@@ -1,0 +1,13 @@
+// 회원정보를 관리하는 Member 테이블 생성
+create table member
+(
+	id varchar2(20) not null,
+	name varchar2(10) not null,
+	password varchar2(30) not null,
+	class_code varchar2(5) not null,
+	join_date date,
+
+	constraint member_pk primary key(id)
+);
+
+commit;
