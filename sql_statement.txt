@@ -1,4 +1,6 @@
-// 회원정보를 관리하는 Member 테이블 생성
+--회원정보를 관리하는 Member 테이블 생성
+set sqlblanklines on
+
 create table member
 (
 	id varchar2(20) not null,
