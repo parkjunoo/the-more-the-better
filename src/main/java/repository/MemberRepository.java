@@ -19,4 +19,6 @@ public interface MemberRepository
 	Optional<Member> findByName(String mem_name); // 이름으로 회원을 찾는 것
 	
 	List<Member> findAll(); // 전체 회원을 다 찾아주는 것
+
+	void clearStore(); // 테스트가 끝나고 repository를 지움
 }

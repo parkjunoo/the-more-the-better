@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+
+import org.springframework.stereotype.Repository;
+
 import domain.Member;
 
 // 구현체 부분
@@ -44,5 +47,10 @@ public class MemoryMemberRepository implements MemberRepository
 	public List<Member> findAll() 
 	{
 		return new ArrayList<Member>(store.values()); // store.values() = member
+	}
+	
+	public void clearStore()
+	{
+		store.clear(); // store를 비워줌
 	}
 }
