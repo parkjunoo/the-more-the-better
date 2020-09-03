@@ -8,9 +8,10 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import domain.Member;
-import exception.SameMemberException;
-import repository.MemoryMemberRepository;
+import io.playdata.themorethebetter.domain.Member;
+import io.playdata.themorethebetter.exception.SameMemberException;
+import io.playdata.themorethebetter.repository.MemoryMemberRepository;
+import io.playdata.themorethebetter.service.MemberService;
 
 public class MemberServiceTest 
 {

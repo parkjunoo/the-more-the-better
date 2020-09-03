@@ -1,4 +1,4 @@
-package exception;
+package io.playdata.themorethebetter.exception;
 
 public class SameMemberException extends RuntimeException
 {

@@ -1,4 +1,4 @@
-package service;
+package io.playdata.themorethebetter.service;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,10 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import domain.Member;
-import exception.SameMemberException;
-import repository.MemberRepository;
-import repository.MemoryMemberRepository;
+import io.playdata.themorethebetter.domain.Member;
+import io.playdata.themorethebetter.exception.SameMemberException;
+import io.playdata.themorethebetter.repository.MemberRepository;
+import io.playdata.themorethebetter.repository.MemoryMemberRepository;
 
 public class MemberService 
 {

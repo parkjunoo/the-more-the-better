@@ -1,11 +1,11 @@
-package repository;
+package io.playdata.themorethebetter.repository;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import domain.Member;
+import io.playdata.themorethebetter.domain.Member;
 
 // 회원 객체를 저장하는 저장소
 public interface MemberRepository

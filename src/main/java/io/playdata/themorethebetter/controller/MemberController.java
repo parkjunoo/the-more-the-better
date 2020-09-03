@@ -1,4 +1,4 @@
-package controller;
+package io.playdata.themorethebetter.controller;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import domain.Member;
-import exception.MemberNotFoundException;
-import repository.MemberRepository;
-import service.MemberService;
+import io.playdata.themorethebetter.domain.Member;
+import io.playdata.themorethebetter.exception.MemberNotFoundException;
+import io.playdata.themorethebetter.repository.MemberRepository;
+import io.playdata.themorethebetter.service.MemberService;
 
 @Controller
 public class MemberController 

@@ -1,4 +1,4 @@
-package exception;
+package io.playdata.themorethebetter.exception;
 
 public class MemberNotFoundException extends RuntimeException
 {

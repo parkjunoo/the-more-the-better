@@ -1,4 +1,4 @@
-package repository;
+package io.playdata.themorethebetter.repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import domain.Member;
+import io.playdata.themorethebetter.domain.Member;
 
 // 구현체 부분
 public class MemoryMemberRepository implements MemberRepository

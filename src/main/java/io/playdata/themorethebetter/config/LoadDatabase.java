@@ -1,4 +1,4 @@
-package config;
+package io.playdata.themorethebetter.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 public class LoadDatabase 
 {
 	@Bean
-	CommandLineRunner initDatabase(repository.MemberRepository memberRepository)
+	CommandLineRunner initDatabase(io.playdata.themorethebetter.repository.MemberRepository memberRepository)
 	{
 		return args -> {};
 	}

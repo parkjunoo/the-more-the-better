@@ -1,11 +1,11 @@
-package config;
+package io.playdata.themorethebetter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import repository.MemberRepository;
-import repository.MemoryMemberRepository;
-import service.MemberService;
+import io.playdata.themorethebetter.repository.MemberRepository;
+import io.playdata.themorethebetter.repository.MemoryMemberRepository;
+import io.playdata.themorethebetter.service.MemberService;
 
 @Configuration // Component 등록
 public class SpringConfig
