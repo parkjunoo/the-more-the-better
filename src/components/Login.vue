@@ -148,8 +148,8 @@
     button,
     .login {
         width: 400px;
-        margin: 16px auto;
-        font-size: 16px;
+        margin: auto;
+        font-size: 10px;
         font-family: 'Do Hyeon', sans-serif;
     }
 

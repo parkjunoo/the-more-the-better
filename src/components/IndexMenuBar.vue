@@ -32,7 +32,7 @@ export default {
         toolbar:[
           {id:0,
           text:"게시판",
-          page: "/hello"},
+          page: "/Enroll"},
           {id:1,
             text:"로그인",
             page: "/login"},
@@ -86,7 +86,7 @@ body {
 a{text-decoration: none;
 font-family: 'Do Hyeon', sans-serif;
   text-decoration: none !important;
-  font-size: 40px;
+  font-size: 30px;
   color:black;
 
 }
