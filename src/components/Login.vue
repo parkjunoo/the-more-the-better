@@ -138,7 +138,6 @@
 
     body {
         font-family: 'Do Hyeon', sans-serif;
-        @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
         font-size:40px;
         font-color:white;
 
@@ -149,7 +148,7 @@
     .login {
         width: 400px;
         margin: auto;
-        font-size: 10px;
+        font-size: 16px;
         font-family: 'Do Hyeon', sans-serif;
     }
 

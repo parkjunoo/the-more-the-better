@@ -8,10 +8,10 @@
 <script>
   import IndexMenuBar from './IndexMenuBar.vue';
 
+
   export default {
-    name: 'HelloWorld',
     components:{
-      IndexMenuBar,
+      IndexMenuBar
 
     }
   }

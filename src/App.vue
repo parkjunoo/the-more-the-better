@@ -3,18 +3,14 @@
     <Navigation></Navigation>
     <h1></h1>
     <router-view/>
-
-
   </div>
 </template>
 
 <script>
-  import HelloWorld from '@/components/HelloWorld.vue'
   import Navigation from '@/components/IndexMenuBar.vue'
   export default{
     components:{
       // eslint-disable-next-line vue/no-unused-components
-      HelloWorld,
       'Navigation':Navigation
     }
   }

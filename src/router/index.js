@@ -3,7 +3,7 @@ import VueRouter from 'vue-router';
 import Login from '../components/Login.vue';
 import Main from "@/components/Main";
 import Board from "@/components/IndexWaitingList.vue";
-import Enroll from "@/views/Enroll.vue";
+import Enroll from "@/components/servicecoms/ServiceEnroll.vue";
 
 Vue.use(VueRouter)
   const routes = [
@@ -20,9 +20,6 @@ Vue.use(VueRouter)
      {
     path: '/login',
     name: 'Login',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: Login,
  },
  {

@@ -4,10 +4,10 @@
 
 <script>
 // @ is an alias to /src
-import ServiceEnroll from '@/components/servicecoms/ServiceEnroll.vue'
+import ServiceEnroll from '@/views/Enroll.vue'
 
 export default {
-  name: 'ServiceEnrolle',
+  name: 'Enroll',
   components: {
     ServiceEnroll
   }
