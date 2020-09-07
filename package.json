@@ -1,5 +1,5 @@
 {
-  "mem_name": "daik",
+  "mem_name": "chaeyeon",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -49,5 +49,18 @@
     "> 1%",
     "last 2 versions",
     "not dead"
-  ]
+  ],
+  "name": "chaeyeon",
+  "description": "## Project setup ``` yarn install ```",
+  "main": "babel.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/benz-e-class/the-more-the-better.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/benz-e-class/the-more-the-better/issues"
+  },
+  "homepage": "https://github.com/benz-e-class/the-more-the-better#readme"
 }
