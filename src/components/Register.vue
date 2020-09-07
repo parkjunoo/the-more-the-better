@@ -10,15 +10,15 @@
                     <form action="/members/new" method="POST">
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="아이디" name="mem_id" id="eid"
-                                   v-model="eid">
+                                   v-model="mem_id">
                         </div>
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="이름" name="mem_name" id="name"
-                                   v-model="name">
+                                   v-model="mem_name">
                         </div>
                         <div class="input-group">
                             <input class="input--style-2" type="password" placeholder="비밀번호" name="mem_pw" id="pass"
-                                   v-model="pw">
+                                   v-model="mem_pw">
                         </div>
                         <div class="input-group">
                             <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check">
@@ -33,7 +33,7 @@
 
 <input type="password" v-model.lazy='checkPassword'>
 
-<transition name="hint" appear>
+<transition mem_name="hint" appear>
 <div v-if='passwordValidation.errors.length > 0 && !submitted' class='hints'>
     <h2>Hints</h2>
     <p v-for='error in passwordValidation.errors'>{{error}}</p>
@@ -53,14 +53,14 @@ Submit
                         -->
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="휴대폰 번호 입력" name="phone_number"
-                                   id="phone" v-model="phone">
+                                   id="phone" v-model="mem_phone">
                         </div>
                         <div class="row row-space ">
                             <div class="col-2 ">
                                 <div class="input-group ">
                                     <div class="rs-select2 js-select-simple select--no-search ">
                                         <select name="gender">
-                                            <!-- <select name="gender" id="gen" v-model="gen">-->
+                                            <!-- <select mem_name="gender" id="gen" v-model="gen">-->
                                             <option disabled="disabled" selected="selected">성별</option>
                                             <option>남자</option>
                                             <option>여자</option>
@@ -73,7 +73,7 @@ Submit
                         <div class="input-group">
                             <div class="rs-select2 js-select-simple select--no-search">
                                 <select name="mem_class">
-                                    <!-- <select name="mem_class" id="class" v-model="">-->
+                                    <!-- <select mem_name="mem_class" id="class" v-model="">-->
                                     <option disabled="disabled" selected="selected ">수강중인 수업 선택</option>
                                     <option>인공지능 P반</option>
                                     <option>인공지능 A반</option>
@@ -93,7 +93,7 @@ Submit
                         </div>
                         <div class="p-t-30 ">
                             <button class="btn btn--radius btn--green" type="submit" id="btn_memberJoin"
-                                    @click="setInfo">회원가입
+                                    @click="submitForm">회원가입
                             </button>
                         </div>
                     </form>
@@ -115,11 +115,11 @@ Submit
         },
         data: function () {
             return {
-                eid: "",
-                pw: "",
-                name: "",
-                phone: "",
-                lec: "",
+                mem_id: "",
+                mem_pw: "",
+                mem_name: "",
+                mem_phone: "",
+                class_no: "",
                 gen: "",
                 message1: "배달료 아끼고 행복을 더하세요 :)",
                 message2: "다다익선 간편 회원가입",
@@ -132,56 +132,27 @@ Submit
         },
 
         methods: {
-            setInfo(status, token, info) {
-                this.status = status;
-                this.token = token;
-                this.info = info;
-                this.result = true;
-            },
-            setDetailInfo(status, token, info, detailInfo) {
-                this.status = status;
-                this.token = token;
-                this.info = info;
-                this.detailInfo = detailInfo;
-            },
+            async submitForm() { // 비동기 객체가 오기때문에 비동기 처리
+                console.log('submit');
+                const userData = {
+                    id: this.mem_id,
+                    pw: this.mem_pw,
+                    name: this.mem_name,
+                    phone: this.mem_phone,
+                    lec: this.class_no
 
-            getInfo() {
-                //         axios.post("/api/info", {
-                //                 eid : this.eid,
-                //                 pw : this.pw
-                //             },
-                //             {
-                //                 headers : {
-                //                     // "jwt-auth-token" : storage.getItem("jwt-auth-token")
-                //                 }
-                //             }
-                //         ).then(res => {
-                //             // this.setDetailInfo( "정보 조회 성공", storage.getItem("jwt-auth-token"), this.info, JSON.stringify(res.data));
-                //         }).catch(e => {
-                //             this.setDetailInfo("정보 조회 실패", "", e.response.data.msg);
-                //         });
+                };
+                const {data} = await registerUser(userData); // Destructuring
+                this.logMessage = `${data.username}님이 가입되었습니다.`;
+                //template literal(백틱문법) 자바스크립변수를 문자열과 합침
+                this.initForm();
             },
-
-            init() {
-                //         // if(storage.getItem("jwt-auth-token")){
-                //         //     this.message = storage.getItem("login_eid") + "로 로그인 되었습니다";
-                //         // }else{
-                //         //     storage.setItem("jwt-auth-token", "");
-                //         // }
-                //     }//init()
-                // }, mounted(){
-                //     this.init();
-            },
-            resetPasswords () {
-                this.password = ''
-                this.checkPassword = ''
-                this.submitted = true
-                setTimeout(() => {
-                    this.submitted = false
-                }, 2000)
-            },
-            togglePasswordVisibility () {
-                this.passwordVisible = !this.passwordVisible
+            initForm() {
+                this.mem_id = '',
+                    this.mem_pw = '',
+                    this.mem_name = '',
+                    this.mem_phone = '',
+                    this.class_no = ''
             }
         }
     }

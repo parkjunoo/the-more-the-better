@@ -61,8 +61,8 @@
                 // storage.setItem("jwt-auth-token", "");
                 // storage.setItem("login_eid", "");
 
-                // this.eid = "";
-                // this.pw = "";
+                // this.mem_id = "";
+                // this.mem_pw = "";
                 //
                 // this.message = "로그인해 주세요";
                 // this.result = false;
@@ -72,8 +72,8 @@
             },
             getInfo() {
                 //         axios.post("/api/info", {
-                //                 eid : this.eid,
-                //                 pw : this.pw
+                //                 mem_id : this.mem_id,
+                //                 mem_pw : this.mem_pw
                 //             },
                 //             {
                 //                 headers : {
@@ -91,14 +91,14 @@
                 //         // storage.setItem("login_eid", "");
                 //
                 //         axios.post("/api/logincheck/signin", {
-                //             eid : this.eid,
-                //             pw : this.pw
+                //             mem_id : this.mem_id,
+                //             mem_pw : this.mem_pw
                 //         }).then(res =>{
                 //             if(res.data.status){
                 //
-                //                 this.eid = "";
-                //                 this.pw = "";
-                //                 this.message = res.data.data.eid + "로 로그인 되었습니다";
+                //                 this.mem_id = "";
+                //                 this.mem_pw = "";
+                //                 this.message = res.data.data.mem_id + "로 로그인 되었습니다";
                 //
                 //                 console.dir(res.headers["jwt-auth-token"]);
                 //                 console.log("//////////");
@@ -106,9 +106,9 @@
                 //                 //화면에 정보 출력
                 //                 this.setInfo("로그인 성공", res.headers["jwt-auth-token"], JSON.stringify(res.data.data));
                 //
-                //                 //토큰 & eid 정보 저장
+                //                 //토큰 & mem_id 정보 저장
                 //                 // storage.setItem("jwt-auth-token", res.headers["jwt-auth-token"]);
-                //                 // storage.setItem("login_eid", res.data.data.eid);
+                //                 // storage.setItem("login_eid", res.data.data.mem_id);
                 //
                 //             }else{
                 //
@@ -217,7 +217,7 @@
         background: #fff;
     }
 
-    .register input[type="eid"],
+    .register input[type="mem_id"],
     .register input[type="password"] {
         background: #fff;
         border-color: #bbb;
@@ -225,7 +225,7 @@
     }
 
     /* Text fields' focus effect */
-    .register input[type="eid"]:focus,
+    .register input[type="mem_id"]:focus,
     .register input[type="password"]:focus {
         border-color: #888;
     }
