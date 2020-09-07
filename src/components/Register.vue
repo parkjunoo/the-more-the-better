@@ -44,7 +44,7 @@
 <p>Passwords don't match.</p>
 </div>
 
-<button @click='VerifyPasswords' v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
+<button @click='resetPasswords' v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
 Submit
 </button>
 
@@ -172,7 +172,7 @@ Submit
                 // }, mounted(){
                 //     this.init();
             },
-            VerifyPasswords () {
+            resetPasswords () {
                 this.password = ''
                 this.checkPassword = ''
                 this.submitted = true
