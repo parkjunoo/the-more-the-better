@@ -23,83 +23,86 @@
                         <div class="input-group">
                             <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check">
                         </div>
-                        <!--
-                        <div class="password">
-<input :class='{valid:passwordValidation.valid}' :type="passwordVisible ? 'text' : 'password'" v-model="password">
-<button class="visibility" tabindex='-1' @click='togglePasswordVisibility' :arial-label='passwordVisible ? "Hide password" : "Show password"'>
-    <i class="material-icons">{{ passwordVisible ? "visibility" : "visibility_off" }}</i>
-</button>
-</div>
 
-<input type="password" v-model.lazy='checkPassword'>
+<!--                        <div class="password">-->
+<!--                            <input :class='{valid:passwordValidation.valid}'-->
+<!--                                   :type="passwordVisible ? 'text' : 'password'" v-model="password">-->
+<!--                            <button class="visibility" tabindex='-1' @click='togglePasswordVisibility'-->
+<!--                                    :arial-label='passwordVisible ? "Hide password" : "Show password"'>-->
+<!--                                <i class="material-icons">{{ passwordVisible ? "visibility" : "visibility_off" }}</i>-->
+<!--                            </button>-->
+<!--                        </div>-->
 
-<transition mem_name="hint" appear>
-<div v-if='passwordValidation.errors.length > 0 && !submitted' class='hints'>
-    <h2>Hints</h2>
-    <p v-for='error in passwordValidation.errors'>{{error}}</p>
-</div>
-</transition>
+<!--                        <input type="password" v-model.lazy='checkPassword'>-->
 
-<div class="matches" v-if='notSamePasswords'>
-<p>Passwords don't match.</p>
-</div>
+<!--                        <transition mem_name="hint" appear>-->
+<!--                            <div v-if='passwordValidation.errors.length > 0 && !submitted' class='hints'>-->
+<!--                                <h2>Hints</h2>-->
+<!--                                <p v-for='error in passwordValidation.errors'>{{error}}</p>-->
+<!--                            </div>-->
+<!--                        </transition>-->
 
-<button @click='resetPasswords' v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>
-Submit
-</button>
+<!--                        <div class="matches" v-if='notSamePasswords'>-->
+<!--                            <p>Passwords don't match.</p>-->
+<!--                        </div>-->
 
-</div>
+<!--                        <button @click='resetPasswords'-->
+<!--                                v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>-->
+<!--                            Submit-->
+<!--                        </button>-->
 
-                        -->
-                        <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="휴대폰 번호 입력" name="phone_number"
-                                   id="phone" v-model="mem_phone">
-                        </div>
-                        <div class="row row-space ">
-                            <div class="col-2 ">
-                                <div class="input-group ">
-                                    <div class="rs-select2 js-select-simple select--no-search ">
-                                        <select name="gender">
-                                            <!-- <select mem_name="gender" id="gen" v-model="gen">-->
-                                            <option disabled="disabled" selected="selected">성별</option>
-                                            <option>남자</option>
-                                            <option>여자</option>
-                                        </select>
-                                        <div class="select-dropdown"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="input-group">
-                            <div class="rs-select2 js-select-simple select--no-search">
-                                <select name="mem_class">
-                                    <!-- <select mem_name="mem_class" id="class" v-model="">-->
-                                    <option disabled="disabled" selected="selected ">수강중인 수업 선택</option>
-                                    <option>인공지능 P반</option>
-                                    <option>인공지능 A반</option>
-                                    <option>데이터과학 영등포</option>
-                                    <option>데이터과학 서초</option>
-                                </select>
-                                <div class="select-dropdown "></div>
-                            </div>
-                        </div>
-                        <div class="row row-space">
-                            <div class="col-2 ">
-                                <div class="input-group ">
-                                    <input class="input--style-2 " type="file" placeholder="Registration Code "
-                                           name="res_code ">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="p-t-30 ">
-                            <button class="btn btn--radius btn--green" type="submit" id="btn_memberJoin"
-                                    @click="submitForm">회원가입
-                            </button>
-                        </div>
-                    </form>
+<!--                </div>-->
+
+
+                <div class="input-group">
+                    <input class="input--style-2" type="text" placeholder="휴대폰 번호 입력" name="phone_number"
+                           id="phone" v-model="mem_phone">
                 </div>
+                <div class="row row-space ">
+                    <div class="col-2 ">
+                        <div class="input-group ">
+                            <div class="rs-select2 js-select-simple select--no-search ">
+                                <select name="gender">
+                                    <!-- <select mem_name="gender" id="gen" v-model="gen">-->
+                                    <option disabled="disabled" selected="selected">성별</option>
+                                    <option>남자</option>
+                                    <option>여자</option>
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <div class="rs-select2 js-select-simple select--no-search">
+                        <select name="mem_class">
+                            <!-- <select mem_name="mem_class" id="class" v-model="">-->
+                            <option disabled="disabled" selected="selected ">수강중인 수업 선택</option>
+                            <option>인공지능 P반</option>
+                            <option>인공지능 A반</option>
+                            <option>데이터과학 영등포</option>
+                            <option>데이터과학 서초</option>
+                        </select>
+                        <div class="select-dropdown "></div>
+                    </div>
+                </div>
+                <div class="row row-space">
+                    <div class="col-2 ">
+                        <div class="input-group ">
+                            <input class="input--style-2 " type="file" placeholder="Registration Code "
+                                   name="res_code ">
+                        </div>
+                    </div>
+                </div>
+                <div class="p-t-30 ">
+                    <button class="btn btn--radius btn--green" type="submit" id="btn_memberJoin"
+                            @click="submitForm">회원가입
+                    </button>
+                </div>
+                </form>
             </div>
         </div>
+    </div>
     </div>
 
 
@@ -142,6 +145,11 @@ Submit
                     lec: this.class_no
 
                 };
+
+                async function registerUser(userData) {
+                    
+                }
+
                 const {data} = await registerUser(userData); // Destructuring
                 this.logMessage = `${data.username}님이 가입되었습니다.`;
                 //template literal(백틱문법) 자바스크립변수를 문자열과 합침
