@@ -1,15 +1,16 @@
 <template>
-    <div class="login">
-        <div class="login-triangle"></div>
+    <div class="register">
+        <div class="register-triangle"></div>
         <img src="../assets/login.png" width=100%>
-        <h2 style="align-content: center">{{message}}<br><br></h2>
+        <h2 style="align-content: center">{{message1}}<br><br></h2>
 
-        <form class="login-container">
+        <form class="register-container">
             <p>ID : <input type="eid" name="eid" id="eid" v-model="eid" ></p>
             <p>PW : <input type="password" name="login" id="pass" v-model="pw" > </p>
             <p><input type="submit" @click="login" value="로그인" id="login"></p>
 <!--            <button id="logout" @click="logout">로그아웃</button>-->
             <!-- <button id="getInfo" @click="getInfo">상세 정보 확인</button> -->
+            <button v-on:click="register" class = "btn-r">아직 회원이 아니신가요?</button>
         </form>
 
         <br><hr><br>
@@ -29,7 +30,8 @@
             return {
                 eid : "",
                 pw : "",
-                message: " 다다익선(多多益善) 회원이신가요? ",
+                message1: " 다다익선(多多益善) 회원이신가요? ",
+                message2:"아직 회원이 아니신가요?",
                 status: "",
                 token: "",
                 info: "",
@@ -50,6 +52,10 @@
                 this.token = token;
                 this.info = info;
                 this.detailInfo = detailInfo;
+            },
+            register(){
+                this.$router.push({ name: 'Register' })
+
             },
             logout(){
                 // storage.setItem("jwt-auth-token", "");
@@ -146,7 +152,7 @@
     }
 
     button,
-    .login {
+    .register {
         width: 400px;
         margin: auto;
         font-size: 10px;
@@ -157,13 +163,13 @@
     .login-header,
 
     button,
-    .login p {
+    .register p {
         color: white;
         font-family: 'Do Hyeon', sans-serif;
     }
 
     /* The triangle form is achieved by a CSS hack */
-    .login-triangle {
+    .register-triangle {
         width: 0;
         margin-right: auto;
         margin-left: auto;
@@ -183,7 +189,7 @@
     }
 
     button,
-    .login-container {
+    .register-container {
         background: grey;
         align-content: center;
         padding: 12px;
@@ -191,13 +197,13 @@
 
     /* Every row inside .login-container is defined with p tags */
     button,
-    .login p {
+    .register p {
         padding: 12px;
         font-family: 'Do Hyeon', sans-serif;
     }
 
     button,
-    .login input {
+    .register input {
         box-sizing: border-box;
         display: block;
         width: 100%;
@@ -211,32 +217,32 @@
         background: #fff;
     }
 
-    .login input[type="eid"],
-    .login input[type="password"] {
+    .register input[type="eid"],
+    .register input[type="password"] {
         background: #fff;
         border-color: #bbb;
         color: #555;
     }
 
     /* Text fields' focus effect */
-    .login input[type="eid"]:focus,
-    .login input[type="password"]:focus {
+    .register input[type="eid"]:focus,
+    .register input[type="password"]:focus {
         border-color: #888;
     }
 
     button,
-    .login input[type="submit"] {
+    .register input[type="submit"] {
         background: rgb(146, 139, 137);
         border-color: white;
         color: #fff;
         cursor: pointer;
     }
 
-    .login input[type="submit"]:hover {
+    .register input[type="submit"]:hover {
         background: rgb(226, 226, 162);
     }
 
-    .login input[type="submit"]:focus {
+    .register input[type="submit"]:focus {
         border-color: rgb(226, 226, 162);
     }
 
@@ -249,4 +255,60 @@
     /*    width : 105%;*/
     /*    align-self: center;*/
     /*}*/
+
+    .btn-r {
+        background-color: tan;
+        border: none;
+        color: #ffffff;
+        cursor: pointer;
+        display: inline-block;
+        font-family: 'Do Hyeon', sans-serif;
+        font-size:40px;
+        font-size: 1em;
+        font-size: 22px;
+        line-height: 1em;
+        outline: none;
+        padding: 12px 40px 10px;
+        position: relative;
+        text-transform: uppercase;
+        /*font-weight: 700;*/
+
+    }
+    .btn-r:before,
+    .btn-r:after {
+        border-color: transparent;
+        -webkit-transition: all 0.25s;
+        transition: all 0.25s;
+        border-style: solid;
+        border-width: 0;
+        content: "";
+        height: 24px;
+        position: absolute;
+        width: 24px;
+    }
+    .btn-r:before {
+        border-color: #c47135;
+        border-right-width: 2px;
+        border-top-width: 2px;
+        right: -5px;
+        top: -5px;
+    }
+    .btn-r:after {
+        border-bottom-width: 2px;
+        border-color: #c47135;
+        border-left-width: 2px;
+        bottom: -5px;
+        left: -5px;
+    }
+    .btn-r:hover,
+    .btn-r.hover {
+        background-color: #c47135;
+    }
+    .btn-r:hover:before,
+    .btn-r.hover:before,
+    .btn-r:hover:after,
+    .btn-r.hover:after {
+        height: 100%;
+        width: 100%;
+    }
 </style>
