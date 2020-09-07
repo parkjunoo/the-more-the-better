@@ -24,10 +24,10 @@ public class LoadDatabase
 			log.info("Preloading" + classRepository.save(Class.builder().code("DSY").name("Data Science Yeongdeungpo").build()));
 			log.info("Preloading" + classRepository.save(Class.builder().code("DSS").name("Data Science Seocho").build()));
 			/* Member 생성 */
-			log.info("Preloading" + memberRepository.save(Member.builder().id("aa").pw("aa").name("aa").myclass(classRepository.findByCode("IP").get()).build()));
-			log.info("Preloading" + memberRepository.save(Member.builder().id("bb").pw("bb").name("bb").myclass(classRepository.findByCode("IP").get()).build()));
-			log.info("Preloading" + memberRepository.save(Member.builder().id("cc").pw("cc").name("cc").myclass(classRepository.findByCode("IA").get()).build()));
-			log.info("Preloading" + memberRepository.save(Member.builder().id("dd").pw("dd").name("dd").myclass(classRepository.findByCode("IA").get()).build()));
+			log.info("Preloading" + memberRepository.save(Member.builder().id("aa").pw("aa").name("aa").phone("01011111111").myclass(classRepository.findByCode("IP").get()).build()));
+			log.info("Preloading" + memberRepository.save(Member.builder().id("bb").pw("bb").name("bb").phone("01022222222").myclass(classRepository.findByCode("IP").get()).build()));
+			log.info("Preloading" + memberRepository.save(Member.builder().id("cc").pw("cc").name("cc").phone("01033333333").myclass(classRepository.findByCode("IA").get()).build()));
+			log.info("Preloading" + memberRepository.save(Member.builder().id("dd").pw("dd").name("dd").phone("01044444444").myclass(classRepository.findByCode("IA").get()).build()));
 			/* Store 생성 */
 			log.info("Preloading" + storeRepository.save(Store.builder().name("bana").address("nambu").build()));
 			log.info("Preloading" + storeRepository.save(Store.builder().name("starbucks").address("nambu").build()));

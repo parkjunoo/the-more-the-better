@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrePersist;
 
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
@@ -42,6 +43,9 @@ public class Member extends BaseTimeEntity
 	@Column(name="MEM_NAME", length=20)
 	private String name; // 사용자 이름
 	
+	@Column(name="MEM_PHONE", length=20)
+	private String phone; // 사용자 전화번호 
+	
 	@ManyToOne(optional=false)
 	@JoinColumn(name="CLASS_NO")
 	private Class myclass; // 수강 중인 수업 정보 
@@ -57,10 +61,11 @@ public class Member extends BaseTimeEntity
 	private WaitingMems waitingmems; //속해있는 대기명단 정보 
 
 	@Builder
-	public Member(String id, String pw, String name, Class myclass, boolean iscertify, Host host, WaitingMems waitingmems) {
+	public Member(String id, String pw, String name, String phone, Class myclass, boolean iscertify, Host host, WaitingMems waitingmems) {
 		this.id = id;
 		this.pw = pw;
 		this.name = name;
+		this.phone = phone;
 		this.myclass = myclass;
 		this.iscertify = iscertify;
 		this.host = host;
