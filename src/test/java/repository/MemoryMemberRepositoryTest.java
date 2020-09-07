@@ -7,9 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import io.playdata.themorethebetter.domain.Member;
-import io.playdata.themorethebetter.repository.MemberRepository;
-import io.playdata.themorethebetter.repository.MemoryMemberRepository;
+import domain.Member;
 
 // 필요한 테스트 로직만 주석을 해제해서 JUnit Test로 빌드할 것
 class MemoryMemberRepositoryTest 

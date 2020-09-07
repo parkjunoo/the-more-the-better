@@ -3,8 +3,10 @@ package io.playdata.themorethebetter.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,30 +16,35 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@Setter @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Table(name="WAITING_MEMS")
 @Entity
-@EqualsAndHashCode(callSuper = false)
-public class WaitingMems 
+public class WaitingMems extends BaseTimeEntity
 {
 	@Id @GeneratedValue
 	@Column(name="WAIT_MEM_NO")
-	private Long wait_mem_no; // 대기명단 고유번호
+	private Long no; // 대기명단 고유번호
 	
-	@OneToOne(optional=false)
-	@JoinColumn(name="WAIT_NO")
-	private Waiting wait_mem_order; // 대기하고 있는 주문 정보 
+	@OneToOne(mappedBy="waitingmems")
+	private Waiting order; // 대기하고 있는 주문 정보 
 	
-	@OneToMany(mappedBy="mem_wait")
-	private List<Member> wait_mem_mems = new ArrayList<Member>(); // 대기하고 있는 멤버 정보 
-	
-	
+	@OneToMany(mappedBy="waitingmems", fetch=FetchType.EAGER)
+	private List<Member> members = new ArrayList<Member>(); // 대기하고 있는 멤버 정보 
+
+	@Builder
+	public WaitingMems(Waiting order, List<Member> members) {
+		this.order = order;
+		this.members = members;
+	}
+
 }	

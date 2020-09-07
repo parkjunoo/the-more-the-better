@@ -13,4 +13,9 @@ create table member
 	constraint member_pk primary key(mem_no)
 );
 
+<<<<<<< HEAD
 commit;
+
+=======
+commit;
+>>>>>>> c66bf4292fe92d24eda3698a6c35f503efae8366

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.exception.SameMemberException;
 import io.playdata.themorethebetter.repository.MemberRepository;
-import io.playdata.themorethebetter.repository.MemoryMemberRepository;
 
 public class MemberService 
 {
@@ -25,7 +24,7 @@ public class MemberService
 		checkDuplicateId(member); // 중복 회원 검증
 		memberRepository.save(member);
 		
-		return member.getMem_id();
+		return member.getId();
 	}
 	
 	public List<Member> findMembers() // 전체 회원 조회
@@ -33,15 +32,13 @@ public class MemberService
 		return memberRepository.findAll();
 	}
 	
-	public Optional <Member> findOne(String mem_id)
+	public Optional<Member> findOne(String mem_id)
 	{
 		return memberRepository.findById(mem_id);
 	}
 	
 	private void checkDuplicateId(Member member)
 	{
-		memberRepository.findById(member.getMem_id()).ifPresent(m -> { // ifPresent : Null이 아니라 어떤 값이 있으면
-			throw new SameMemberException();
-		});
+		memberRepository.findById(member.getId()).orElseThrow(() -> new SameMemberException());
 	}
 }
