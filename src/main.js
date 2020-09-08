@@ -9,7 +9,8 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import naver from 'vue-naver-maps';
-
+import axios from 'axios'
+Vue.prototype.$axios = axios; 
 Vue.use(BootstrapVue)
 Vue.use(Vuetify);
 Vue.config.productionTip = false
