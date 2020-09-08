@@ -17,7 +17,6 @@ import io.playdata.themorethebetter.dto.member.MemberCreateRequestDto;
 import io.playdata.themorethebetter.dto.member.MemberLogInRequestDto;
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
-import io.playdata.themorethebetter.service.JwtService;
 import io.playdata.themorethebetter.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,27 +27,33 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private MemberService memberService;
-	private JwtService jwtService;
 	
-	//회원가입 
-	@PostMapping("/member")
-	public Member createMember(@RequestBody MemberCreateRequestDto dto) {
+	//회원가입
+	@PostMapping("/members/new")
+	public ResponseEntity<Map<String, Object>> createMember(@RequestBody MemberCreateRequestDto dto, HttpServletResponse res) {
 		Member member = null;
+		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
 		try {
 			member = memberService.join(dto);
-			status = HttpStatus.OK; //200
+			resultMap.put("member", member);
+			resultMap.put("status", true);
 			log.info("회원가입 성공");
+			status = HttpStatus.OK; //200
 			
 		}catch(RuntimeException e) {
 			log.error("회원가입 실패");
+			resultMap.put("message", e.getMessage());
 			status = HttpStatus.METHOD_NOT_ALLOWED; //405
 		}
-		return member;
+		log.info("resultMap" + resultMap);
+		log.info("status" + status);
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	//로그인 
+	//로그인 - 미완성 
 	@GetMapping("/member/login")
 	public ResponseEntity<Map<String, Object>> loginMember(@RequestBody MemberLogInRequestDto dto, HttpServletResponse res) {
 		Map<String, Object> resultMap = new HashMap<>();
@@ -56,10 +61,7 @@ public class MemberController {
 		
 		try {
 			Member member = memberService.logIn(dto);
-			String token = jwtService.create(member);
-			res.setHeader("log-in-token", token);
 			
-			resultMap.put("log_in_token", token);
 			resultMap.put("status", true);
 			resultMap.put("user", member);
 			

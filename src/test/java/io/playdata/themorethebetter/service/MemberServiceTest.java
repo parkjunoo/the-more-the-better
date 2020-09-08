@@ -46,11 +46,11 @@ public class MemberServiceTest {
 	public void 회원가입 () {
 		//given
 		MemberCreateRequestDto dto = MemberCreateRequestDto.builder()
-				.id("ee")
-				.pw("ee")
-				.name("ee")
-				.phone("01055555555")
-				.class_no((long)1)
+				.mem_id("ee")
+				.mem_pw("ee")
+				.mem_name("ee")
+				.mem_phone("01055555555")
+				.class_code("IP")
 				.build();
 		
 		//when
@@ -58,9 +58,9 @@ public class MemberServiceTest {
 		
 		//then
 		Member member = memberRepository.findByName("ee").get();
-		assertThat(member.getId()).isEqualTo(dto.getId());
+		assertThat(member.getId()).isEqualTo(dto.getMem_id());
 		assertThat(member.isIscertify()).isEqualTo(false);
-		assertThat(member.getMyclass().getNo()).isEqualTo(dto.getClass_no());
+		assertThat(member.getMyclass().getCode()).isEqualTo(dto.getClass_code());
 	}
 	
 	@Test(expected=NotFoundException.class)

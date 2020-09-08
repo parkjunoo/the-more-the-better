@@ -21,7 +21,7 @@ public class OrderSearchResponseDto {
 	public OrderSearchResponseDto(Waiting entity) {
 		store = entity.getStore();
 		host = entity.getHost();
-		minlimit = entity.getMinlimit();
+		minlimit = entity.getMinperson();
 		waitingmems = entity.getWaitingmems();
 	}
 	

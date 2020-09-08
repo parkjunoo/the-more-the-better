@@ -20,9 +20,11 @@ import io.playdata.themorethebetter.repository.StoreRepository;
 import io.playdata.themorethebetter.repository.WaitingMemsRepository;
 import io.playdata.themorethebetter.repository.WaitingRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @AllArgsConstructor
 @Service
+@Slf4j
 public class MemberService {
 	
 	private MemberRepository memberRepository;
@@ -30,18 +32,21 @@ public class MemberService {
 	
 	/* 회원가입 */
 	public Member join(MemberCreateRequestDto dto) throws NotFoundException, ForbiddenException {
+		log.info("회원가입 시도중...");
 		
-		checkExistClass(dto.getClass_no()); // 클래스 존재여부 확인 
-		checkDuplicateId(dto.getId()); // 중복 회원 검증
-		checkDuplicatePhone(dto.getPhone()); // 중복 전화번호 검증
+		checkExistClass(dto.getClass_code());
+		checkDuplicateId(dto.getMem_id());
+		checkDuplicatePhone(dto.getMem_phone());
 		
-		Class myclass = classRepository.findByNo(dto.getClass_no()).get();
+		Class myclass = classRepository.findByCode(dto.getClass_code()).get();
 		Long mem_no = memberRepository.save(dto.toEntity(myclass)).getNo();
 		return memberRepository.findByNo(mem_no).get();
 	}
 		
 	/* 아이디 중복체크 */
 	private void checkDuplicateId(String id) throws ForbiddenException{
+		log.info("중복 회원 검증");
+		
 		Optional<Member> member = memberRepository.findById(id);
 		
 		if(member.isPresent()) {
@@ -51,6 +56,8 @@ public class MemberService {
 	
 	/* 전화번호 중복체크 */
 	private void checkDuplicatePhone(String phone) throws ForbiddenException{
+		log.info("중복 전화번호 검증");
+
 		Optional<Member> member = memberRepository.findByPhone(phone);
 		
 		if(member.isPresent()) {
@@ -59,8 +66,10 @@ public class MemberService {
 	}
 	
 	/* 클래스 존재여부 확인 */
-	private void checkExistClass(Long class_no) throws NotFoundException {
-		classRepository.findByNo(class_no)
+	private void checkExistClass(String class_code) throws NotFoundException {
+		log.info("클래스 존재여부 확인");
+		
+		classRepository.findByCode(class_code)
 			.orElseThrow(() -> new NotFoundException("존재하지 않는 클래스입니다."));
 	}
 	
