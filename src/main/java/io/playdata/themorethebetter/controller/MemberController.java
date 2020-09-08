@@ -63,16 +63,17 @@ public class MemberController {
 			Member member = memberService.logIn(dto);
 			
 			resultMap.put("status", true);
-			resultMap.put("user", member);
-			
+			resultMap.put("member", member);
+			log.info("로그인 성공");
 			status = HttpStatus.ACCEPTED;
 			
-		}catch(NotFoundException e) {
-			log.error("로그인 실패", e);
+		}catch(RuntimeException e) {
+			log.error("로그인 실패");
 			resultMap.put("error_message", e.getMessage());
+			status = HttpStatus.METHOD_NOT_ALLOWED; //405
 		}
-		
-		log.info("로그인 정보" + resultMap);
+		log.info("resultMap" + resultMap);
+		log.info("status" + status);
 		
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}

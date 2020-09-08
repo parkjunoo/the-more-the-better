@@ -34,6 +34,7 @@ public class MemberService {
 	public Member join(MemberCreateRequestDto dto) throws NotFoundException, ForbiddenException {
 		log.info("회원가입 시도중...");
 		
+		checkSamePassword(dto.getMem_pw(), dto.getMem_pw_check());
 		checkExistClass(dto.getClass_code());
 		checkDuplicateId(dto.getMem_id());
 		checkDuplicatePhone(dto.getMem_phone());
@@ -43,6 +44,15 @@ public class MemberService {
 		return memberRepository.findByNo(mem_no).get();
 	}
 		
+	/* 비밀번호 일치체크 */
+	private void checkSamePassword(String pw, String pw_check) {
+		log.info("패스워드 일치 여부 검증");
+		
+		if(!pw.equals(pw_check)) {
+			throw new ForbiddenException("패스워드가 일치하지 않습니다.");
+		}
+	}
+	
 	/* 아이디 중복체크 */
 	private void checkDuplicateId(String id) throws ForbiddenException{
 		log.info("중복 회원 검증");
