@@ -1,6 +1,8 @@
 # the-more-the-better
 플레이데이터 Pose-Estimation 개발자 교육 과정 중간 프로젝트 - '다다익선(多多益善)'
-
+## Data Model Diagram - 변경사항 2020-09-08
+- 멤버 테이블 마감시간, 수령장소, 최소가격, 최소인원, 상세설명 추가 
+- WAIT_MINPERSON 이랑 WAIT_MINLIMIT 이랑 동일 -> WAIT_MINLIMIT 삭제예정 (작업중)
 ## Data Model Diagram - 변경사항 2020-09-07
 - 멤버 핸드폰 번호 추가
 - 호스트도 waiting_mems 에 들어감
@@ -8,7 +10,7 @@
 ## Data Model Diagram
 바뀔수 있어요!
 
-![Screen Shot 2020-09-07 at 12 14 58 PM](https://user-images.githubusercontent.com/64248514/92345362-08525c80-f104-11ea-982f-24932ddcd383.png)
+![Screen Shot 2020-09-08 at 2 30 56 PM](https://user-images.githubusercontent.com/64248514/92436637-1aa1c880-f1e0-11ea-8252-0c6f5a436b33.png)
 
 Member : 사용자 <br>
 Class : 개설된 반 <br>
