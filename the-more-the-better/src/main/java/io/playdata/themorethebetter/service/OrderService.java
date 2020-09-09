@@ -35,7 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderService {
 	
 	private WaitingRepository waitingRepository;
-	private HostRepository hostRepository;
+	//private HostRepository hostRepository;
 	private MemberRepository memberRepository;
 	private StoreRepository storeRepository;
 	
@@ -60,6 +60,8 @@ public class OrderService {
 //		Host host = Host.builder()
 //				.member(member)
 //				.build();
+		
+		
 		log.info("상점생성완료");
 		Store store = Store.builder().name(dto.getStoreName()).address(dto.getStoreAddress()).picture(dto.getStoreImg()).build();
 		storeRepository.save(store);
@@ -93,27 +95,27 @@ public class OrderService {
 				.map(OrderSearchResponseDto::new)
 				.collect(Collectors.toList());
 	}
-	
-	/* 스토어명으로 주문 검색 */
-	@Transactional(readOnly=true)
-	public List<OrderSearchResponseDto> findByStoreName(String st_name) {
-		return waitingRepository.findByNameContaining(st_name)
-				.map(OrderSearchResponseDto::new)
-				.collect(Collectors.toList());
-	}
-	
+//	
+//	/* 스토어명으로 주문 검색 */
+//	@Transactional(readOnly=true)
+//	public List<OrderSearchResponseDto> findByStoreName(String st_name) {
+//		return waitingRepository.findByNameContaining(st_name)
+//				.map(OrderSearchResponseDto::new)
+//				.collect(Collectors.toList());
+//	}
+//	
 	/* 주문 삭제 */
-	@Transactional
-	public void cancelOrder(Long host_no, Long order_no) throws NotFoundException, ForbiddenException {
-		Host host = hostRepository.findByNo(host_no)
-				.orElseThrow(() -> new NotFoundException());
-		
-		if(host.getOrder().getNo() != order_no) {
-			throw new ForbiddenException("주문 호스트만 주문을 취소할 수 있습니다.");
-		}
-		
-		waitingRepository.deleteByNo(order_no);
-	}
+//	@Transactional
+//	public void cancelOrder(Long host_no, Long order_no) throws NotFoundException, ForbiddenException {
+//		Host host = hostRepository.findByNo(host_no)
+//				.orElseThrow(() -> new NotFoundException());
+//		
+//		if(host.getOrder().getNo() != order_no) {
+//			throw new ForbiddenException("주문 호스트만 주문을 취소할 수 있습니다.");
+//		}
+//		
+//		waitingRepository.deleteByNo(order_no);
+//	}
 
 //	/* 주문 멤버 추가 */
 //	@Transactional

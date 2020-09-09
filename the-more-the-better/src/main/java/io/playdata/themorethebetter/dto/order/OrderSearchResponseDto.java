@@ -16,8 +16,8 @@ public class OrderSearchResponseDto {
 	private ArrayList<Member> waitingmems;
 	
 	public OrderSearchResponseDto(Waiting entity) {
-		store = entity.getStore();
-		host = entity.getHost();
+//		store = entity.getStore();
+//		host = entity.getHost();
 		minlimit = entity.getMinperson();
 		waitingmems = entity.getWaitingmems();
 	}

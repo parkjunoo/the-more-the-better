@@ -1,6 +1,5 @@
 package io.playdata.themorethebetter.domain;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -53,10 +52,10 @@ public class Member extends BaseTimeEntity
 	
 	@Column(name="MEM_ISCERTIFY", columnDefinition="number(1,0) default 0")
 	private boolean iscertify; // 회원 인증 여부 
-	
-	@OneToOne(mappedBy="member")
-	private Host host; // 사용자의 주최자 정보 
-	
+//	
+//	@OneToOne(mappedBy="member")
+//	private Host host; // 사용자의 주최자 정보 
+//	
 
 	@Builder
 	public Member(String id, String pw, String name, String phone, Class myclass, boolean iscertify, Host host) {
@@ -66,9 +65,7 @@ public class Member extends BaseTimeEntity
 		this.phone = phone;
 		this.myclass = myclass;
 		this.iscertify = iscertify;
-		this.host = host;
+		//this.host = host;
 	}
-
-
 
 }	

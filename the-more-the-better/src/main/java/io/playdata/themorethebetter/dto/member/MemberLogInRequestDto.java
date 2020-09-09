@@ -17,7 +17,7 @@ public class MemberLogInRequestDto {
 	@Builder
 	public MemberLogInRequestDto(String id, String pw) {
 		super();
-		this.id = id;
+		this.id = id; 
 		this.pw = pw;
 	}
 }
