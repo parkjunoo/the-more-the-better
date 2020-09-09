@@ -17,6 +17,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -52,9 +54,11 @@ public class Store extends BaseTimeEntity
 	@Column(name="ST_PICTURE")
 	private Blob picture; // 가게 사진 
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="store")
 	private List<Waiting> waiting = new ArrayList<Waiting>(); // 진행중인 주문 정보
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="store")
 	private Event event; // 가게의 이벤트 정보 
 

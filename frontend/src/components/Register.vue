@@ -86,13 +86,6 @@
                 mem_name: "",
                 mem_phone: "",
                 class_code: "",
-                logMessage: "",
-                gen: "",
-                status: "",
-                token: "",
-                info: "",
-                detailInfo: "",
-                result: false
             }
         },
 
@@ -112,22 +105,24 @@
                     class_code: this.class_code
 
                 }).then(res => {
+                    
                     if(res.data.status) {
-                        
                         console.log("status : true");
-                        
-                        const {data} = res.data.member;
-                        this.logMessage = `${data.username}님이 가입되었습니다.`;
+                        alert(this.mem_name + "님이 가입되었습니다.");
+                        this.$router.push({ name: 'Home' })
                     }
 
                 }).catch(e => {
 
                     console.log("sign in fail");
-                    // login denied logic - res.data.error_message 
+                    //controller에서 넘어온 에러 문구 출력 
+                    alert(JSON.stringify(e.response.data.message));
 
                 });
             },
             init() {
+                console.log("data initialize");
+
                 this.mem_id = "",
                 this.mem_pw = "",
                 this.mem_name = "",

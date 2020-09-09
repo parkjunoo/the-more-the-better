@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,9 +37,11 @@ public class WaitingMems extends BaseTimeEntity
 	@Column(name="WAIT_MEM_NO")
 	private Long no; // 대기명단 고유번호
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="waitingmems")
 	private Waiting order; // 대기하고 있는 주문 정보 
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="waitingmems", fetch=FetchType.EAGER)
 	private List<Member> members = new ArrayList<Member>(); // 대기하고 있는 멤버 정보 
 

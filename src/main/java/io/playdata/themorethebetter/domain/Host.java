@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.util.Assert;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +31,7 @@ public class Host extends BaseTimeEntity
 	@Column(name="HOST_NO")
 	private Long no; // 호스트 고유번호
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="host")
 	private Waiting order; // 맡은 주문 정보 
 	

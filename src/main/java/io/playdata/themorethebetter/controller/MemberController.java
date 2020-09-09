@@ -1,5 +1,6 @@
 package io.playdata.themorethebetter.controller;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +31,7 @@ public class MemberController {
 	
 	//회원가입
 	@PostMapping("/members/new")
-	public ResponseEntity<Map<String, Object>> createMember(@RequestBody MemberCreateRequestDto dto, HttpServletResponse res) {
+	public ResponseEntity<Map<String, Object>> createMember(@RequestBody MemberCreateRequestDto dto, HttpServletResponse res) throws IOException {
 		Member member = null;
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
@@ -44,8 +45,9 @@ public class MemberController {
 			
 		}catch(RuntimeException e) {
 			log.error("회원가입 실패");
-			resultMap.put("message", e.getMessage());
 			status = HttpStatus.METHOD_NOT_ALLOWED; //405
+			//vue로 에러 메세지 보내기 (e.response.data.message)
+			res.sendError(405, e.getMessage());
 		}
 		log.info("resultMap" + resultMap);
 		log.info("status" + status);

@@ -16,6 +16,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -53,6 +55,7 @@ public class Member extends BaseTimeEntity
 	@Column(name="MEM_ISCERTIFY", columnDefinition="number(1,0) default 0")
 	private boolean iscertify; // 회원 인증 여부 
 	
+	@JsonIgnore
 	@OneToOne(mappedBy="member")
 	private Host host; // 사용자의 주최자 정보 
 	

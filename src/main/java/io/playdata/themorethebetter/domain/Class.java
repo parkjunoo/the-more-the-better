@@ -12,6 +12,8 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,6 +38,7 @@ public class Class extends BaseTimeEntity
 	@Column(name="CLASS_CODE", length=4, nullable=false)
 	private String code; // 수업 코드 
 	
+	@JsonIgnore
 	@OneToMany(mappedBy="myclass")
 	private List<Member> members = new ArrayList<Member>(); // 수강중인 사용자 정보 
 
