@@ -109,7 +109,7 @@
                     if(res.data.status) {
                         console.log("status : true");
                         alert(this.mem_name + "님이 가입되었습니다.");
-                        this.$router.push({ name: 'Home' })
+                        this.$router.push({ name: 'Home' });
                     }
 
                 }).catch(e => {

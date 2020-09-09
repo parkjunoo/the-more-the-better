@@ -55,24 +55,24 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	//로그인 - 미완성 
-	@GetMapping("/member/login")
-	public ResponseEntity<Map<String, Object>> loginMember(@RequestBody MemberLogInRequestDto dto, HttpServletResponse res) {
+	//로그인
+	@PostMapping("/members/login")
+	public ResponseEntity<Map<String, Object>> loginMember(@RequestBody MemberLogInRequestDto dto, HttpServletResponse res) throws IOException {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
 		try {
 			Member member = memberService.logIn(dto);
 			
-			resultMap.put("status", true);
 			resultMap.put("member", member);
+			resultMap.put("status", true);
 			log.info("로그인 성공");
-			status = HttpStatus.ACCEPTED;
+			status = HttpStatus.ACCEPTED; //202
 			
 		}catch(RuntimeException e) {
 			log.error("로그인 실패");
-			resultMap.put("error_message", e.getMessage());
 			status = HttpStatus.METHOD_NOT_ALLOWED; //405
+			res.sendError(405, e.getMessage());
 		}
 		log.info("resultMap" + resultMap);
 		log.info("status" + status);

@@ -2,16 +2,16 @@
     <div class="register">
         <div class="register-triangle"></div>
         <img src="../assets/login.png" width=100%>
-        <h2 style="align-content: center">{{message1}}<br><br></h2>
+        <h2 style="align-content: center">다다익선(多多益善) 회원이신가요?<br><br></h2>
 
-        <form class="register-container">
-            <p>ID : <input type="eid" name="eid" id="eid" v-model="eid" ></p>
-            <p>PW : <input type="password" name="login" id="pass" v-model="pw" > </p>
-            <p><input type="submit" @click="login" value="로그인" id="login"></p>
-<!--            <button id="logout" @click="logout">로그아웃</button>-->
-            <!-- <button id="getInfo" @click="getInfo">상세 정보 확인</button> -->
-            <button v-on:click="register" class = "btn-r">아직 회원이 아니신가요?</button>
-        </form>
+        <!-- 채연아 미안해... 수정했더니 css가 깨졌어.. ㅜ -->
+
+        <p>ID : <input type="eid" name="eid" id="eid" v-model="mem_id" ></p>
+        <p>PW : <input type="password" name="login" id="pass" v-model="mem_pw" > </p>
+            
+        <p><input type="button" @click="login" value="로그인" id="login"></p>
+            
+        <button v-on:click="register" class = "btn-r">아직 회원이 아니신가요?</button>
 
         <br><hr><br>
 
@@ -19,8 +19,9 @@
 </template>
 
 <script>
-    // const axios = require('axios').default;
-
+    
+    import axios from 'axios';
+    const storage = window.sessionStorage; 
     export default {
         name: 'HelloWorld',
         props: {
@@ -28,10 +29,8 @@
         },
         data: function() {
             return {
-                eid : "",
-                pw : "",
-                message1: " 다다익선(多多益善) 회원이신가요? ",
-                message2:"아직 회원이 아니신가요?",
+                mem_id : "",
+                mem_pw : "",
                 status: "",
                 token: "",
                 info: "",
@@ -57,7 +56,43 @@
                 this.$router.push({ name: 'Register' })
 
             },
-            logout(){
+            login() {
+                
+                console.log("vue : start login");
+
+                axios.post("/members/login", {
+
+                    mem_id: this.mem_id,
+                    mem_pw: this.mem_pw
+
+                }).then(res => {
+
+                    if(res.data.status) {
+                        console.log("status : true");
+
+                        storage.setItem("member", res.data.member.no);
+                        this.$router.push({ name: 'Home' });
+                    }
+
+                }).catch(e => {
+
+                    console.log("log in fail");
+                    //controller에서 넘어온 에러 문구 출력 
+                    alert(JSON.stringify(e.response.data.message));
+
+                });
+            },
+            init() {
+                console.log("data initialize");
+
+                this.mem_id = "",
+                this.mem_pw = ""
+            }
+        }, mounted() {
+            this.init();
+        }
+    }
+            //logout(){
                 // storage.setItem("jwt-auth-token", "");
                 // storage.setItem("login_eid", "");
 
@@ -69,8 +104,8 @@
                 //
                 // this.setDetailInfo("로그아웃 성공", "", "");
 
-            },
-            getInfo() {
+            //},
+            //getInfo() {
                 //         axios.post("/api/info", {
                 //                 mem_id : this.mem_id,
                 //                 mem_pw : this.mem_pw
@@ -85,8 +120,8 @@
                 //         }).catch(e => {
                 //             this.setDetailInfo("정보 조회 실패", "", e.response.data.msg);
                 //         });
-                     },
-                     login(){
+                //     },
+                //     login(){
                 //         // storage.setItem("jwt-auth-token", "");
                 //         // storage.setItem("login_eid", "");
                 //
@@ -121,8 +156,8 @@
                 //         }).catch(e => {
                 //             this.setInfo("실패", "", JSON.stringify(e.response || e.message));
                 //         });
-                     },
-                     init(){
+                //     },
+                //     init(){
                 //         // if(storage.getItem("jwt-auth-token")){
                 //         //     this.message = storage.getItem("login_eid") + "로 로그인 되었습니다";
                 //         // }else{
@@ -131,9 +166,9 @@
                 //     }//init()
                 // }, mounted(){
                 //     this.init();
-                 }
-            }
-    }
+                // }
+        //    }
+//    }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

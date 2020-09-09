@@ -85,8 +85,13 @@ public class MemberService {
 	
 	/* 로그인 */
 	public Member logIn(MemberLogInRequestDto dto) throws NotFoundException {
-		Optional<Member> member = memberRepository.findByIdAndPw(dto.getId(), dto.getPw());
-		member.orElseThrow(() -> new NotFoundException());
+		log.info("로그인 시도중...");
+		
+		Optional<Member> member = memberRepository.findByIdAndPw(dto.getMem_id(), dto.getMem_pw());
+		
+		log.info("member : " + member);
+		
+		member.orElseThrow(() -> new NotFoundException("아이디 또는 비밀번호가 틀렸습니다."));
 		
 		return member.get();
 	}

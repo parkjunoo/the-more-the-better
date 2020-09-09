@@ -9,15 +9,18 @@
 </template>
 
 <script>
+    import IndexMenuBar from './IndexMenuBar';
     import IndexSlideBanner from './IndexSlideBanner';
     import IndexRanking from './IndexRanking';
     import IndexWaitingList from './IndexWaitingList.vue';
     import IndexEventList from './IndexEventList';
     import IndexFooter from './IndexFooter';
+    
     export default {
         name: 'Main',
         components:{
 
+            IndexMenuBar,
             IndexSlideBanner,
             IndexRanking,
             IndexWaitingList,

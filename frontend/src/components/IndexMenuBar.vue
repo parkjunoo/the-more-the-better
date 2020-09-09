@@ -13,6 +13,8 @@
                                     v-bind:key="routes.id"
                                     :to="`${routes.page}`">{{routes.text}}
                             </router-link>
+                        
+                            <button class="btn" @click="logout">{{logout_button}}</button>
                         </li>
                         <!--          <li v-for="item in toolbar" :key="item.index"> <a href="#">{{item}}</a></li>-->
                     </nav>
@@ -23,11 +25,17 @@
 </template>
 
 <script>
+
+    import axios from 'axios';
+    const storage = window.sessionStorage; 
+
     export default {
         name: 'IndexMenuBar',
         data() {
             return {
                 sitename: "🔅다다익선",
+                logout_button: "",
+
                 // toolbar: ["둘러보기", "로그인", "회원가입", "고객센터"]
                 toolbar: [
                     {
@@ -36,6 +44,7 @@
                         page: "/Enroll"
                     },
                     {
+                        //로그인을 하면 마이페이지로 바뀌면 좋겟어!
                         id: 1,
                         text: "로그인",
                         page: "/login"
@@ -44,6 +53,26 @@
                     // text:"회원가입",
                     // page : "/Register"}
                 ]
+            }
+        },
+        
+        methods: {
+            logout() {
+                console.log("vue : logout");
+                if(storage.getItem("member")) { //if exist login info 
+                    storage.removeItem("member");
+                    console.log("로그아웃 성공");
+                }
+            },
+            init() {
+                if(storage.getItem("member")) {
+                    console.log("member : " + storage.getItem("member"));
+                    this.logout_button = "로그아웃";
+                }else {
+                    this.logout_button = "";
+                }
+            }, mounted() {
+                this.init();
             }
         }
     }
