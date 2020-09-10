@@ -49,7 +49,9 @@
 
 
 <script>
+
 import axios from 'axios'
+const storage = window.sessionStorage; 
 export default {
   name: 'ServiceEroll',
   data(){
@@ -140,7 +142,13 @@ export default {
                 text: this.text,               //부가설명
                 storeAddress: this.storeAddress,
                 storeImg: this.storeImg
-            }).then(res =>{
+            },
+            {
+                headers: {
+                  "mem_no" : storage.getItem("member")
+                }
+            }
+            ).then(res =>{
                 console.log("성공");
             })//.catch(e => {
             //     alert("실패");
