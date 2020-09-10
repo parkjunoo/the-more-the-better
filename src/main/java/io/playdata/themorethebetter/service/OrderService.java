@@ -62,7 +62,7 @@ public class OrderService {
 		
 		log.info("주문자 호스트 권한 보유 및 대기자 저장");
 		member.createHost();
-		member.startwaiting(waiting);
+		member.startWaiting(waiting);
 	}
 	
 	/* 대기인원 순으로 주문 전체보기 */
@@ -71,6 +71,28 @@ public class OrderService {
 		return waitingRepository.findAllDesc()
 				.map(OrderSearchResponseDto::new)
 				.collect(Collectors.toList());
+	}
+	
+	/* 멤버 고유번호로 주문 검색 */
+	@Transactional(readOnly=true)
+	public Waiting findOrderByMem(long mem_no) throws NotFoundException {
+		log.info("멤버 번호로 주문 검색 중...");
+		Member member = memberRepository.findByNo(mem_no)
+				.orElseThrow(() -> new NotFoundException("멤버 정보가 올바르지 않습니다."));
+		
+		return member.searchWaiting();
+		/* 
+		 * return member.getMywait(); 를 쓰지 않은이유 
+		 * null일 수도 있는 값을 getter로 찾아오는 방법은 객체지향적이지 않다..? 
+		 * 참고 : https://tech.wheejuni.com/2017/12/03/why-no-optional-for-getters/
+		 */
+	}
+	
+	/* 주문통해서 상점 검색 */
+	@Transactional(readOnly=true)
+	public Store findStoreByOrder(Waiting order) {
+		log.info("주문통해서 상점 검색중...");
+		return order.getStore();
 	}
 	
 	/* 주문 멤버 삭제 - 호스트가 아닌 경우만 가능 */
@@ -85,7 +107,7 @@ public class OrderService {
 		if(member.getMywait() != order && member.isIshost()) {
 			throw new ForbiddenException("주문정보가 일치하지 않습니다.");
 		}
-		member.cancelwaiting();
+		member.cancelWaiting();
 	}
 	
 	/* 주문 삭제 - 호스트만 가능 */
@@ -103,7 +125,7 @@ public class OrderService {
 		if(member.getMywait() != order && !member.isIshost() && order.getStandby() != 1) {
 			throw new ForbiddenException("주문취소가 불가능합니다.");
 		}
-		member.cancelwaiting();
+		member.cancelWaiting();
 		member.deleteHost();
 	}
 }

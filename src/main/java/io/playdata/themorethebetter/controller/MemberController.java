@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.playdata.themorethebetter.domain.Member;
+import io.playdata.themorethebetter.domain.Store;
+import io.playdata.themorethebetter.domain.Waiting;
 import io.playdata.themorethebetter.dto.member.MemberCreateRequestDto;
 import io.playdata.themorethebetter.dto.member.MemberLogInRequestDto;
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
 import io.playdata.themorethebetter.service.MemberService;
+import io.playdata.themorethebetter.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -29,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 	
 	private MemberService memberService;
+	private OrderService orderService;
 	
 	//회원가입
 	@PostMapping("/members/new")
@@ -81,23 +85,23 @@ public class MemberController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	//멤버 정보 가져오기 
+	//멤버 정보 가져오기  
 	@GetMapping("members/info/{no}")
-	public ResponseEntity<Map<String, Object>> getMemberInfo(@PathVariable Long no) throws IOException {
+	public ResponseEntity<Map<String, Object>> getMemberInfo(@PathVariable Long no, HttpServletResponse res) throws IOException {
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
 		try {
 			Member member = memberService.getInfo(no);
-			
 			resultMap.put("member", member);
 			resultMap.put("status", true);
 			log.info("회원 검색 성공");
 			status = HttpStatus.OK; //200
 			
 		}catch(RuntimeException e) {
-			log.error("회원 검색 실패");
+			log.info("회원 검색 실패");
 			status = HttpStatus.METHOD_NOT_ALLOWED; //405
+			res.sendError(405, e.getMessage());
 		}
 		log.info("resultMap" + resultMap);
 		log.info("status" + status);

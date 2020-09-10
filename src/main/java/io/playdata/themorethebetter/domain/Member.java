@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import io.playdata.themorethebetter.exception.ForbiddenException;
+import io.playdata.themorethebetter.exception.NotFoundException;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -79,7 +80,7 @@ public class Member extends BaseTimeEntity
 	}
 	
 	//주문 대기 참여 
-	public void startwaiting(Waiting wait) throws ForbiddenException {
+	public void startWaiting(Waiting wait) throws ForbiddenException {
 		if(this.mywait != null) {
 			throw new ForbiddenException("이미 참여중인 주문이 존재합니다.");
 		}
@@ -87,10 +88,18 @@ public class Member extends BaseTimeEntity
 	}
 	
 	//대기중인 주문 취소 
-		public void cancelwaiting() throws ForbiddenException {
-			if(this.mywait == null) {
-				throw new ForbiddenException("참여중인 주문이 존재하지 않습니다.");
-			}
-			this.mywait = null;
+	public void cancelWaiting() throws ForbiddenException {
+		if(this.mywait == null) {
+			throw new ForbiddenException("참여중인 주문이 존재하지 않습니다.");
 		}
+		this.mywait = null;
+	}
+	
+	//참여중인 주문 검색 
+	public Waiting searchWaiting() throws NotFoundException {
+		if(this.mywait == null) {
+			throw new NotFoundException("참여중인 주문이 존재하지 않습니다.");
+		}
+		return this.mywait;
+	}
 }	

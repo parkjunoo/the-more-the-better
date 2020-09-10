@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -36,6 +38,7 @@ public class Store extends BaseTimeEntity
 	@Column(name="ST_PICTURE")
 	private String picture; // 가게 사진  
 
+	@JsonIgnore
 	@OneToMany(mappedBy="store")
 	private List<Waiting> waiting = new ArrayList<Waiting>(); // 진행중인 주문 정보
 

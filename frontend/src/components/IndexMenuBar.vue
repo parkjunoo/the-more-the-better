@@ -46,6 +46,11 @@
                         text: "로그인",
                         page: "/login"
                     },
+                    {
+                        id: 2,
+                        text: "마이페이지",
+                        page: "/mypage"
+                    },
                     // {id:2,
                     // text:"회원가입",
                     // page : "/Register"}
