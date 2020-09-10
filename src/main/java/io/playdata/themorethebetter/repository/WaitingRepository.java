@@ -18,13 +18,6 @@ public interface WaitingRepository extends JpaRepository<Waiting, Long> {
             "ORDER BY w.standby DESC")
 	public Stream<Waiting> findAllDesc();
 	
-	// 이름으로 주문이 진행중인 가게 찾기 (문자열 포함하는 모든가게 검색)
-	@Query("SELECT w " +
-			"FROM Waiting w " +
-			"INNER JOIN w.store s " +
-			"WHERE s.name LIKE %:name%")
-	public Stream<Waiting> findByNameContaining(String name);
-	
 	// 고유번호로 주문 삭제 
 	public void deleteByNo(Long no);	
 }

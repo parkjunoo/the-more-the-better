@@ -1,24 +1,17 @@
 package io.playdata.themorethebetter.service;
 
-import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.domain.Class;
+import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.dto.member.MemberCreateRequestDto;
 import io.playdata.themorethebetter.dto.member.MemberLogInRequestDto;
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
-import io.playdata.themorethebetter.exception.SameMemberException;
 import io.playdata.themorethebetter.repository.ClassRepository;
-import io.playdata.themorethebetter.repository.HostRepository;
 import io.playdata.themorethebetter.repository.MemberRepository;
-import io.playdata.themorethebetter.repository.StoreRepository;
-import io.playdata.themorethebetter.repository.WaitingMemsRepository;
-import io.playdata.themorethebetter.repository.WaitingRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

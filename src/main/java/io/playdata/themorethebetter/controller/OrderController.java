@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.dto.order.OrderCreateRequestDto;
 import io.playdata.themorethebetter.service.OrderService;
 import lombok.AllArgsConstructor;
@@ -37,20 +36,18 @@ public class OrderController {
 	
 	// 주문 생성 
 	@PostMapping("/order")
-	public ResponseEntity<Map<String, Object>> makeOrder(@RequestBody OrderCreateRequestDto dto, HttpServletRequest req) {
-		
+	public ResponseEntity<Map<String, Object>> makeOrder(@RequestBody OrderCreateRequestDto dto, HttpServletRequest req) { 
 		log.info("주문 생성 시작");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
-		
 		try {
-			Long memberNo = (long) Integer.parseInt(req.getHeader("member-no"));
-			orderService.makeOrder(dto, memberNo);
+			System.out.println(dto.toString());
+			orderService.makeOrder(dto);
 			status = HttpStatus.ACCEPTED;
 			log.info("주문 생성 완료 - 200");
 		
 		}catch (RuntimeException e) {
-			status = HttpStatus.METHOD_NOT_ALLOWED;
+			status = HttpStatus.METHOD_NOT_ALLOWED; 
 			resultMap.put("message", e.getMessage());
 			log.error("주문 생성 실패 - 405");
 		}
