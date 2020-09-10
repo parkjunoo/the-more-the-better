@@ -40,17 +40,21 @@ public class OrderController {
 		log.info("주문 생성 시작");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
+		
 		try {
 			System.out.println(dto.toString());
-			orderService.makeOrder(dto);
+			//주문 생성할때 멤버 정보 받아와야 하지 않을까...?
+			Long mem_no = Long.parseLong(req.getHeader("mem_no"));
+			orderService.makeOrder(dto, mem_no);
 			status = HttpStatus.ACCEPTED;
 			log.info("주문 생성 완료 - 200");
 		
 		}catch (RuntimeException e) {
 			status = HttpStatus.METHOD_NOT_ALLOWED; 
 			resultMap.put("message", e.getMessage());
-			log.error("주문 생성 실패 - 405");
+			log.error("주문 생성 실패 - 405", e.getMessage());
 		}
+		log.info("resultMap : " + resultMap);
 		return new ResponseEntity<Map<String,Object>>(resultMap, status);
 	}
 

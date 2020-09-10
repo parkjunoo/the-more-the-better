@@ -26,8 +26,8 @@ public class OrderCreateRequestDto {
 	private String deliPlace; //배달수령장소 
 	private int minCost; //최소주문가격 
 	private String text; //부가설명 
-	private String storeAddress;
-	private String storeImg;
+	private String storeAddress; //가게주소 
+	private String storeImg; //가게사진 
 		
 	@Builder
 	public OrderCreateRequestDto(String storeName, int people, String time, String deliPlace, int minCost, String text, String storeAddress, String storeImg) {

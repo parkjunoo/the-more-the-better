@@ -1,11 +1,15 @@
 package io.playdata.themorethebetter.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -32,12 +36,16 @@ public class Store extends BaseTimeEntity
 	@Column(name="ST_PICTURE")
 	private String picture; // 가게 사진  
 
+	@OneToMany(mappedBy="store")
+	private List<Waiting> waiting = new ArrayList<Waiting>(); // 진행중인 주문 정보
 
 	@Builder
-	public Store(String name, String address, String picture) {
+	public Store(String name, String address, String picture, List<Waiting> waiting) {
+		super();
 		this.name = name;
 		this.address = address;
 		this.picture = picture;
+		this.waiting = waiting;
 	}
-	
+
 }	

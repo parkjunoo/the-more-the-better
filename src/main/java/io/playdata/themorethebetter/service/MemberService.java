@@ -88,4 +88,17 @@ public class MemberService {
 		
 		return member.get();
 	}
+	
+	/* 회원 찾기 */
+	public Member getInfo(Long mem_no) throws NotFoundException {
+		log.info("멤버 정보 찾기 시도중...");
+	
+		Optional<Member> member = memberRepository.findByNo(mem_no);
+
+		log.info("member : " + member);
+
+		member.orElseThrow(() -> new NotFoundException("회원 정보를 불러오는데 실패하였습니다."));
+		
+		return member.get();
+	}
 }

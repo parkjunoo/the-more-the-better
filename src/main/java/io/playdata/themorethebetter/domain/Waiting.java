@@ -1,6 +1,7 @@
 package io.playdata.themorethebetter.domain;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +9,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import org.hibernate.annotations.ColumnDefault;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -28,12 +32,12 @@ public class Waiting extends BaseTimeEntity
 	private Long no; // 주문 고유 번호 
 	
 	@OneToOne
-	@JoinColumn(name="ST_NAME")
+	@JoinColumn(name="ST_NO")
 	private Store store; // 주문하려는 가게 정보 
 	
-//	@OneToOne(optional=false)
-//	@JoinColumn(name="HOST_NO")
-//	private Host host; // 주문하려는 호스트 정보
+	@OneToOne(optional=false)
+	@JoinColumn(name="MEM_NO")
+	private Member host; // 주문하려는 호스트 정보
 	
 	@ColumnDefault("1")
 	@Column(name="WAIT_STANDBY")
@@ -55,12 +59,15 @@ public class Waiting extends BaseTimeEntity
 	@Column(name="WAIT_TEXT")
 	private String text; //부가 설명 
 	
-	private ArrayList<Member> waitingmems; // 대기명단 정보 
+	@JsonIgnore
+	@OneToMany(mappedBy="mywait")
+	private List<Member> waitingmems = new ArrayList<Member>(); // 대기명단 정보 
 
 	@Builder
-	public Waiting(Store store, Host host, int standby, int minperson, String meetplace, String closetime, int mincost, String text) {
+	public Waiting(Store store, Member host, int standby, int minperson, String meetplace, String closetime,
+			int mincost, String text) {
 		this.store = store;
-//		this.host = host;
+		this.host = host;
 		this.standby = standby;
 		this.minperson = minperson;
 		this.meetplace = meetplace;
@@ -68,6 +75,7 @@ public class Waiting extends BaseTimeEntity
 		this.mincost = mincost;
 		this.text = text;
 	}
+	
 	
 	//Default값 설정 
 	@PrePersist
@@ -88,5 +96,6 @@ public class Waiting extends BaseTimeEntity
 		}
 		this.standby--;
 	}
+
 	
 }	
