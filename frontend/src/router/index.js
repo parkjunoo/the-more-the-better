@@ -6,7 +6,7 @@ import Board from "@/components/IndexWaitingList.vue";
 import Enroll from "@/views/Enroll.vue";
 import Register from "@/components/Register";
 import BoardRegister from "@/components/BoardRegister"
-
+import MyPage from "@/components/MyPage";
 
 Vue.use(VueRouter)
 const routes = [
@@ -34,6 +34,11 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/mypage',
+        name: 'MyPage',
+        component: MyPage
     }
 ]
 

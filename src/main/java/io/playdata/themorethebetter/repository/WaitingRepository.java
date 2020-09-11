@@ -1,5 +1,6 @@
 package io.playdata.themorethebetter.repository;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -13,18 +14,13 @@ public interface WaitingRepository extends JpaRepository<Waiting, Long> {
 	public Optional<Waiting> findByNo(Long order_no); 
 	
 	// 대기인원이 많이 찬 주문 우선으로 모든 주문 검색 
-	@Query("SELECT w " +
-            "FROM Waiting w " +
-            "ORDER BY w.standby DESC")
-	public Stream<Waiting> findAllDesc();
+	@Query(value="SELECT w.no, s.picture, s.name, w.closetime, w.standby FROM Waiting w INNER JOIN w.store s ON w.store = s.no ORDER BY w.standby")
+	public ArrayList<String> findAllStandby();
 	
 	// 이름으로 주문이 진행중인 가게 찾기 (문자열 포함하는 모든가게 검색)
-//	@Query("SELECT w " +
-//			"FROM Waiting w " +
-//			"INNER JOIN w.store s " +
-//			"WHERE s.name LIKE %:name%")
-//	public Stream<Waiting> findByNameContaining(String name);
-//	
+	@Query(value="SELECT s.name FROM Waiting w INNER JOIN w.store s ON w.store = s.no AND s.name LIKE %:name%")
+	public ArrayList<String> findByNameContaining(String name);
+
 	// 고유번호로 주문 삭제 
 	public void deleteByNo(Long no);	
 }

@@ -6,86 +6,47 @@
             <div class="card card-2">
                 <div class="card-heading"></div>
                 <div class="card-body">
-                    <h2 class="title" align="center">{{message2}}</h2>
-                    <form action="/members/new" method="POST">
+                    <h2 class="title" align="center">다다익선 간편 회원가입</h2>
+
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="아이디" name="mem_id" id="eid"
                                    v-model="mem_id">
                         </div>
+                        
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="이름" name="mem_name" id="name"
                                    v-model="mem_name">
                         </div>
+                        
                         <div class="input-group">
                             <input class="input--style-2" type="password" placeholder="비밀번호" name="mem_pw" id="pass"
                                    v-model="mem_pw">
                         </div>
+                        
                         <div class="input-group">
-                            <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check">
+                            <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check"
+                                    v-model="mem_pw_check">
                         </div>
-
-<!--                        <div class="password">-->
-<!--                            <input :class='{valid:passwordValidation.valid}'-->
-<!--                                   :type="passwordVisible ? 'text' : 'password'" v-model="password">-->
-<!--                            <button class="visibility" tabindex='-1' @click='togglePasswordVisibility'-->
-<!--                                    :arial-label='passwordVisible ? "Hide password" : "Show password"'>-->
-<!--                                <i class="material-icons">{{ passwordVisible ? "visibility" : "visibility_off" }}</i>-->
-<!--                            </button>-->
-<!--                        </div>-->
-
-<!--                        <input type="password" v-model.lazy='checkPassword'>-->
-
-<!--                        <transition mem_name="hint" appear>-->
-<!--                            <div v-if='passwordValidation.errors.length > 0 && !submitted' class='hints'>-->
-<!--                                <h2>Hints</h2>-->
-<!--                                <p v-for='error in passwordValidation.errors'>{{error}}</p>-->
-<!--                            </div>-->
-<!--                        </transition>-->
-
-<!--                        <div class="matches" v-if='notSamePasswords'>-->
-<!--                            <p>Passwords don't match.</p>-->
-<!--                        </div>-->
-
-<!--                        <button @click='resetPasswords'-->
-<!--                                v-if='passwordsFilled && !notSamePasswords && passwordValidation.valid'>-->
-<!--                            Submit-->
-<!--                        </button>-->
-
-<!--                </div>-->
-
 
                 <div class="input-group">
                     <input class="input--style-2" type="text" placeholder="휴대폰 번호 입력" name="phone_number"
                            id="phone" v-model="mem_phone">
                 </div>
-                <div class="row row-space ">
-                    <div class="col-2 ">
-                        <div class="input-group ">
-                            <div class="rs-select2 js-select-simple select--no-search ">
-                                <select name="gender">
-                                    <!-- <select mem_name="gender" id="gen" v-model="gen">-->
-                                    <option disabled="disabled" selected="selected">성별</option>
-                                    <option>남자</option>
-                                    <option>여자</option>
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <div class="input-group">
                     <div class="rs-select2 js-select-simple select--no-search">
-                        <select name="mem_class">
+                        <select name="mem_class" v-model="class_code">
                             <!-- <select mem_name="mem_class" id="class" v-model="">-->
                             <option disabled="disabled" selected="selected ">수강중인 수업 선택</option>
-                            <option>인공지능 P반</option>
-                            <option>인공지능 A반</option>
-                            <option>데이터과학 영등포</option>
-                            <option>데이터과학 서초</option>
+                            <option value="IP">인공지능 P반</option>
+                            <option value="IA">인공지능 A반</option>
+                            <option value="DSY">데이터과학 영등포</option>
+                            <option value="DSS">데이터과학 서초</option>
                         </select>
                         <div class="select-dropdown "></div>
                     </div>
                 </div>
+
                 <div class="row row-space">
                     <div class="col-2 ">
                         <div class="input-group ">
@@ -94,12 +55,12 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="p-t-30 ">
-                    <button class="btn btn--radius btn--green" type="submit" id="btn_memberJoin"
+                    <button class="btn btn--radius btn--green" id="btn_memberJoin"
                             @click="submitForm">회원가입
                     </button>
                 </div>
-                </form>
             </div>
         </div>
     </div>
@@ -109,8 +70,9 @@
 </template>
 
 <script>
-    // const axios = require('axios').default;
-
+    
+    import axios from 'axios';
+    const storage = window.sessionStorage;
     export default {
         name: 'HelloWorld',
         props: {
@@ -120,62 +82,60 @@
             return {
                 mem_id: "",
                 mem_pw: "",
+                mem_pw_check: "",
                 mem_name: "",
                 mem_phone: "",
-                class_no: "",
-                gen: "",
-                message1: "배달료 아끼고 행복을 더하세요 :)",
-                message2: "다다익선 간편 회원가입",
-                status: "",
-                token: "",
-                info: "",
-                detailInfo: "",
-                result: false
+                class_code: "",
             }
         },
-
         //post axios
         methods: {
-            async submitForm() { // 비동기 객체가 오기때문에 비동기 처리
-                console.log('submit');
-                const userData = {
-                    id: this.mem_id,
-                    pw: this.mem_pw,
-                    name: this.mem_name,
-                    phone: this.mem_phone,
-                    lec: this.class_no //class_code 
-
-                };
-
-                async function registerUser(userData) {
+            submitForm() {
+                
+                console.log("vue : start submitForm");
+                
+                axios.post("/members/new", {
+                    //pw check -> server
+                    mem_id: this.mem_id,
+                    mem_pw: this.mem_pw,
+                    mem_pw_check: this.mem_pw_check,
+                    mem_name: this.mem_name,
+                    mem_phone: this.mem_phone,
+                    class_code: this.class_code
+                }).then(res => {
                     
-                }
-
-                const {data} = await registerUser(userData); // Destructuring
-                this.logMessage = `${data.username}님이 가입되었습니다.`;
-                //template literal(백틱문법) 자바스크립변수를 문자열과 합침
-                this.initForm();
+                    if(res.data.status) {
+                        console.log("status : true");
+                        alert(this.mem_name + "님이 가입되었습니다.");
+                        this.$router.push({ name: 'Home' });
+                    }
+                }).catch(e => {
+                    console.log("sign in fail");
+                    //controller에서 넘어온 에러 문구 출력 
+                    alert(JSON.stringify(e.response.data.message));
+                });
             },
-            initForm() {
-                this.mem_id = '',
-                    this.mem_pw = '',
-                    this.mem_name = '',
-                    this.mem_phone = '',
-                    this.class_no = ''
+            init() {
+                console.log("data initialize");
+                this.mem_id = "",
+                this.mem_pw = "",
+                this.mem_name = "",
+                this.mem_phone = "",
+                this.class_no = ""
             }
-        }
+    }, mounted() {
+        this.init();
     }
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
     @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
-
     .font-robo {
         font-family: 'Do Hyeon', sans-serif;
     }
-
     .row {
         display: -webkit-box;
         display: -webkit-flex;
@@ -186,7 +146,6 @@
         -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     }
-
     .row-space {
         -webkit-box-pack: justify;
         -webkit-justify-content: space-between;
@@ -194,41 +153,32 @@
         -ms-flex-pack: justify;
         justify-content: space-between;
     }
-
     .col-2 {
         width: -webkit-calc((100% - 60px) / 2);
         width: -moz-calc((100% - 60px) / 2);
         width: calc((100% - 60px) / 2);
     }
-
     @media (max-width: 767px) {
         .col-2 {
             width: 100%;
         }
     }
-
-
     /* ==========================================================================
        #BOX-SIZING
        ========================================================================== */
-
-
     /**
      * More sensible default box-sizing:
      * css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
      */
-
     html {
         -webkit-box-sizing: border-box;
         -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
-
     * {
         padding: 0;
         margin: 0;
     }
-
     *,
     *:before,
     *:after {
@@ -236,17 +186,12 @@
         -moz-box-sizing: inherit;
         box-sizing: inherit;
     }
-
-
     /* ==========================================================================
        #RESET
        ========================================================================== */
-
-
     /**
      * A very simple reset that sits on top of Normalize.css.
      */
-
     body,
     h1,
     h2,
@@ -268,60 +213,45 @@
         margin: 0;
         padding: 0;
     }
-
-
     /**
      * Remove trailing margins from nested lists.
      */
-
     li > ol,
     li > ul {
         margin-bottom: 0;
     }
-
-
     /**
      * Remove default table spacing.
      */
-
     table {
         border-collapse: collapse;
         border-spacing: 0;
     }
-
-
     /**
      * 1. Reset Chrome and Firefox behaviour which sets a `min-width: min-content;`
      *    on fieldsets.
      */
-
     fieldset {
         min-width: 0;
         /* [1] */
         border: 0;
     }
-
     button {
         outline: none;
         background: none;
         border: none;
     }
-
-
     /* ==========================================================================
        #PAGE WRAPPER
        ========================================================================== */
-
     .page-wrapper {
         min-height: 100vh;
     }
-
     body {
         font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
         font-weight: 400;
         font-size: 14px;
     }
-
     h1,
     h2,
     h3,
@@ -330,91 +260,66 @@
     h6 {
         font-weight: 400;
     }
-
     h1 {
         font-size: 36px;
     }
-
     h2 {
         font-size: 30px;
     }
-
     h3 {
         font-size: 24px;
     }
-
     h4 {
         font-size: 18px;
     }
-
     h5 {
         font-size: 15px;
     }
-
     h6 {
         font-size: 13px;
     }
-
-
     /* ==========================================================================
        #BACKGROUND
        ========================================================================== */
-
     .bg-blue {
         background: #d59763;
     }
-
     .bg-red {
         background: #fadd91;
     }
-
-
     /* ==========================================================================
        #SPACING
        ========================================================================== */
-
     .p-t-100 {
         padding-top: 100px;
     }
-
     .p-t-180 {
         padding-top: 180px;
     }
-
     .p-t-20 {
         padding-top: 20px;
     }
-
     .p-t-30 {
         padding-top: 30px;
     }
-
     .p-b-100 {
         padding-bottom: 100px;
     }
-
-
     /* ==========================================================================
        #WRAPPER
        ========================================================================== */
-
     .wrapper {
         margin: 0 auto;
     }
-
     .wrapper--w960 {
         max-width: 960px;
     }
-
     .wrapper--w680 {
         max-width: 680px;
     }
-
-
     /* ==========================================================================
        #BUTTON
        ========================================================================== */
-
     .btn {
         line-height: 40px;
         display: inline-block;
@@ -429,46 +334,36 @@
         font-size: 14px;
         font-weight: 700;
     }
-
     .btn--radius {
         -webkit-border-radius: 3px;
         -moz-border-radius: 3px;
         border-radius: 3px;
     }
-
     .btn--green {
         background: #57b846;
     }
-
     .btn--green:hover {
         background: #4dae3c;
     }
-
-
     /* ==========================================================================
        #DATE PICKER
        ========================================================================== */
-
     td.active {
         background-color: #2c6ed5;
     }
-
     input[type="date" i] {
         padding: 14px;
     }
-
     .table-condensed td,
     .table-condensed th {
         font-size: 14px;
         font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
         font-weight: 400;
     }
-
     .daterangepicker td {
         width: 40px;
         height: 30px;
     }
-
     .daterangepicker {
         border: none;
         -webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
@@ -478,16 +373,13 @@
         border: 1px solid #e0e0e0;
         margin-top: 5px;
     }
-
     .daterangepicker::after,
     .daterangepicker::before {
         display: none;
     }
-
     .daterangepicker thead tr th {
         padding: 10px 0;
     }
-
     .daterangepicker .table-condensed th select {
         border: 1px solid #ccc;
         -webkit-border-radius: 3px;
@@ -497,12 +389,9 @@
         padding: 5px;
         outline: none;
     }
-
-
     /* ==========================================================================
        #FORM
        ========================================================================== */
-
     input {
         outline: none;
         margin: 0;
@@ -514,19 +403,13 @@
         font-size: 14px;
         font-family: inherit;
     }
-
-
     /* input group 1 */
-
-
     /* end input group 1 */
-
     .input-group {
         position: relative;
         margin-bottom: 32px;
         border-bottom: 1px solid #e5e5e5;
     }
-
     .input-icon {
         position: absolute;
         font-size: 18px;
@@ -540,61 +423,49 @@
         transform: translateY(-50%);
         cursor: pointer;
     }
-
     .input--style-2 {
         padding: 9px 0;
         color: #666;
         font-size: 16px;
         font-weight: 500;
     }
-
     .input--style-2::-webkit-input-placeholder {
         /* WebKit, Blink, Edge */
         color: #808080;
     }
-
     .input--style-2:-moz-placeholder {
         /* Mozilla Firefox 4 to 18 */
         color: #808080;
         opacity: 1;
     }
-
     .input--style-2::-moz-placeholder {
         /* Mozilla Firefox 19+ */
         color: #808080;
         opacity: 1;
     }
-
     .input--style-2:-ms-input-placeholder {
         /* Internet Explorer 10-11 */
         color: #808080;
     }
-
     .input--style-2:-ms-input-placeholder {
         /* Microsoft Edge */
         color: #808080;
     }
-
-
     /* ==========================================================================
        #SELECT2
        ========================================================================== */
-
     .select--no-search .select2-search {
         display: none !important;
     }
-
     .rs-select2 .select2-container {
         width: 100% !important;
         outline: none;
     }
-
     .rs-select2 .select2-container .select2-selection--single {
         outline: none;
         border: none;
         height: 36px;
     }
-
     .rs-select2 .select2-container .select2-selection--single .select2-selection__rendered {
         line-height: 36px;
         padding-left: 0;
@@ -603,7 +474,6 @@
         font-family: inherit;
         font-weight: 500;
     }
-
     .rs-select2 .select2-container .select2-selection--single .select2-selection__arrow {
         height: 34px;
         right: 4px;
@@ -623,11 +493,9 @@
         -ms-flex-align: center;
         align-items: center;
     }
-
     .rs-select2 .select2-container .select2-selection--single .select2-selection__arrow b {
         display: none;
     }
-
     .rs-select2 .select2-container .select2-selection--single .select2-selection__arrow:after {
         font-family: "Material-Design-Iconic-Font";
         content: '\f2f9';
@@ -638,7 +506,6 @@
         -moz-transition: all 0.4s ease;
         transition: all 0.4s ease;
     }
-
     .rs-select2 .select2-container.select2-container--open .select2-selection--single .select2-selection__arrow::after {
         -webkit-transform: rotate(-180deg);
         -moz-transform: rotate(-180deg);
@@ -646,7 +513,6 @@
         -o-transform: rotate(-180deg);
         transform: rotate(-180deg);
     }
-
     .select2-container--open .select2-dropdown--below {
         border: none;
         -webkit-border-radius: 3px;
@@ -659,23 +525,17 @@
         margin-top: 5px;
         overflow: hidden;
     }
-
-
     /* ==========================================================================
        #TITLE
        ========================================================================== */
-
     .title {
         text-transform: uppercase;
         font-weight: 700;
         margin-bottom: 37px;
     }
-
-
     /* ==========================================================================
        #CARD
        ========================================================================== */
-
     .card {
         overflow: hidden;
         -webkit-border-radius: 3px;
@@ -683,7 +543,6 @@
         border-radius: 3px;
         background: #fff;
     }
-
     .card-2 {
         -webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
         -moz-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
@@ -694,31 +553,26 @@
         width: 100%;
         display: table;
     }
-
     .card-2 .card-heading {
         background: url("../assets/sun.png") top left/cover no-repeat;
         width: 29.1%;
         display: table-cell;
     }
-
     .card-2 .card-body {
         display: table-cell;
         padding: 80px 90px;
         padding-bottom: 88px;
     }
-
     @media (max-width: 767px) {
         .card-2 {
             display: block;
         }
-
         .card-2 .card-heading {
             width: 100%;
             display: block;
             padding-top: 300px;
             background-position: left center;
         }
-
         .card-2 .card-body {
             display: block;
             padding: 60px 50px;

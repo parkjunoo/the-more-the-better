@@ -8,16 +8,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+
 @Setter
 @Getter
 public class MemberLogInRequestDto {
-	private String id;
-	private String pw;
+	private String mem_id;
+	private String mem_pw;
 	
 	@Builder
-	public MemberLogInRequestDto(String id, String pw) {
+	public MemberLogInRequestDto(String mem_id, String mem_pw) {
 		super();
-		this.id = id; 
-		this.pw = pw;
+		this.mem_id = mem_id;
+		this.mem_pw = mem_pw;
 	}
+	
 }

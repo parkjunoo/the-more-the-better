@@ -4,9 +4,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import io.playdata.themorethebetter.domain.Member;
-import io.playdata.themorethebetter.domain.Store;
 import io.playdata.themorethebetter.domain.Class;
+import io.playdata.themorethebetter.domain.Store;
+import io.playdata.themorethebetter.domain.Waiting;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -28,9 +28,7 @@ public class LoadDatabase
 //			log.info("Preloading" + memberRepository.save(Member.builder().id("bb").pw("bb").name("bb").phone("01022222222").myclass(classRepository.findByCode("IP").get()).build()));
 //			log.info("Preloading" + memberRepository.save(Member.builder().id("cc").pw("cc").name("cc").phone("01033333333").myclass(classRepository.findByCode("IA").get()).build()));
 //			log.info("Preloading" + memberRepository.save(Member.builder().id("dd").pw("dd").name("dd").phone("01044444444").myclass(classRepository.findByCode("IA").get()).build()));
-			/* Store 생성 */
-			
-			
+			/* Store 생성 */			
 			
 		};
 	}

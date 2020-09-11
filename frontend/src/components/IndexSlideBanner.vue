@@ -1,9 +1,21 @@
 <template>
     <div class="section">
         <section class="webdesigntuts-workshop">
-            <form action="" method="">          
-                <input type="search" placeholder="배달하고 싶으신 지점을 찾아주세요!">             
+            <form action="" method="" @keyup="event">          
+                <input v-model="search" type="search" placeholder="배달하고 싶으신 지점을 찾아주세요!">             
                 <button>Search</button>
+                <table>
+                  <tr>
+                    <td><td/>
+                  </tr>
+                  <tr>
+                    <td><td/>
+                  </tr>
+                  <tr>
+                    <td><td/>
+                  </tr>
+
+                </table>
             </form>
         </section>
             <div id="demo" class="carousel slide" data-ride="carousel">
@@ -62,7 +74,32 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
+  
+  data(){
+    return {
+      search : "",
+      result : [
+
+      ]
+    }
+  },
+  watch: {
+    search:function(){
+      console.log("입력 : " + this.search);
+      axios.get('/order/search/' + this.search, {
+          search: this.search
+        }).then(res =>{
+            console.log(res.data);
+        })
+    }
+  },
+  methods:{
+    event:function(){
+      console.log("!!!");
+    }
+  }
 }
 </script>
 
@@ -79,6 +116,11 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 
+tr,td{
+  width: 700px; height: 40px;
+  z-index: 2;
+  border-bottom: 1px solid #444444;
+}
 body{
 background-color:#f2f2f2;
 }
@@ -581,7 +623,7 @@ h2 {
    margin: 0;
    padding: 0 10px;
    text-shadow: 0 -1px 0 #000;
-   width: 1000px;
+   width: 700px;
 }
 
 .ie .webdesigntuts-workshop input {
@@ -600,9 +642,7 @@ h2 {
    animation: glow 800ms ease-out infinite alternate;
    background: rgb(229, 232, 241);
    background: linear-gradient(rgb(229, 232, 241),rgb(229, 232, 241));
-   border-color: #393;
-   box-shadow: 0 0 5px rgba(0,255,0,.2), inset 0 0 5px rgba(0,255,0,.1), 0 2px 0 #000;
-   color: #efe;
+   color: rgb(95, 91, 91);
    outline: none;
 }
 

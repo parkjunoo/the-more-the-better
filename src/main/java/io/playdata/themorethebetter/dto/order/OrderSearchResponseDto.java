@@ -1,25 +1,18 @@
 package io.playdata.themorethebetter.dto.order;
 
-import java.util.ArrayList;
-
-import io.playdata.themorethebetter.domain.Host;
-import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.domain.Store;
-import io.playdata.themorethebetter.domain.Waiting;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
+@Setter
 @Getter
+@Builder
 public class OrderSearchResponseDto {
-	private Store store;
-	private Host host;
-	private int minlimit;
-	private ArrayList<Member> waitingmems;
+	private int waitingNum;
+	private String storeName;
+	private String closeTime;
+	private String storeImg;
+	private int waitingmems;
 	
-	public OrderSearchResponseDto(Waiting entity) {
-//		store = entity.getStore();
-//		host = entity.getHost();
-		minlimit = entity.getMinperson();
-		waitingmems = entity.getWaitingmems();
-	}
-
 }
