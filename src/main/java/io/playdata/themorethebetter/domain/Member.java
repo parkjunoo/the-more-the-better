@@ -16,6 +16,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.transaction.annotation.Transactional;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,6 +30,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
+@ApiModel
 public class Member extends BaseTimeEntity
 {
 	@Id @GeneratedValue

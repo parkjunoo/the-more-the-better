@@ -12,6 +12,7 @@ import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
 import io.playdata.themorethebetter.repository.ClassRepository;
 import io.playdata.themorethebetter.repository.MemberRepository;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
