@@ -42,6 +42,7 @@ public class OrderController {
 	/* 멤버 고유 번호로 주문 찾기 */
 	@GetMapping("/order/info/{mem_no}")
 	public ResponseEntity<Map<String, Object>> getMemberInfo(@PathVariable Long mem_no, HttpServletResponse res) throws IOException {
+		
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
 		
@@ -90,8 +91,24 @@ public class OrderController {
 	}
 
 	// 주문 삭제 
-	@DeleteMapping("/order/{orderNo}")
-	public void deleteOrder(@PathVariable Long orderNo) {
+	@DeleteMapping("/order/{order_no}/{mem_no}")
+	public ResponseEntity<Map<String, Object>> deleteOrder(@PathVariable Long order_no, @PathVariable Long mem_no, HttpServletResponse res) {
+		log.info("주문 삭제 시작");
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
 		
+		try {
+			orderService.deleteOrder(mem_no, order_no);;
+			resultMap.put("status", true);
+			status = HttpStatus.OK;
+			log.info("주문 삭제 완료 - 200");
+		
+		}catch (RuntimeException e) {
+			status = HttpStatus.METHOD_NOT_ALLOWED; 
+			resultMap.put("message", e.getMessage());
+			log.error("주문 삭제 실패 - 405", e.getMessage());
+		}
+		log.info("resultMap : " + resultMap);
+		return new ResponseEntity<Map<String,Object>>(resultMap, status);
 	}
 }

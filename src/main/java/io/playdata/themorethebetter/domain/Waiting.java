@@ -59,7 +59,6 @@ public class Waiting extends BaseTimeEntity
 	@Column(name="WAIT_TEXT")
 	private String text; //부가 설명 
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="mywait")
 	private List<Member> waitingmems = new ArrayList<Member>(); // 대기명단 정보 
 
@@ -85,7 +84,10 @@ public class Waiting extends BaseTimeEntity
     }
 	
 	//대기 인원 추가 
-	public void addWaitMem() {
+	public void addWaitMem() throws ForbiddenException {
+		if(this.standby >= this.minperson) {
+			throw new ForbiddenException("주문 가능 인원이 초과하였습니다.");
+		}
 		this.standby++;
 	}
 	

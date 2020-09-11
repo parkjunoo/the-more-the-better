@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
 import lombok.AccessLevel;
@@ -36,10 +38,12 @@ public class Member extends BaseTimeEntity
 	@Column(name="MEM_PHONE", length=20)
 	private String phone; // 사용자 전화번호 
 	
+	@JsonIgnore
 	@ManyToOne(optional=false)
 	@JoinColumn(name="CLASS_NO")
 	private Class myclass; // 수강 중인 수업 정보 
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="WAIT_NO")
 	private Waiting mywait; //속해있는 주문 정보  

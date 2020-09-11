@@ -25,6 +25,7 @@ public class LoadDatabase
 
 			/* Member 생성 */
 			log.info("Preloading" + memberRepository.save(Member.builder().id("loove1997").name("박주현").pw("kk1997").phone("01041026206").myclass(classRepository.findByCode("IP").get()).build()));
+			log.info("Preloading" + memberRepository.save(Member.builder().id("seon1997").name("권성훈").pw("kk1997").phone("01089110489").myclass(classRepository.findByCode("IP").get()).build()));
 			
 		};
 	}

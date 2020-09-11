@@ -95,37 +95,45 @@ public class OrderService {
 		return order.getStore();
 	}
 	
-	/* 주문 멤버 삭제 - 호스트가 아닌 경우만 가능 */
+	/* 주문 멤버 삭제 - 호스트 여부 확인 */
 	@Transactional
-	public void deleteMemberToOrder(Long mem_no, Long wait_no) throws NotFoundException, ForbiddenException {
+	public void deleteOrder(Long mem_no, Long wait_no) throws NotFoundException, ForbiddenException {
+		log.info("호스트 여부 확인중...");
 		Member member = memberRepository.findByNo(mem_no)
 				.orElseThrow(() -> new NotFoundException());
 		Waiting order = waitingRepository.findByNo(wait_no)
 				.orElseThrow(() -> new NotFoundException());
 		
-		log.info("현재 참여중인 주문이 아니거나 호스트일 경우 멤버 주문 취소 불가");
-		if(member.getMywait() != order && member.isIshost()) {
+		if(member.isIshost()) {
+			deleteOrderByHost(member, order);
+		} else {
+			deleteMemberToOrder(member, order);
+		}
+	}
+	
+	/* 주문 멤버 삭제 - 호스트가 아닌 경우만 가능 */
+	@Transactional
+	public void deleteMemberToOrder(Member member, Waiting order) throws ForbiddenException {
+		log.info("호스트 아님 : 주문 대기멤버 명단에서 삭제 시도중...");
+		
+		if(member.getMywait() != order) {
 			throw new ForbiddenException("주문정보가 일치하지 않습니다.");
 		}
 		member.cancelWaiting();
+		order.deleteWaitMem();
 	}
 	
 	/* 주문 삭제 - 호스트만 가능 */
 	@Transactional
-	public void deleteOrder(Long mem_no, Long wait_no) throws NotFoundException, ForbiddenException {
-		Member member = memberRepository.findByNo(mem_no)
-				.orElseThrow(() -> new NotFoundException());
-		Waiting order = waitingRepository.findByNo(wait_no)
-				.orElseThrow(() -> new NotFoundException());
+	public void deleteOrderByHost(Member member, Waiting order) throws ForbiddenException {
+		log.info("호스트이므로 주문 전체 삭제 시도중...");
 		
-		log.info("1. 현재 참여중인 주문이 아니거나"
-				+ "2. 호스트가 아니거나"
-				+"3. 호스트 이외에 대기중인 멤버가 존재한다면"
-				+ "주문 취소 불가");
-		if(member.getMywait() != order && !member.isIshost() && order.getStandby() != 1) {
+		//호스트 이외에 대기중인 멤버가 존재하면 주문 취소 불가 
+		if(member.getMywait() != order || order.getStandby() != 1) {
 			throw new ForbiddenException("주문취소가 불가능합니다.");
 		}
 		member.cancelWaiting();
+		waitingRepository.delete(order);
 		member.deleteHost();
 	}
 }

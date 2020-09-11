@@ -34,7 +34,7 @@ public class Store extends BaseTimeEntity
 	@Column(name="ST_ADDR", length=50, nullable=false)
 	private String address; // 가게 주소 
 	
-	@Lob
+	//@Lob
 	@Column(name="ST_PICTURE")
 	private String picture; // 가게 사진  
 
