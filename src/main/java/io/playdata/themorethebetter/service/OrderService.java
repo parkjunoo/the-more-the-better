@@ -8,6 +8,8 @@
 
 package io.playdata.themorethebetter.service;
 
+import java.text.ParseException;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +40,7 @@ public class OrderService {
 	
 	/* 주문 생성 */
 	@Transactional
-	public void makeOrder(OrderCreateRequestDto dto, Long mem_no) throws NotFoundException, ForbiddenException {
+	public void makeOrder(OrderCreateRequestDto dto, Long mem_no) throws NotFoundException, ForbiddenException, ParseException {
 		Store store = Store.builder().name(dto.getStoreName()).address(dto.getStoreAddress()).picture(dto.getStoreImg()).build();
 		Member member = memberRepository.findByNo(mem_no)
 				.orElseThrow(() -> new NotFoundException("주문자 정보가 올바르지 않습니다."));
@@ -46,13 +48,16 @@ public class OrderService {
 		log.info("상점생성완료");
 		storeRepository.save(store);
 		
+		log.info("마감시간 String -> Date");
+		LocalTime endDate = LocalTime.parse(dto.getTime());
+		
 		log.info("대기주문 빌드");
 		Waiting waiting = Waiting.builder()
 				.store(store)
 				.host(member)
 				.minperson(dto.getPeople())
 				.meetplace(dto.getDeliPlace())
-				.closetime(dto.getTime())
+				.closetime(endDate)
 				.mincost(dto.getMinCost())
 				.text(dto.getText())
 				.build();
@@ -86,13 +91,6 @@ public class OrderService {
 		 * null일 수도 있는 값을 getter로 찾아오는 방법은 객체지향적이지 않다..? 
 		 * 참고 : https://tech.wheejuni.com/2017/12/03/why-no-optional-for-getters/
 		 */
-	}
-	
-	/* 주문통해서 상점 검색 */
-	@Transactional(readOnly=true)
-	public Store findStoreByOrder(Waiting order) {
-		log.info("주문통해서 상점 검색중...");
-		return order.getStore();
 	}
 	
 	/* 주문 멤버 삭제 - 호스트 여부 확인 */
@@ -133,6 +131,7 @@ public class OrderService {
 			throw new ForbiddenException("주문취소가 불가능합니다.");
 		}
 		member.cancelWaiting();
+		storeRepository.delete(order.getStore());
 		waitingRepository.delete(order);
 		member.deleteHost();
 	}

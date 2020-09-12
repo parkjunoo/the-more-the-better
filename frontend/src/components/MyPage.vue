@@ -23,22 +23,22 @@
       <div class="container">
         <h4>가게 이름<span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>{{st_name}}</b></span></h4>
         <hr>
-        <p>시작 시간<span class="price">{{order_start_date}}</span></p>
-        <p>마감 시간<span class="price">{{order_dead_date}}</span></p>
-        <p>주문 인원<span class="price">{{order_standby}}/{{order_min_pers}}
+        <p>시작 시간<span class="price">{{order.createdDate}}</span></p>
+        <p>마감 시간<span class="price">{{order.closetime}}</span></p>
+        <p>주문 인원<span class="price">{{order.standby}}/{{order.minperson}}
             <div class="dropdown">
               <button @click="detailMember" class="dropbtn">자세히보기</button>
               <div id="myDropdown" class="dropdown-content">
-                <p>주문생성자 : {{order_host}}</p>
+                <p>주문생성자 : {{order.host.name}}</p>
                 <p><대기멤버></p>
                 <p v-for="member in members" v-bind:key="member.id">{{member.name}}</p>
               </div>
             </div>
           </span>
         </p>
-        <p>배달 수령 장소<span class="price">{{order_meetplace}}</span></p>
-        <p>최소 주문 가격<span class="price">{{order_min_pay}}</span></p>
-        <p>부가 설명<span class="price">{{order_text}}</span></p>
+        <p>배달 수령 장소<span class="price">{{order.meetplace}}</span></p>
+        <p>최소 주문 가격<span class="price">{{order.mincost}}</span></p>
+        <p>부가 설명<span class="price">{{order.text}}</span></p>
         <hr>        
         <button @click="cancelOrder" class="btn success">주문취소</button>
       </div>
@@ -69,20 +69,8 @@
         return {
           mem_no : "",
           mem_name : "",
-
-          order_no : "",
-          order_start_date : "",
-          order_dead_date : "",
-          order_standby : "",
-          order_min_pers : "",
-          order_meetplace : "",
-          order_min_pay : "",
-          order_text : "",
-          order_host : "",
-          order_members : "",
-
+          order: "",
           st_name : "",
-
           get_mem_info_address : "",
           get_order_info_address : "",
           members: [],
@@ -109,7 +97,7 @@
         var result = confirm("정말 주문을 취소하시겠습니까?");
         
         if(result) {
-          axios.delete("/order/" + this.order_no + "/" + this.mem_no)
+          axios.delete("/order/" + this.order.no + "/" + this.mem_no)
           .then(res => {
             if(res.data.status) {
             console.log("delete : success");
@@ -123,11 +111,11 @@
         }
       },
       setArray() {
-        var length = JSON.parse(this.order_standby);
+        var length = JSON.parse(this.order.standby);
         for(var i=0; i<length; i++) {
           this.members.push({
             id: i,
-            name: this.order_members[i].name,
+            name: this.order.waitingmems[i].name,
           })
         }
       },
@@ -150,19 +138,10 @@
 					if(res.data.status) {
             this.my_order_state = true;
             console.log("order search status : true");
-            this.order_no = res.data.order.no;
-            this.order_start_date = res.data.order.createdDate;
-            this.order_dead_date = res.data.order.closetime;
-            this.order_standby = res.data.order.standby;
-            this.order_min_pers = res.data.order.minperson;
-            this.order_meetplace = res.data.order.meetplace;
-            this.order_min_pay = res.data.order.mincost;
-            this.order_text = res.data.order.text;
-            this.order_host = res.data.order.host.name;
-            this.order_members = res.data.order.waitingmems;                      
+            this.order = res.data.order;     
             this.setArray();
             
-            this.st_name = res.data.store.name;
+            this.st_name = this.order.store.name;
 					}
 				}).catch(e => {
           console.log("error : " + e.response.data.message);
@@ -172,20 +151,8 @@
 				console.log("mypage data initialize");
         
           this.mem_name = "";
-
-          this.order_no = "";
-          this.order_start_date = "";
-          this.order_dead_date = "";
-          this.order_standby = "";
-          this.order_min_pers = "";
-          this.order_meetplace = "";
-          this.order_min_pay = "";
-          this.order_text = "";
-          this.order_host = "";
-          this.order_members = "";
-
+          this.order = "";
           this.st_name = "";
-
           this.get_mem_info_address = "";
           this.get_order_info_address = "";
           this.members= [];

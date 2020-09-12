@@ -1,6 +1,7 @@
 package io.playdata.themorethebetter.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.playdata.themorethebetter.domain.Member;
-import io.playdata.themorethebetter.domain.Store;
 import io.playdata.themorethebetter.domain.Waiting;
 import io.playdata.themorethebetter.dto.order.OrderCreateRequestDto;
 import io.playdata.themorethebetter.service.OrderService;
@@ -61,9 +60,7 @@ public class OrderController {
 		
 		try {
 			Waiting order = orderService.findOrderByMem(mem_no);
-			Store store = orderService.findStoreByOrder(order);
 			resultMap.put("order", order);
-			resultMap.put("store", store);
 			resultMap.put("status", true);
 			log.info("주문 검색 성공");
 			status = HttpStatus.OK; //200
@@ -98,6 +95,11 @@ public class OrderController {
 			orderService.makeOrder(dto, mem_no);
 			status = HttpStatus.ACCEPTED;
 			log.info("주문 생성 완료 - 202");
+		
+		}catch (ParseException e) {
+			status = HttpStatus.FORBIDDEN;
+			resultMap.put("message", e.getMessage());
+			log.error("마감 시간 저장 실패 - 403", e.getMessage());
 		
 		}catch (RuntimeException e) {
 			status = HttpStatus.METHOD_NOT_ALLOWED; 

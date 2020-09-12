@@ -1,7 +1,9 @@
 package io.playdata.themorethebetter.domain;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -49,9 +51,8 @@ public class Waiting extends BaseTimeEntity
 	@Column(name="WAIT_PLACE")
 	private String meetplace; //배달 수령 장소 
 	
-	@JsonFormat(shape=JsonFormat.Shape.STRING ,pattern="a hh:mm")
 	@Column(name="WAIT_CLOSETIME")
-	private String closetime; //모집 마감 시간 
+	private LocalTime closetime; //모집 마감 시간 
 	
 	@Column(name="WAIT_MINCOST")
 	private int mincost; //최소주문가격
@@ -63,7 +64,7 @@ public class Waiting extends BaseTimeEntity
 	private List<Member> waitingmems = new ArrayList<Member>(); // 대기명단 정보 
 
 	@Builder
-	public Waiting(Store store, Member host, int standby, int minperson, String meetplace, String closetime,
+	public Waiting(Store store, Member host, int standby, int minperson, String meetplace, LocalTime closetime,
 			int mincost, String text) {
 		this.store = store;
 		this.host = host;
