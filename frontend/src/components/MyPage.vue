@@ -59,9 +59,8 @@
 </template>
 
 <script>
-
 	import axios from 'axios';
-  const storage = window.sessionStorage; 
+  const storage = window.sessionStorage;
 	export default {
 		name: 'MyPage',
         
@@ -157,13 +156,11 @@
           this.get_order_info_address = "";
           this.members= [];
           this.my_order_state = false;
-
 				if(storage.getItem("member")) {
           
 					console.log("login state : true");
 					this.mem_no = storage.getItem("member");
           this.get_mem_info_address = "/members/info/" + this.mem_no;
-
 					this.getMemberInfo();
         }
 			}
@@ -182,7 +179,6 @@
   background-color: #f1f1f1;
   padding: 20px 10px;
 }
-
 .notexist a {
   float: left;
   color: black;
@@ -193,12 +189,10 @@
   line-height: 25px;
   border-radius: 4px;
 }
-
 .notexist a.logo {
   font-size: 25px;
   font-weight: bold;
 }
-
 .notexists a:hover {
   background-color: #ddd;
   color: black;
@@ -211,16 +205,13 @@
   border: none;
   cursor: pointer;
 }
-
 .dropbtn:hover, .dropbtn:focus {
   background-color: #46a049;
 }
-
 .dropdown {
   position: relative;
   display: inline-block;
 }
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -230,26 +221,20 @@
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
-
 .dropdown-content p {
   color: black;
   padding: 3px 16px;
   text-decoration: none;
   display: block;
 }
-
 .dropdown a:hover {background-color: #ddd;}
-
 .show {display: block;}
-
 .success {
   background-color: #4CAF50;
 } /* Green */
-
 .success:hover {
   background-color: #46a049;
 }
-
 .btn {
   border: none;
   color: white;
@@ -257,40 +242,33 @@
   font-size: 16px;
   cursor: pointer;
 }
-
 .col-25 {
   -ms-flex: 25%; /* IE10 */
   flex: 25%;
   padding: 0 16px;
   margin-bottom: 20px;
 }
-
 .container {
   background-color: #f2f2f2;
   padding: 5px 20px 15px 20px;
   border: 1px solid lightgrey;
   border-radius: 3px;
 }
-
 .order {
   text-align: center;
 }
-
 hr {
   border: 1px solid lightgrey;
 }
-
 span.price {
   float: right;
   color: grey;
 }
-
 /* Style the body */
 body {
   font-family: 'Do Hyeon', sans-serif;
   margin: 40px;
 }
-
 /* Header/logo Title */
 .header {
   padding: 80px;
@@ -298,18 +276,15 @@ body {
   background: #1abc9c;
   color: white;
 }
-
 /* Increase the font size of the heading */
 .header h1 {
   font-size: 40px;
 }
-
 /* Style the top navigation bar */
 .navbar {
   overflow: hidden;
   background-color: #333;
 }
-
 /* Style the navigation bar links */
 .navbar a {
   float: left;
@@ -319,18 +294,15 @@ body {
   padding: 14px 20px;
   text-decoration: none;
 }
-
 /* Right-aligned link */
 .navbar a.right {
   float: right;
 }
-
 /* Change color on hover */
 .navbar a:hover {
   background-color: #ddd;
   color: black;
 }
-
 /* Column container */
 .row {  
   display: -ms-flexbox; /* IE10 */
@@ -338,7 +310,6 @@ body {
   -ms-flex-wrap: wrap; /* IE10 */
   flex-wrap: wrap;
 }
-
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
 .side {
@@ -347,7 +318,6 @@ body {
   background-color: #f1f1f1;
   padding: 20px;
 }
-
 /* Main column */
 .main {   
   -ms-flex: 70%; /* IE10 */
@@ -355,14 +325,12 @@ body {
   background-color: white;
   padding: 20px;
 }
-
 /* Responsive layout - when the screen is less than 700px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 700px) {
   .row {   
     flex-direction: column;
   }
 }
-
 /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
 @media screen and (max-width: 400px) {
   .navbar a {
@@ -370,5 +338,4 @@ body {
     width: 100%;
   }
 }
-
 </style>

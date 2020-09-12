@@ -1,10 +1,17 @@
 <template>
     <div class="section">
         <section class="webdesigntuts-workshop">
-            <form action="" method="">          
-                <input type="search" placeholder="배달하고 싶으신 지점을 찾아주세요!">             
+            <div action="" method="" @keyup="event">          
+                <input v-on:input="typing" v-bind:value="search" type="search" placeholder="배달하고 싶으신 지점을 찾아주세요!">             
                 <button>Search</button>
-            </form>
+            </div>
+            <table>
+                  <tr v-for="item in result" :key="item.index" @click="openModal">
+                    <td>{{item}}</td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+            </table>
         </section>
             <div id="demo" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
@@ -58,11 +65,69 @@
                         <!-- 인디케이터 끝 -->
                     </div>
             </div>
+            <ServiceModal @close="closeModal" v-if="modal">
+            <!-- default 슬롯 콘텐츠 -->
+            <div><input v-model="message"></div>
+            <!-- /default -->
+            <!-- footer 슬롯 콘텐츠 -->
+            <template slot="footer">
+              <button @click="doSend">제출</button>
+            </template>
+            <!-- /footer -->
+          </ServiceModal>
     </div>
 </template>
 
 <script>
+import ServiceModal from './servicecoms/ServiceModal'
+import axios from 'axios'
 export default {
+  
+  data(){
+    return {
+      modal: false,
+      message: '',
+      search : "",
+      result : [
+
+      ]
+    }
+  },
+  components:{
+    ServiceModal
+  },
+  methods:{
+    openModal() {
+      this.modal = true
+    },
+    closeModal() {
+      this.modal = false
+    },
+    doSend() {
+      if (this.message.length > 0) {
+        alert(this.message)
+        this.message = ''
+        this.closeModal()
+      } else {
+        alert('메시지를 입력해주세요.')
+      }
+    },
+    typing(e) {
+        this.search = e.target.value
+        if(this.search == ""){
+            this.result = [];
+        }
+    },
+    event:function(){
+      console.log("입력 : " + this.search);
+      axios.get('/order/search/' + this.search, {
+          search: this.search
+        }).then(res =>{
+          this.result=res.data;
+        })
+     }
+    
+  }
 }
 </script>
 
@@ -78,7 +143,31 @@ export default {
 }/**/
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
-
+table{
+  margin : auto;
+  border-radius: 5px;
+  
+}
+td{
+  bottom: 7px;
+  right: 40px;
+  background-color: rgb(255, 255, 255);
+  width: 233px; height: 40px;
+  border-bottom: 1px solid #444444;
+  position: relative;
+  z-index: 1;
+  margin : auto;
+}
+tr{
+  bottom: 7px;
+  right: 40px;
+  background-color: rgb(255, 255, 255);
+  width: 700px; height: 40px;
+  border-bottom: 1px solid #444444;
+  position: relative;
+  z-index: 1;
+  margin : auto;
+}
 body{
 background-color:#f2f2f2;
 }
@@ -551,12 +640,11 @@ h2 {
    top: 191px;
 }
 
-.webdesigntuts-workshop form {
+.webdesigntuts-workshop div {
    background: rgb(229, 232, 241);
    background: linear-gradient(rgb(229, 232, 241), rgb(229, 232, 241));
    border: 1px solid #000;
    border-radius: 30px;
-   box-shadow: inset 0 0 0 1px #272727;
    display: inline-block;
    font-size: 0px;
    margin:auto 0;
@@ -570,7 +658,6 @@ h2 {
    background: linear-gradient(white,white);   
    border: 1px solid #444;
    border-radius: 5px 0 0 5px;
-   box-shadow: 0 2px 0 rgb(229, 232, 241);
    color: #888;
    display: block;
    float: left;
@@ -581,7 +668,7 @@ h2 {
    margin: 0;
    padding: 0 10px;
    text-shadow: 0 -1px 0 #000;
-   width: 1000px;
+   width: 700px;
 }
 
 .ie .webdesigntuts-workshop input {
@@ -600,9 +687,7 @@ h2 {
    animation: glow 800ms ease-out infinite alternate;
    background: rgb(229, 232, 241);
    background: linear-gradient(rgb(229, 232, 241),rgb(229, 232, 241));
-   border-color: #393;
-   box-shadow: 0 0 5px rgba(0,255,0,.2), inset 0 0 5px rgba(0,255,0,.1), 0 2px 0 #000;
-   color: #efe;
+   color: rgb(95, 91, 91);
    outline: none;
 }
 

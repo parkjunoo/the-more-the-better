@@ -3,6 +3,7 @@ package io.playdata.themorethebetter.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Member extends BaseTimeEntity
 {
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy= GenerationType.AUTO,generator="native4")
 	@Column(name="MEM_NO")
 	private Long no; // 사용자 고유번호	
 	

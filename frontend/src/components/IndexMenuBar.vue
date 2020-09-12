@@ -8,13 +8,13 @@
                 <ul class="nav">
                     <nav>
                         <li>
+                            <button class="btn" @click="logout">{{logout_button}}</button>
                             <router-link
                                     v-for="routes in toolbar"
                                     v-bind:key="routes.id"
                                     :to="`${routes.page}`">{{routes.text}}
                             </router-link>
                         
-                            <button class="btn" @click="logout">{{logout_button}}</button>
                         </li>
                         <!--          <li v-for="item in toolbar" :key="item.index"> <a href="#">{{item}}</a></li>-->
                     </nav>
@@ -144,13 +144,12 @@
       Header
     */
     .hold {
-        height: 80px;
+        height: 50px;
     }
     .header {
         line-height: 80px;
         width: 100%;
         transition: line-height 0.2s linear, box-shadow 0.2s linear;
-        position: fixed;
         top: 0;
         left: 0;
         z-index: 100;

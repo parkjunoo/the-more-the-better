@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Class extends BaseTimeEntity
 {
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy= GenerationType.AUTO,generator="native3")
 	@Column(name="CLASS_NO")
 	private Long no; // 수업 고유번호	
 	

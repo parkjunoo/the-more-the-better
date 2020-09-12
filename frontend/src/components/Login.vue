@@ -21,7 +21,7 @@
 <script>
     
     import axios from 'axios';
-    const storage = window.sessionStorage; 
+    const storage = window.sessionStorage;
     export default {
         name: 'HelloWorld',
         props: {

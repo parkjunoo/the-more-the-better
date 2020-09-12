@@ -10,6 +10,7 @@ package io.playdata.themorethebetter.service;
 
 import java.text.ParseException;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,10 +73,9 @@ public class OrderService {
 	
 	/* 대기인원 순으로 주문 전체보기 */
 	@Transactional(readOnly=true)
-	public List<OrderSearchResponseDto> findAll() {
-		return waitingRepository.findAllDesc()
-				.map(OrderSearchResponseDto::new)
-				.collect(Collectors.toList());
+	public List<Waiting> findAllStandBy() {
+		log.info("------findAllStandBy()--------");
+		return waitingRepository.findAllStandby();
 	}
 	
 	/* 멤버 고유번호로 주문 검색 */
@@ -86,11 +86,31 @@ public class OrderService {
 				.orElseThrow(() -> new NotFoundException("멤버 정보가 올바르지 않습니다."));
 		
 		return member.searchWaiting();
-		/* 
-		 * return member.getMywait(); 를 쓰지 않은이유 
-		 * null일 수도 있는 값을 getter로 찾아오는 방법은 객체지향적이지 않다..? 
-		 * 참고 : https://tech.wheejuni.com/2017/12/03/why-no-optional-for-getters/
-		 */
+	}
+	
+	/* 주문통해서 상점 검색 */
+	@Transactional(readOnly=true)
+	public Store findStoreByOrder(Waiting order) {
+		log.info("주문통해서 상점 검색중...");
+		return order.getStore();
+	}
+	
+	/*주문번호로 주문 검색*/
+	@Transactional(readOnly=true)
+	public Waiting findOrderByNo(long mem_no) throws NotFoundException{
+		log.info("주문 번호로 주문 검색 중...");
+		Waiting order = waitingRepository.findByNo(mem_no)
+				.orElseThrow(() -> new NotFoundException("주문 번호가 올바르지 않습니다."));
+		
+		return order;
+	}
+	
+	/*store 이름으로 주문목록 검색*/
+	@Transactional(readOnly=true)
+	public ArrayList<String> searchByStoreName(String st_name) {
+		log.info("------searchByStoreName--------" + "받은 데이터 :" + st_name);
+		return waitingRepository.findByNameContaining(st_name); 
+		
 	}
 	
 	/* 주문 멤버 삭제 - 호스트 여부 확인 */
@@ -135,4 +155,5 @@ public class OrderService {
 		waitingRepository.delete(order);
 		member.deleteHost();
 	}
+	
 }

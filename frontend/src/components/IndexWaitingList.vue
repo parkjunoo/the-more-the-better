@@ -3,62 +3,105 @@
     <div class="container">
       <h1>전체 리스트 보기</h1>
       <h2>배달료 줄이고 행복을 더하세요! 多多益善</h2>
-    <div v-for="(store) in stores" :key="store.index">
-      <div  class="col three bg nopad pointer">
+    <div v-for="(info) in orders" :key="info.no">
+      <div  class="col three bg nopad pointer" @click="openModal(store)" >
         <div class="imgholder">
-          <img :src = "store.storeImg" style=" height: 100%; 
+          <img :src = "info.store.picture" style=" height: 100%; 
           width : 100%; 
-          object-fit: contain;"/>
+          object-fit: contain;"
+          />
         </div>
-        <h1 class="feature">{{store.storeName}}</h1>
-        <p>{{store.curPeople}}</p>
+        <h1 class="feature">{{info.store.name}}</h1>
+        <p>모집시간 : {{info.order.closetime}}&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;모집현황 : {{info.order.standby}}/{{info.order.minperson}}</p>
      </div>
     </div>
       <div class="group"></div>
     </div>
+     <ServiceModal @close="closeModal" v-if="modal">
+      <!-- default 슬롯 콘텐츠 -->
+      <div class="modalBox">
+        <div class="modalBox1">
+          <h3>남부터미널 스타벅스</h3>
+          <img class="fit-picture" src="http://placehold.it/400x300">
+        </div>
+        <div class="modalBox2">
+          <h5>게시자:박준수</h5>
+          <h5>모집인원: 5/1</h5>
+        </div>
+      </div>
+      <template slot="footer">
+        <button @click="doSend">제출</button>
+      </template>
+      <!-- /footer -->
+    </ServiceModal>
   </div>
 
 </template>
 
 <script>
-
-
+import ServiceModal from './servicecoms/ServiceModal'
+import axios from 'axios'
+const storage = window.sessionStorage;
 export default {
   name: 'IndexWaitingList',
+  components: {ServiceModal},
   data(){ 
     return{
-        stores:[
-            {
-              storeImg: "https://dtd31o1ybbmk8.cloudfront.net/photos/ba1b1c1b8c7f1c3475980282a46e4fa5/thumb.jpg",
-              storeName: "스타벅스 남부터미널점",
-              curPeople: "12시 30분 4/5명"
-            },
-            {
-              storeImg: "https://ediya.com/C/images/ediyarab/interior_slide01_2.jpg",
-              storeName: "이디야 남부터미널점",
-              curPeople: "12시 50분 4/5명"
-            },
-            {
-              storeImg: "https://lh3.googleusercontent.com/proxy/BiuP7UQuQ4iFEtZLeOU04wPDny2tkw5Mrs2kgClNIYiVvx1NX_WaN_jSoa3arYE8EMESj9IVIDjR2ozzhNI0kt2Pw2tIrGsLy6qtZq36InPDEVeAxI1ptizU9azM_WzsA2GIaB59gEk5ya8rC98mNN1p1B8NbzsfiiisHqL5m9CfjehuUMyV3B8A8t2V68FZ8C7QvtBI3ymCql4yLs_GUb1Yo4d3zprjGZ8jjGNH-H9-fPOB3gsKLM-lrOUwSYlzG9UeydvHfkcyHAtYHY8qV-NYSgGajh5zszWDpsuthTAvaU3polCM8Q8iGabK",
-              storeName: "바나프레소 남부터미널점",
-              curPeople: "12시 30분 4/5명"
-            },
-            { 
-              storeImg: "https://selecto.co.kr/images/foundation/2v0011.jpg",
-              storeName: "셀렉토 커피",
-              curPeople: "12시 30분 4/5명"
-            },
-            {
-              storeImg: "https://t1.daumcdn.net/cfile/blog/022DE64A50B6BFB41D",
-              storeName: "요거프레소 남부터미널점",
-              curPeople: "12시 30분 4/5명"
-            },
-            {
-              storeImg: "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTvl9Y1FiBVE7ZZ82OXYZ_j4A8V5qY0573Zxw&usqp=CAU",
-              storeName: "투썸플레이스 남부터미널점",
-              curPeople: "12시 30분 4/5명"
-            },
-          ]
+        modal: false,
+        modalData:[],
+        message: '',
+        orders:[],
+    }
+  },
+  created() {
+    console.log("!!!!!");
+    this.init()
+  },
+  methods:{
+    openModal(store) {
+      this.modalData = store;
+      console.log(this.modalData);
+      this.modal = true;
+    },
+    closeModal() {
+      this.modalData = [];
+      this.modal = false;
+    },
+    /////////////////////////////////////////////
+    doSend(index) {
+      console.log(this.modalData.waitingNum);
+      axios.post('/order/setmem',{
+        waitingNum : this.modalData.waitingNum
+      },{
+        headers: {
+          "mem_no" : storage.getItem("member")
+        }
+      })
+      .then(res =>{
+          console.log("등록성공");
+      })
+
+      if (this.message.length > 0) {
+        alert(this.message)
+        this.message = ''
+        this.closeModal()
+      } else {
+        alert('메시지를 입력해주세요.')
+      }
+    },
+    init(){
+      console.log("시작")
+      axios.get('/order/all')
+        .then(res => {
+          console.log(res.data.orders);
+          
+          for(var i=0; i<JSON.parse(res.data.orders.length); i++) {
+            this.orders.push({
+              order: res.data.orders[i],
+              store: res.data.orders[i].store,
+            })
+          }
+        })
     }
   }
 }
@@ -76,6 +119,20 @@ export default {
 }/**/
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+
+.modalBox{
+}
+.modalBox1{
+  display: inline-block;
+  
+}
+.modalBox2{
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  background-color: #F44336;
+}
 
 body{
 background-color:#f2f2f2;
@@ -342,6 +399,7 @@ h1.hero:after {
 .col h1 {
   padding: 0 1%;
   text-align: center;
+  font-size: 20px;
 }
 
 .group.margin {

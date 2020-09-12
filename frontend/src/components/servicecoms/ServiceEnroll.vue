@@ -43,15 +43,15 @@
     </div>
     </div>
   </div>
+  
 </div>
 </div>
 </template>
 
 
 <script>
-
 import axios from 'axios'
-const storage = window.sessionStorage; 
+const storage = window.sessionStorage;
 export default {
   name: 'ServiceEroll',
   data(){
@@ -63,7 +63,7 @@ export default {
             minCost: 0,        //최소주문가격
             text: '',
             storeAddress: '서울시..',
-            storeImg: ''           
+            storeImg: 'https://dtd31o1ybbmk8.cloudfront.net/photos/ba1b1c1b8c7f1c3475980282a46e4fa5/thumb.jpg'          
           }
   },
   mounted() {
@@ -125,14 +125,6 @@ export default {
     });
   },
   onSubmit(){
-            alert(
-                    " 상점: "+ this.storeName +
-                    " 인원: "+ this.people +
-                    " 시간: "+ this.time +
-                    " 배달장소:" + this.deliPlace +
-                    " 최소금액: " + this.minCost +
-                    " 추가설명: " + this.text
-                 )
             axios.post('/order', {
                 storeName: this.storeName,    //가게 이름 
                 people: this.people,          //인원
@@ -147,20 +139,9 @@ export default {
                 headers: {
                   "mem_no" : storage.getItem("member")
                 }
-            }
-            ).then(res =>{
+            }).then(res =>{
                 console.log("성공");
-            })//.catch(e => {
-            //     alert("실패");
-            //     alert(
-            //         " 상점: "+ this.storeName +
-            //         " 인원: "+ this.people +
-            //         " 시간: "+ this.time +
-            //         " 배달장소:" + this.deliPlace +
-            //         " 최소금액: " + this.minCost +
-            //         " 추가설명: " + this.text
-            //     )
-            // });
+            })
         }
   }
 
