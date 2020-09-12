@@ -26,7 +26,6 @@ public class MemberService {
 	/* 회원가입 */
 	public Member join(MemberCreateRequestDto dto) throws NotFoundException, ForbiddenException {
 		log.info("회원가입 시도중...");
-		
 		checkSamePassword(dto.getMem_pw(), dto.getMem_pw_check());
 		checkExistClass(dto.getClass_code());
 		checkDuplicateId(dto.getMem_id());
@@ -92,9 +91,8 @@ public class MemberService {
 		log.info("멤버 정보 찾기 시도중...");
 	
 		Optional<Member> member = memberRepository.findByNo(mem_no);
-
+		System.out.println(member);
 		log.info("member : " + member);
-
 		member.orElseThrow(() -> new NotFoundException("회원 정보를 불러오는데 실패하였습니다."));
 		
 		return member.get();

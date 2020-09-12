@@ -63,7 +63,7 @@ public class Waiting extends BaseTimeEntity
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="mywait")
-	private List<Member> waitingmems = new ArrayList<Member>(); // 대기명단 정보 
+	private List<Member> waitingmems; // 대기명단 정보 
 
 	@Builder
 	public Waiting(Store store, Member host, int standby, int minperson, String meetplace, String closetime,
@@ -87,7 +87,8 @@ public class Waiting extends BaseTimeEntity
     }
 	
 	//대기 인원 추가 
-	public void addWaitMem() {
+	public void addWaitMem(Member mem) {
+		waitingmems.add(mem);
 		this.standby++;
 	}
 	
@@ -98,6 +99,7 @@ public class Waiting extends BaseTimeEntity
 		}
 		this.standby--;
 	}
+
 
 	
 }	

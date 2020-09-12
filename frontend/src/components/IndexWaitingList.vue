@@ -4,7 +4,7 @@
       <h1>전체 리스트 보기</h1>
       <h2>배달료 줄이고 행복을 더하세요! 多多益善</h2>
     <div v-for="(store) in stores" :key="store.index">
-      <div  class="col three bg nopad pointer" @click="openModal" >
+      <div  class="col three bg nopad pointer" @click="openModal(store)" >
         <div class="imgholder">
           <img :src = "store.storeImg" style=" height: 100%; 
           width : 100%; 
@@ -19,9 +19,16 @@
     </div>
      <ServiceModal @close="closeModal" v-if="modal">
       <!-- default 슬롯 콘텐츠 -->
-      <div><input v-model="message"></div>
-      <!-- /default -->
-      <!-- footer 슬롯 콘텐츠 -->
+      <div class="modalBox">
+        <div class="modalBox1">
+          <h3>남부터미널 스타벅스</h3>
+          <img class="fit-picture" src="http://placehold.it/400x300">
+        </div>
+        <div class="modalBox2">
+          <h5>게시자:박준수</h5>
+          <h5>모집인원: 5/1</h5>
+        </div>
+      </div>
       <template slot="footer">
         <button @click="doSend">제출</button>
       </template>
@@ -34,12 +41,14 @@
 <script>
 import ServiceModal from './servicecoms/ServiceModal'
 import axios from 'axios'
+const storage = window.sessionStorage;
 export default {
   name: 'IndexWaitingList',
   components: {ServiceModal},
   data(){ 
     return{
         modal: false,
+        modalData:[],
         message: '',
         stores:[]
     }
@@ -49,13 +58,29 @@ export default {
     this.init()
   },
   methods:{
-    openModal() {
-      this.modal = true
+    openModal(store) {
+      this.modalData = store;
+      console.log(this.modalData);
+      this.modal = true;
     },
     closeModal() {
-      this.modal = false
+      this.modalData = [];
+      this.modal = false;
     },
-    doSend() {
+    /////////////////////////////////////////////
+    doSend(index) {
+      console.log(this.modalData.waitingNum);
+      axios.post('/order/setmem',{
+        waitingNum : this.modalData.waitingNum
+      },{
+        headers: {
+          "mem_no" : storage.getItem("member")
+        }
+      })
+      .then(res =>{
+          console.log("등록성공");
+      })
+
       if (this.message.length > 0) {
         alert(this.message)
         this.message = ''
@@ -88,6 +113,20 @@ export default {
 }/**/
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+
+.modalBox{
+}
+.modalBox1{
+  display: inline-block;
+  
+}
+.modalBox2{
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+  background-color: #F44336;
+}
 
 body{
 background-color:#f2f2f2;

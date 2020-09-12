@@ -1,7 +1,6 @@
 package io.playdata.themorethebetter.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,10 +17,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.domain.Store;
 import io.playdata.themorethebetter.domain.Waiting;
 import io.playdata.themorethebetter.dto.order.OrderCreateRequestDto;
 import io.playdata.themorethebetter.dto.order.OrderSearchResponseDto;
+import io.playdata.themorethebetter.dto.order.OrderWaitingSetNewMemDto;
+import io.playdata.themorethebetter.service.MemberService;
 import io.playdata.themorethebetter.service.OrderService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +34,7 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderController {
 	
 	private OrderService orderService;
+	private MemberService memberService;
 	
 	// 모든 주문 내역 찾기 
 	@GetMapping("/order/AllStanBy")
@@ -40,6 +43,7 @@ public class OrderController {
         return orderService.findAllStandBy();
     }
 	
+	// 특정이름이 포함된 주문 내역 찾기
 	@GetMapping("/order/search/{keyword}")
     public List<String> SearchAllName(@PathVariable String keyword) {
 		log.info("------searchAllName 접속완료--------" + "받은 데이터 :" + keyword);
@@ -92,6 +96,33 @@ public class OrderController {
 		}
 		return new ResponseEntity<Map<String,Object>>(resultMap, status);
 	}
+	
+	// 주문 대기자 등록
+	@PostMapping("/order/setmem")
+	public ResponseEntity<Map<String, Object>> waitingSetMem(@RequestBody OrderWaitingSetNewMemDto WaitingNum, HttpServletRequest req) { 
+		log.info("주문 생성 시작");
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		try {
+			Long mem_no = Long.parseLong(req.getHeader("mem_no"));
+			Waiting order = orderService.findOrderByNo(WaitingNum.getWaitingNum());
+			Member mem = memberService.getInfo(mem_no);
+			System.out.println(order.toString());
+			System.out.println(mem.toString());
+			order.addWaitMem(mem);
+			status = HttpStatus.ACCEPTED;
+			log.info(mem_no+"주문 등록 완료 - 200");
+			System.out.println(order.getWaitingmems());
+		}catch (RuntimeException e) {
+			status = HttpStatus.METHOD_NOT_ALLOWED; 
+			resultMap.put("message", e.getMessage());
+			log.error("주문 등록 실패 - 405");
+		}
+		return new ResponseEntity<Map<String,Object>>(resultMap, status);
+	}
+	
+	
+	
 
 	// 주문 삭제 
 	@DeleteMapping("/order/{orderNo}")

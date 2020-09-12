@@ -72,6 +72,16 @@ public class OrderService {
 		log.info("주문통해서 상점 검색중...");
 		return order.getStore();
 	}
+	
+	/*주문번호로 주문 검색*/
+	@Transactional(readOnly=true)
+	public Waiting findOrderByNo(long mem_no) throws NotFoundException{
+		log.info("주문 번호로 주문 검색 중...");
+		Waiting order = waitingRepository.findByNo(mem_no)
+				.orElseThrow(() -> new NotFoundException("주문 번호가 올바르지 않습니다."));
+		
+		return order;
+	}
 
 	
 	@Transactional(readOnly=true)
@@ -88,11 +98,6 @@ public class OrderService {
 		 */
 	}
 	
-//	private int hostNum;
-//	private String storeName;
-//	private String closeTime;
-//	private String storeImg;
-//	private int waitingmems;
 	
 	/* 대기인원 순으로 주문 전체보기 */
 	// DB에서 가져온 데이터 OrderSearchResponseDto로 래핑
@@ -115,7 +120,7 @@ public class OrderService {
 		return Waitings;
 	}
 
-	
+	/*store 이름으로 주문목록 검색*/
 	@Transactional(readOnly=true)
 	public ArrayList<String> searchByStoreName(String st_name) {
 		log.info("------searchByStoreName--------" + "받은 데이터 :" + st_name);
