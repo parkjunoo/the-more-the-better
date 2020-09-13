@@ -85,10 +85,12 @@ public class Waiting extends BaseTimeEntity
     }
 	
 	//대기 인원 추가 
-	public void addWaitMem() throws ForbiddenException {
+	public void addWaitMem(Member mem) throws ForbiddenException {
 		if(this.standby >= this.minperson) {
 			throw new ForbiddenException("주문 가능 인원이 초과하였습니다.");
 		}
+		mem.startWaiting(this);
+		waitingmems.add(mem);
 		this.standby++;
 	}
 	

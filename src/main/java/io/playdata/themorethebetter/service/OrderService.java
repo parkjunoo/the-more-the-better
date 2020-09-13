@@ -95,7 +95,7 @@ public class OrderService {
 		return order.getStore();
 	}
 	
-	/*주문번호로 주문 검색*/
+	/* 주문번호로 주문 검색 */
 	@Transactional(readOnly=true)
 	public Waiting findOrderByNo(long mem_no) throws NotFoundException{
 		log.info("주문 번호로 주문 검색 중...");
@@ -105,9 +105,16 @@ public class OrderService {
 		return order;
 	}
 	
-	/*store 이름으로 주문목록 검색*/
+	/* 존재하던 주문에 대기멤버 저장 */
+	@Transactional
+	public void updateWaiting(Member mem) {
+		log.info("대기 주문 저장");
+	    memberRepository.save(mem); 
+	}
+	
+	/* store 이름으로 주문목록 검색 */
 	@Transactional(readOnly=true)
-	public ArrayList<String> searchByStoreName(String st_name) {
+	public ArrayList<Waiting> searchByStoreName(String st_name) {
 		log.info("------searchByStoreName--------" + "받은 데이터 :" + st_name);
 		return waitingRepository.findByNameContaining(st_name); 
 		

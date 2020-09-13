@@ -1,5 +1,5 @@
 /*
- * 멤버 회원가입 DTO 
+ * 멤버 로그인 DTO 
  *	- membercontroller 에서 memberservice로 갈때 RequestBody로 사용됨 
  */
 package io.playdata.themorethebetter.dto.member;

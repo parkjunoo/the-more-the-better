@@ -19,7 +19,7 @@ public class MemberCreateRequestDto {
 	private String mem_name; //이름 
 	private String mem_phone; //핸드폰번호 
 	private String class_code; //클래스
-	private boolean mem_certify;
+	private boolean mem_certify; //핸드폰 인증 여부 
 	
 	@Builder
 	public MemberCreateRequestDto(String mem_id, String mem_pw, String mem_pw_check, String mem_name, String mem_phone,

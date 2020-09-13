@@ -1,19 +1,18 @@
 <template>
-<div>
-  <div><h1>aaaaaa</h1></div>
+<div id="mainBody">
+  <div><h1>사람들을 모아보자</h1></div>
   <div id="divBox">
-      <div id="box1" style="background-color: #FFFFF0" >
+      <div id="box1" >
         <div id="map"></div>
       </div>
       <div id="box2">
         <div id="form-div">
-          <p1> 모아보자 </p1>
           <div class="form" id="form1">
-          <p5> 모집장소 </p5>
+          <div id="text_p"> 모집장소 </div>
           <p class="name">
             <input name="name" type="text" class="validate[required,custom[onlyLetter],length[0,100]] feedback-input" :placeholder="storeName" id="name" />
           </p>
-          <p5>모집인원</p5>
+          <div id="text_p">모집인원</div>
           <select class="people" name = "people" v-model="people">
               <optgroup label = "모집인원">
                 <option value = 1>1명</option>
@@ -22,22 +21,21 @@
                 <option value = 4>4명</option>
               </optgroup>         
         </select>
-        <p5 id="a">마감시간</p5>
-        <p class="time"><input v-model="time" type="time"></p>
-        <p5>수령장소</p5>
+        <div id="text_p">마감시간</div><p class="time"><input v-model="time" type="time"></p><br>
+        <div id="text_p">수령장소</div>
         <p class="email">
             <input v-model="deliPlace" name="email" type="text" class="validate[required,custom[email]] feedback-input" id="email" placeholder="수령할 장소를 정해주세요!" />
         </p>
-        <p5>배달금액</p5>
+        <div id="text_p">배달금액</div>
         <p class="email">
             <input v-model="minCost" name="email" type="text" class="validate[required,custom[email]] feedback-input" id="email" placeholder="최소금액을 입력해주세요!" />
         </p>
-        <p5>설명</p5>
+        <div id="text_p">설명</div>
         <p class="text">
             <textarea v-model="text" name="text" class="validate[required,length[6,300]] feedback-input" id="comment" placeholder="추가설명"></textarea>
         </p>
         <div class="submit">
-            <input v-on:click="onSubmit()" type="submit" value="SEND" id="button-blue"/>
+            <input v-on:click="onSubmit()" type="submit" value="등록하기" id="button-blue"/>
             <div class="ease"></div>
         </div>
     </div>
@@ -51,12 +49,13 @@
 
 <script>
 import axios from 'axios'
+
 const storage = window.sessionStorage;
 export default {
   name: 'ServiceEroll',
   data(){
           return{
-            storeName: '임시',    //가게 이름 
+            storeName: '지도에서 골라주세요!',    //가게 이름 
             people: 0,          //인원
             time: '',              //모집마감시간
             deliPlace: '',    //배달수령장소
@@ -136,11 +135,12 @@ export default {
                 storeImg: this.storeImg
             },
             {
-                headers: {
+              headers: {
                   "mem_no" : storage.getItem("member")
-                }
+              }
             }).then(res =>{
-                console.log("성공");
+              this.$router.push({ name: 'Home' })
+              console.log("성공");
             })
         }
   }
@@ -156,16 +156,20 @@ export default {
   padding: 35px 135px 50px;
 
 }
-
+.time{
+  display: inline-block;
+}
+#mainBody{
+  background-color: orange;
+}
 #box1{
-  float: left;
-  width: 500px;
-  height: 500px;
-  padding: 35px 35px 50px;
+  
 }
 #map{
+  background-color: orange;
   width:600px;
   height:500px;
+  float: left;
 }
 #box2{
   float: left;
@@ -173,9 +177,11 @@ export default {
   height: 500px;
 }
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,700');
-p5 {
+#text_p {
   color : white;
   font-weight: bold;
+  display: inline-block;
+
 }
 #a {
   display: inline;
@@ -195,7 +201,6 @@ html{
     background-color: #bbb;
     padding:35px 35px 50px;
     width: 450px;
-    left: 20%;
     position: relative;
     -moz-border-radius: 7px;
     -webkit-border-radius: 7px;

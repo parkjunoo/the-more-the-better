@@ -35,12 +35,13 @@ export default {
   }
 
   &-window {
-    background: #fff;
+    background: #ffd765;
     border-radius: 4px;
     overflow: hidden;
   }
 
   &-content {
+    background: #ffd765
     padding: 10px 20px;
   }
 

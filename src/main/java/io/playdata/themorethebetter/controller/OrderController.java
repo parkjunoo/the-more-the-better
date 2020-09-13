@@ -2,6 +2,7 @@ package io.playdata.themorethebetter.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,7 +71,8 @@ public class OrderController {
 	
 	/* 특정이름이 포함된 주문 내역 찾기 */
 	@GetMapping("/order/search/{keyword}")
-    public List<String> SearchAllName(@PathVariable String keyword) {
+    public ArrayList<Waiting> SearchAllName(@PathVariable String keyword) {
+		
 		log.info("------searchAllName 접속완료--------" + "받은 데이터 :" + keyword);
         return orderService.searchByStoreName(keyword);
     }	
@@ -119,7 +121,6 @@ public class OrderController {
 		
 		try {
 			System.out.println(dto.toString());
-			//주문 생성할때 멤버 정보 받아와야 하지 않을까...?
 			Long mem_no = Long.parseLong(req.getHeader("mem_no"));
 			orderService.makeOrder(dto, mem_no);
 			status = HttpStatus.ACCEPTED;
@@ -142,26 +143,27 @@ public class OrderController {
 	// 주문 대기자 등록
 	@PostMapping("/order/setmem")
 	public ResponseEntity<Map<String, Object>> waitingSetMem(@RequestBody OrderWaitingSetNewMemDto WaitingNum, HttpServletRequest req) { 
-		log.info("주문 생성 시작");
-		Map<String, Object> resultMap = new HashMap<>();
-		HttpStatus status = null;
-		try {
-			Long mem_no = Long.parseLong(req.getHeader("mem_no"));
-			Waiting order = orderService.findOrderByNo(WaitingNum.getWaitingNum());
-			Member mem = memberService.getInfo(mem_no);
-			System.out.println(order.toString());
-			System.out.println(mem.toString());
-			order.addWaitMem();
-			status = HttpStatus.ACCEPTED;
-			log.info(mem_no+"주문 등록 완료 - 200");
-			System.out.println(order.getWaitingmems());
-		}catch (RuntimeException e) {
-			status = HttpStatus.METHOD_NOT_ALLOWED; 
-			resultMap.put("message", e.getMessage());
-			log.error("주문 등록 실패 - 405");
-		}
-		return new ResponseEntity<Map<String,Object>>(resultMap, status);
-	}
+	      log.info("주문 생성 시작");
+	      Map<String, Object> resultMap = new HashMap<>();
+	      HttpStatus status = null;
+	      
+	      try {
+	         Long mem_no = Long.parseLong(req.getHeader("mem_no"));
+	         Waiting order = orderService.findOrderByNo(WaitingNum.getWaitingNum());
+	         Member mem = memberService.getInfo(mem_no);
+	         System.out.println(order.getNo()+mem.getNo());
+	         order.addWaitMem(mem);
+	         orderService.updateWaiting(mem);
+	         status = HttpStatus.ACCEPTED;
+	         log.info(mem_no+"주문 등록 완료 - 200");
+	         
+	      }catch (RuntimeException e) {
+	         status = HttpStatus.METHOD_NOT_ALLOWED; 
+	         resultMap.put("message", e.getMessage());
+	         log.error("주문 등록 실패 - 405");
+	      }
+	      return new ResponseEntity<Map<String,Object>>(resultMap, status);
+	   }
 
 	// 주문 삭제 
 	@DeleteMapping("/order/{order_no}/{mem_no}")
