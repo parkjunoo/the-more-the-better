@@ -1,5 +1,6 @@
 package io.playdata.themorethebetter.domain;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,9 +52,8 @@ public class Waiting extends BaseTimeEntity
 	@Column(name="WAIT_PLACE")
 	private String meetplace; //배달 수령 장소 
 	
-	@JsonFormat(shape=JsonFormat.Shape.STRING ,pattern="a hh:mm")
-	@Column(name="WAIT_CLOSETIME") 
-	private String closetime; //모집 마감 시간 
+	@Column(name="WAIT_CLOSETIME")
+	private LocalTime closetime; //모집 마감 시간 
 	
 	@Column(name="WAIT_MINCOST")
 	private int mincost; //최소주문가격
@@ -61,12 +61,11 @@ public class Waiting extends BaseTimeEntity
 	@Column(name="WAIT_TEXT")
 	private String text; //부가 설명 
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="mywait")
-	private List<Member> waitingmems; // 대기명단 정보 
+	private List<Member> waitingmems = new ArrayList<Member>(); // 대기명단 정보 
 
 	@Builder
-	public Waiting(Store store, Member host, int standby, int minperson, String meetplace, String closetime,
+	public Waiting(Store store, Member host, int standby, int minperson, String meetplace, LocalTime closetime,
 			int mincost, String text) {
 		this.store = store;
 		this.host = host;
@@ -87,7 +86,11 @@ public class Waiting extends BaseTimeEntity
     }
 	
 	//대기 인원 추가 
-	public void addWaitMem(Member mem) {
+	public void addWaitMem(Member mem) throws ForbiddenException {
+		if(this.standby >= this.minperson) {
+			throw new ForbiddenException("주문 가능 인원이 초과하였습니다.");
+		}
+		mem.setMywait(this);
 		waitingmems.add(mem);
 		this.standby++;
 	}
@@ -99,7 +102,5 @@ public class Waiting extends BaseTimeEntity
 		}
 		this.standby--;
 	}
-
-
 	
 }	

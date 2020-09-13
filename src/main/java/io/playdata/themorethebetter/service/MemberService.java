@@ -30,6 +30,7 @@ public class MemberService {
 		checkExistClass(dto.getClass_code());
 		checkDuplicateId(dto.getMem_id());
 		checkDuplicatePhone(dto.getMem_phone());
+		
 		Class myclass = classRepository.findByCode(dto.getClass_code()).get();
 		Long mem_no = memberRepository.save(dto.toEntity(myclass)).getNo();
 		return memberRepository.findByNo(mem_no).get();
@@ -73,6 +74,7 @@ public class MemberService {
 		classRepository.findByCode(class_code)
 			.orElseThrow(() -> new NotFoundException("존재하지 않는 클래스입니다."));
 	}
+	
 	/* 로그인 */
 	public Member logIn(MemberLogInRequestDto dto) throws NotFoundException {
 		log.info("로그인 시도중...");
@@ -89,12 +91,9 @@ public class MemberService {
 	/* 회원 찾기 */
 	public Member getInfo(Long mem_no) throws NotFoundException {
 		log.info("멤버 정보 찾기 시도중...");
-	
 		Optional<Member> member = memberRepository.findByNo(mem_no);
-		System.out.println(member);
 		log.info("member : " + member);
 		member.orElseThrow(() -> new NotFoundException("회원 정보를 불러오는데 실패하였습니다."));
-		
 		return member.get();
 	}
 }

@@ -3,6 +3,7 @@ package io.playdata.themorethebetter.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,7 +22,7 @@ import lombok.NoArgsConstructor;
 @Entity
 public class Member extends BaseTimeEntity
 {
-	@Id @GeneratedValue
+	@Id @GeneratedValue(strategy= GenerationType.AUTO,generator="native4")
 	@Column(name="MEM_NO")
 	private Long no; // 사용자 고유번호	
 	
@@ -42,7 +43,7 @@ public class Member extends BaseTimeEntity
 	@JoinColumn(name="CLASS_NO")
 	private Class myclass; // 수강 중인 수업 정보 
 	
-
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="WAIT_NO")
 	private Waiting mywait; //속해있는 주문 정보  
@@ -104,5 +105,9 @@ public class Member extends BaseTimeEntity
 			throw new NotFoundException("참여중인 주문이 존재하지 않습니다.");
 		}
 		return this.mywait;
+	}
+
+	public void setMywait(Waiting waiting) {
+		this.mywait = waiting;
 	}
 }	

@@ -12,6 +12,8 @@
  */
 package io.playdata.themorethebetter.dto.order;
 
+import java.time.LocalTime;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

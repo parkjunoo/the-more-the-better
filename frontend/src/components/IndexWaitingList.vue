@@ -3,32 +3,38 @@
     <div class="container">
       <h1>전체 리스트 보기</h1>
       <h2>배달료 줄이고 행복을 더하세요! 多多益善</h2>
-    <div v-for="(store) in stores" :key="store.index">
-      <div  class="col three bg nopad pointer" @click="openModal(store)" >
+    <div v-for="(info) in orders" :key="info.no">
+      <div  class="col three bg nopad pointer" @click="openModal(info)" >
         <div class="imgholder">
-          <img :src = "store.storeImg" style=" height: 100%; 
+          <img :src = "info.store.picture" style=" height: 100%; 
           width : 100%; 
           object-fit: contain;"
           />
         </div>
-        <h1 class="feature">{{store.storeName}}</h1>
-        <p>모집시간 : {{store.closeTime}}&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;모집현황 : {{store.waitingmems}}/{{store.waitingNum}}</p>
+        <h1 class="feature">{{info.store.name}}</h1>
+        <p>모집시간 : {{info.order.closetime}}&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;모집현황 : {{info.order.standby}}/{{info.order.minperson}}</p>
      </div>
     </div>
       <div class="group"></div>
     </div>
      <ServiceModal @close="closeModal" v-if="modal">
       <!-- default 슬롯 콘텐츠 -->
-      <div class="modalBox">
+      <div class="modalBox" >
         <div class="modalBox1">
-          <h3>남부터미널 스타벅스</h3>
-          <img class="fit-picture" src="http://placehold.it/400x300">
+          <h3 style="text-align: center;">{{modalData.store.name}}</h3>
+          <img class="fit-picture" style=" width: 100%;height: 300px;" :src="modalData.store.picture">
         </div>
         <div class="modalBox2">
-          <h5>게시자:박준수</h5>
-          <h5>모집인원: 5/1</h5>
-        </div>
-      </div>
+          <h5>게시자: {{modalData.order.host.name}}</h5>
+          <h5>모집인원: {{modalData.order.standby}}/{{modalData.order.minperson}}</h5>
+          <h5>마감시간: {{modalData.order.closetime}}</h5>
+          <h5>최소금액: {{modalData.order.mincost}}</h5>
+          <h3>대기인원</h3>
+          <h5 v-for="mem in modalData.order.waitingmems" :key="mem.index">{{mem.name}}</h5>
+          <h5>상세설명: {{modalData.order.text}}</h5>
+          </div>
+          </div>
+
       <template slot="footer">
         <button @click="doSend">제출</button>
       </template>
@@ -50,7 +56,7 @@ export default {
         modal: false,
         modalData:[],
         message: '',
-        stores:[]
+        orders: []
     }
   },
   created() {
@@ -58,8 +64,8 @@ export default {
     this.init()
   },
   methods:{
-    openModal(store) {
-      this.modalData = store;
+    openModal(orders) {
+      this.modalData = orders;
       console.log(this.modalData);
       this.modal = true;
     },
@@ -69,9 +75,9 @@ export default {
     },
     /////////////////////////////////////////////
     doSend(index) {
-      console.log(this.modalData.waitingNum);
+      console.log(this.modalData.store.no);
       axios.post('/order/setmem',{
-        waitingNum : this.modalData.waitingNum
+        waitingNum : this.modalData.store.no
       },{
         headers: {
           "mem_no" : storage.getItem("member")
@@ -91,10 +97,15 @@ export default {
     },
     init(){
       console.log("시작")
-      axios.get('/order/AllStanBy')
+      axios.get('/order/all')
         .then(res =>{
-          console.log(res.data);
-          this.stores = res.data;
+          for(var i=0; i<JSON.parse(res.data.orders.length); i++) {
+        
+            this.orders.push({
+              order: res.data.orders[i],
+              store: res.data.orders[i].store,
+            })
+          }
         })
     }
   }
@@ -116,16 +127,26 @@ export default {
 
 
 .modalBox{
-}
-.modalBox1{
-  display: inline-block;
+
+  overflow: hidden;
+  display:inline-block;
+  background-color: #ffefc3;
   
 }
+.modalBox1{
+  margin: 10px;
+  float: left;
+  background-color: #ffd765;
+  width: 400px;
+  height: 500px;
+
+}
 .modalBox2{
-  display: inline-block;
+  margin: 10px;
+  float: left;
   width: 300px;
-  height: 300px;
-  background-color: #F44336;
+  height: 500px;
+  background-color: #ffd765; 
 }
 
 body{
