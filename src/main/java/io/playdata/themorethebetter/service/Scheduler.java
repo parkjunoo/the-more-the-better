@@ -28,19 +28,18 @@ public class Scheduler {
 	
 	private WaitingRepository waitingRepository;
 	private StoreRepository storeRepository;
+	private SMSService smsService;
 
 	@Scheduled(fixedRate = 1000)
 	@Transactional
 	public void checkCloseTime() {
 		
 		LocalTime currentTime = LocalTime.now();
-		log.info("마감시간 확인중... - " + currentTime);
 		
 		try {
 			//전체 주문의 고유번호와 마감시간 가져오기 
 			Map<Long, LocalTime> timeMap = new HashMap<>();
 			waitingRepository.findAll().stream().forEach(o -> timeMap.put(o.getNo(), o.getClosetime()));
-			log.info("timeMap : " + timeMap);
 			
 			//현재시간과 비교해서 마감시간과 동일하면 주문 삭제 
 			for(long order_no : timeMap.keySet()) {
@@ -55,8 +54,10 @@ public class Scheduler {
 					Waiting target = waitingRepository.findByNo(order_no).get();
 					List<Member> members = target.getWaitingmems();
 					
-					//주문 대기중인 멤버들 모두 내보내기 
+					//주문 대기중인 멤버들 문자메세지 전송 후 모두 내보내기 
 					for(Member member : members) {
+						String message = member.getName() + "님 " + target.getStore().getName() + "의 주문이 마감시간으로 인해 취소되었습니다. - 다다익선";
+						smsService.sendMessage(member.getPhone(), message);
 						member.cancelWaiting();
 						if(member.isIshost()) {
 							member.deleteHost();

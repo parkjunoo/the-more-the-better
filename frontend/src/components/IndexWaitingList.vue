@@ -1,10 +1,12 @@
 <template>
-<div class="section bg">
+  <div class="section bg">
     <div class="container">
       <h1>전체 리스트 보기</h1>
       <h2>배달료 줄이고 행복을 더하세요! 多多益善</h2>
+
+    <!-- order list -->
     <div v-for="(info) in orders" :key="info.no">
-      <div  class="col three bg nopad pointer" @click="openModal(store)" >
+      <div  class="col three bg nopad pointer" @click="openModal(info)" >
         <div class="imgholder">
           <img :src = "info.store.picture" style=" height: 100%; 
           width : 100%; 
@@ -13,28 +15,30 @@
         </div>
         <h1 class="feature">{{info.store.name}}</h1>
         <p>모집시간 : {{info.order.closetime}}&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;모집현황 : {{info.order.standby}}/{{info.order.minperson}}</p>
-     </div>
-    </div>
-      <div class="group"></div>
-    </div>
-     <ServiceModal @close="closeModal" v-if="modal">
-      <!-- default 슬롯 콘텐츠 -->
-      <div class="modalBox">
-        <div class="modalBox1">
-          <h3>남부터미널 스타벅스</h3>
-          <img class="fit-picture" src="http://placehold.it/400x300">
-        </div>
-        <div class="modalBox2">
-          <h5>게시자:박준수</h5>
-          <h5>모집인원: 5/1</h5>
-        </div>
       </div>
-      <template slot="footer">
-        <button @click="doSend">제출</button>
-      </template>
-      <!-- /footer -->
-    </ServiceModal>
+    </div>
+
+    <div class="group"></div>
   </div>
+
+  <!-- modal -->
+  <ServiceModal @close="closeModal" v-if="modal">
+    <!-- default 슬롯 콘텐츠 -->
+    <div class="modalBox">
+      <div class="modalBox1">
+        <h3>남부터미널 스타벅스</h3>
+      </div>
+      <div class="modalBox2">
+        <h5>게시자:박준수</h5>
+        <h5>모집인원: 5/1</h5>
+      </div>
+    </div>
+    <template slot="footer">
+      <button @click="doSend">제출</button>
+    </template>
+
+  </ServiceModal>
+</div>
 
 </template>
 

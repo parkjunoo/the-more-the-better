@@ -19,16 +19,18 @@ public class MemberCreateRequestDto {
 	private String mem_name; //이름 
 	private String mem_phone; //핸드폰번호 
 	private String class_code; //클래스
+	private boolean mem_certify;
 	
 	@Builder
 	public MemberCreateRequestDto(String mem_id, String mem_pw, String mem_pw_check, String mem_name, String mem_phone,
-			String class_code) {
+			String class_code, boolean mem_certify) {
 		this.mem_id = mem_id;
 		this.mem_pw = mem_pw;
 		this.mem_pw_check = mem_pw_check;
 		this.mem_name = mem_name;
 		this.mem_phone = mem_phone;
 		this.class_code = class_code;
+		this.mem_certify = mem_certify;
 	}
 	
 	//클래스 정보 받아서 멤버 생성 

@@ -22,6 +22,15 @@ public class MemberService {
 	
 	private MemberRepository memberRepository;
 	private ClassRepository classRepository;
+	private SMSService smsService;
+	
+	/* 휴대폰 인증번호 전송 */
+	public int validatePhone(String phone_no) {
+		int valiNum = (int) (Math.random() * 10000);
+		String message = "다다익선 회원가입 인증번호 : " + valiNum;
+		smsService.sendMessage(phone_no, message);
+		return valiNum;
+	}
 	
 	/* 회원가입 */
 	public Member join(MemberCreateRequestDto dto) throws NotFoundException, ForbiddenException {
@@ -38,7 +47,7 @@ public class MemberService {
 	}
 		
 	/* 비밀번호 일치체크 */
-	private void checkSamePassword(String pw, String pw_check) {
+	public void checkSamePassword(String pw, String pw_check) {
 		log.info("패스워드 일치 여부 검증");
 		
 		if(!pw.equals(pw_check)) {
@@ -47,7 +56,7 @@ public class MemberService {
 	}
 	
 	/* 아이디 중복체크 */
-	private void checkDuplicateId(String id) throws ForbiddenException{
+	public void checkDuplicateId(String id) throws ForbiddenException{
 		log.info("중복 회원 검증");
 		
 		Optional<Member> member = memberRepository.findById(id);
@@ -58,7 +67,7 @@ public class MemberService {
 	}
 	
 	/* 전화번호 중복체크 */
-	private void checkDuplicatePhone(String phone) throws ForbiddenException{
+	public void checkDuplicatePhone(String phone) throws ForbiddenException{
 		log.info("중복 전화번호 검증");
 
 		Optional<Member> member = memberRepository.findByPhone(phone);
@@ -69,7 +78,7 @@ public class MemberService {
 	}
 	
 	/* 클래스 존재여부 확인 */
-	private void checkExistClass(String class_code) throws NotFoundException {
+	public void checkExistClass(String class_code) throws NotFoundException {
 		log.info("클래스 존재여부 확인");
 		
 		classRepository.findByCode(class_code)

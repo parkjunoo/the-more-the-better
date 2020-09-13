@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import io.playdata.themorethebetter.domain.Store;
 import io.playdata.themorethebetter.domain.Waiting;
 import io.playdata.themorethebetter.dto.member.MemberCreateRequestDto;
 import io.playdata.themorethebetter.dto.member.MemberLogInRequestDto;
+import io.playdata.themorethebetter.dto.member.PasswordCheckRequestDto;
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
 import io.playdata.themorethebetter.service.MemberService;
@@ -38,6 +40,65 @@ public class MemberController {
 	
 	private MemberService memberService;
 	
+	//휴대폰 인증번호 전송 
+	@PostMapping("/members/phone/{phone_no}")
+	public ResponseEntity<Map<String, Object>> validatePhone(@PathVariable String phone_no, HttpServletResponse res) throws IOException {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		
+		try {
+			int valiNum = memberService.validatePhone(phone_no);
+			resultMap.put("validate_num", valiNum);
+			resultMap.put("status", true);
+			log.info("인증번호 전송 성공");
+			status = HttpStatus.OK; //200
+			
+		}catch(Exception e) {
+			log.error("인증번호 전송 실패");
+			status = HttpStatus.METHOD_NOT_ALLOWED; //405
+			//vue로 에러 메세지 보내기 (e.response.data.message)
+			res.sendError(405, e.getMessage());
+		}
+		log.info("resultMap" + resultMap);
+		log.info("status" + status);
+		
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	//회원가입시 중복 또는 형식 확인 - type : id/pw/phone
+	@PostMapping("/members/check/{type}/{text}")
+	public void checkDupl(@PathVariable String type, @PathVariable String text, HttpServletResponse res) throws IOException, NotFoundException {
+		
+		try {
+			if(type.equals("id")) {
+				memberService.checkDuplicateId(text);
+				
+			} else if(type.equals("phone")) {
+				memberService.checkDuplicatePhone(text);
+			}
+			
+		}catch(RuntimeException e) {
+			//vue로 에러 메세지 보내기 (e.response.data.message)
+			res.sendError(405, e.getMessage());
+		}
+	}
+	
+	//회원가입시 비밀번호 일치여부 확인 
+	@PostMapping("/members/check/pw")
+	public void checkSamePw(@RequestBody PasswordCheckRequestDto dto, HttpServletResponse res) throws IOException, NotFoundException {
+		
+		try {	
+			log.info("패스워드 일치 확인중...");
+			memberService.checkSamePassword(dto.getMem_pw(), dto.getMem_pw_check());
+			
+		}catch(RuntimeException e) {
+			//vue로 에러 메세지 보내기 (e.response.data.message)
+			res.sendError(405, e.getMessage());
+		}
+	}
+	
+	
+	
 	//회원가입
 	@PostMapping("/members/new")
 	@ApiOperation(value = "신규 회원 가입", notes = "성공시 입력받은 개인정보가 member DB에 저장됩니다.")
@@ -51,11 +112,20 @@ public class MemberController {
 		HttpStatus status = null;
 		
 		try {
+			if(dto.isMem_certify() == false) {
+				throw new ForbiddenException("휴대폰 인증을 해주세요.");
+			}
+			
 			member = memberService.join(dto);
 			resultMap.put("member", member);
 			resultMap.put("status", true);
 			log.info("회원가입 성공");
 			status = HttpStatus.OK; //200
+		
+		}catch(ForbiddenException e) {
+			log.error("휴대폰 미인증으로 인해 회원가입 실패");
+			status = HttpStatus.FORBIDDEN; //403
+			res.sendError(403, e.getMessage());
 			
 		}catch(RuntimeException e) {
 			log.error("회원가입 실패");

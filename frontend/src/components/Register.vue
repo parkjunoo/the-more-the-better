@@ -11,6 +11,7 @@
                         <div class="input-group">
                             <input class="input--style-2" type="text" placeholder="아이디" name="mem_id" id="eid"
                                    v-model="mem_id">
+                            <p style="color:red">{{id_check}}</p>
                         </div>
                         
                         <div class="input-group">
@@ -26,11 +27,24 @@
                         <div class="input-group">
                             <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check"
                                     v-model="mem_pw_check">
+                            <p style="color:red">{{pw_check}}</p>
                         </div>
 
                 <div class="input-group">
                     <input class="input--style-2" type="text" placeholder="휴대폰 번호 입력" name="phone_number"
                            id="phone" v-model="mem_phone">
+                    <p style="color:red">{{phone_check}}</p>
+                </div>
+
+                <!-- validate phone number -->
+                <button @click="sendNum()" class="btn2 warning">인증번호 보내기</button>
+                <div display id="myDIV" style="display:none">
+                    <p>인증번호가 전송되었습니다.</p>
+                    <input class=" input-group" style="margin:3px" type="text" name="fname" placeholder="ex)8282" v-model="mem_vali_num">
+                    <button class="btn2 warning" @click="checkValiNum()">확인</button>
+                </div>
+                <div display id="myDIV2" style="display:none">
+                    <p>{{vali_message}}</p>
                 </div>
                 
                 <div class="input-group">
@@ -44,15 +58,6 @@
                             <option value="DSS">데이터과학 서초</option>
                         </select>
                         <div class="select-dropdown "></div>
-                    </div>
-                </div>
-
-                <div class="row row-space">
-                    <div class="col-2 ">
-                        <div class="input-group ">
-                            <input class="input--style-2 " type="file" placeholder="Registration Code "
-                                   name="res_code ">
-                        </div>
                     </div>
                 </div>
 
@@ -86,10 +91,52 @@
                 mem_name: "",
                 mem_phone: "",
                 class_code: "",
+                validate_num: "",
+                mem_vali_num: "",
+                mem_certify: false,
+                vali_message: "",
+                id_check: "",
+                phone_check: "",
+                pw_check: "",
             }
         },
         //post axios
         methods: {
+            sendNum() {
+                var x = document.getElementById("myDIV");
+                if (x.style.display === "none") {
+                    x.style.display = "block";
+
+                    axios.post("members/phone/" + this.mem_phone)
+                    .then(res => {
+                        console.log("send message status : true")
+                        this.validate_num = JSON.stringify(res.data.validate_num);
+
+                    }).catch(e => {
+                        console.log("fail send message");
+                        //controller에서 넘어온 에러 문구 출력 
+                        alert(JSON.stringify(e.response.data.message));
+                    });
+                }
+            },
+            checkValiNum() {
+                var x = document.getElementById("myDIV");
+                var x2 = document.getElementById("myDIV2");
+
+                if(this.validate_num === this.mem_vali_num) {
+                    this.mem_certify = true;
+                    this.vali_message = "인증이 완료되었습니다.";
+
+                    if(x.style.display === "block") {
+                        x.style.display = "none";
+                    }
+
+                } else {
+                    this.vali_message = "인증번호가 일치하지 않습니다.";
+                    x2.style.display = "block";
+                }
+                x2.style.display = "block";
+            },
             submitForm() {
                 
                 console.log("vue : start submitForm");
@@ -101,7 +148,9 @@
                     mem_pw_check: this.mem_pw_check,
                     mem_name: this.mem_name,
                     mem_phone: this.mem_phone,
-                    class_code: this.class_code
+                    class_code: this.class_code,
+                    mem_certify: this.mem_certify,
+
                 }).then(res => {
                     
                     if(res.data.status) {
@@ -117,12 +166,79 @@
             },
             init() {
                 console.log("data initialize");
-                this.mem_id = "",
-                this.mem_pw = "",
-                this.mem_name = "",
-                this.mem_phone = "",
-                this.class_no = ""
+                this.mem_id = "";
+                this.mem_pw = "";
+                this.mem_name = "";
+                this.mem_phone = "";
+                this.class_no = "";
+                this.validate_num = "";
+                this.mem_vali_num = "";
+                this.mem_certify = false;
+                this.vali_message = "";
+                this.id_check = "";
+                this.phone_check = "";
+                this.pw_check = "";
             }
+    },
+    watch: {
+        mem_id: function(val) {
+            axios.post("members/check/id/" + val)
+            .then(res => {
+                console.log("duplication check status : true");
+                this.id_check = "";
+
+            }).catch(e => {
+                this.id_check = e.response.data.message;
+                if(this.id_check === "No message available") {
+                    this.id_check = "";
+                }
+            });
+        },
+        mem_phone: function(val) {
+            axios.post("members/check/phone/" + val)
+            .then(res => {
+                console.log("duplication check status : true");
+                this.phone_check = "";
+
+            }).catch(e => {
+                this.phone_check = e.response.data.message;
+                if(this.phone_check === "No message available") {
+                    this.phone_check = "";
+                }
+            });
+        },
+        mem_pw: function(val) {
+            axios.post("/members/check/pw", {
+                    mem_pw: val,
+                    mem_pw_check: this.mem_pw_check,
+                
+                }).then(res => {
+                    console.log("password same check status : true");
+                    this.pw_check = "";
+
+                }).catch(e => {
+                    this.pw_check = e.response.data.message;
+                if(this.pw_check === "No message available") {
+                    this.pw_check = "";
+                }
+                });
+        },
+        mem_pw_check: function(val) {
+            axios.post("/members/check/pw", {
+                    mem_pw: this.mem_pw,
+                    mem_pw_check: val,
+                
+                }).then(res => {
+                    console.log("password same check status : true");
+                    this.pw_check = "";
+
+                }).catch(e => {
+                    this.pw_check = e.response.data.message;
+                if(this.pw_check === "No message available") {
+                    this.pw_check = "";
+                }
+                });
+        }
     }, mounted() {
         this.init();
     }
@@ -133,6 +249,26 @@
 <style scoped>
     @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
     @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
+    
+    .btn2 {
+        border: 2px solid black;
+        background-color: white;
+        color: black;
+        padding: 1px 10px;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .warning {
+        border-color: #ff9800;
+        color: orange;
+    }
+
+    .warning:hover {
+        background: #ff9800;
+        color: white;
+    }
+
     .font-robo {
         font-family: 'Do Hyeon', sans-serif;
     }
@@ -236,11 +372,7 @@
         /* [1] */
         border: 0;
     }
-    button {
-        outline: none;
-        background: none;
-        border: none;
-    }
+    
     /* ==========================================================================
        #PAGE WRAPPER
        ========================================================================== */
