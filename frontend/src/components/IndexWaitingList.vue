@@ -85,6 +85,7 @@ export default {
       })
       .then(res =>{
           console.log("등록성공");
+          this.closeModal()
       })
 
       if (this.message.length > 0) {

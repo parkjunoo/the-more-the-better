@@ -76,6 +76,9 @@ public class OrderService {
 		return waitingRepository.findAllStandby();
 	}
 	
+	
+	
+	
 	/* 멤버 고유번호로 주문 검색 */
 	@Transactional(readOnly=true)
 	public Waiting findOrderByMem(long mem_no) throws NotFoundException {
@@ -105,7 +108,7 @@ public class OrderService {
 	
 	/*store 이름으로 주문목록 검색*/
 	@Transactional(readOnly=true)
-	public ArrayList<String> searchByStoreName(String st_name) {
+	public ArrayList<Waiting> searchByStoreName(String st_name) {
 		log.info("------searchByStoreName--------" + "받은 데이터 :" + st_name);
 		return waitingRepository.findByNameContaining(st_name); 
 		

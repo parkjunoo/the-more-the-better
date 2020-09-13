@@ -2,6 +2,7 @@ package io.playdata.themorethebetter.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -91,7 +92,8 @@ public class OrderController {
 	
 	/* 특정이름이 포함된 주문 내역 찾기 */
 	@GetMapping("/order/search/{keyword}")
-    public List<String> SearchAllName(@PathVariable String keyword) {
+    public ArrayList<Waiting> SearchAllName(@PathVariable String keyword) {
+		
 		log.info("------searchAllName 접속완료--------" + "받은 데이터 :" + keyword);
         return orderService.searchByStoreName(keyword);
     }	
@@ -184,4 +186,8 @@ public class OrderController {
 		log.info("resultMap : " + resultMap);
 		return new ResponseEntity<Map<String,Object>>(resultMap, status);
 	}
+	
+	
+	
+	
 }

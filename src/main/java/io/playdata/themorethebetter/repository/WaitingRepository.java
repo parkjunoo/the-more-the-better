@@ -16,10 +16,13 @@ public interface WaitingRepository extends JpaRepository<Waiting, Long> {
 	// 대기인원이 많이 찬 주문 우선으로 모든 주문 검색  
 	@Query(value="SELECT w FROM Waiting w ORDER BY w.standby DESC")
 	public List<Waiting> findAllStandby();
+	 
+	// 이름으로 주문이 진행중인 가게 찾기 (문자열 포함하는 모든가게 검색) 
+	@Query(value="SELECT w FROM Waiting w INNER JOIN w.store s ON w.store = s.no AND s.name LIKE %:name%")
+	public ArrayList<Waiting> findByNameContaining(String name);	
 	
-	// 이름으로 주문이 진행중인 가게 찾기 (문자열 포함하는 모든가게 검색)
-	@Query(value="SELECT s.name FROM Waiting w INNER JOIN w.store s ON w.store = s.no AND s.name LIKE %:name%")
-	public ArrayList<String> findByNameContaining(String name);	
+	@Query(value="SELECT w FROM Waiting w INNER JOIN w.store s ON w.store = s.no AND s.name LIKE %:name%")
+	public Optional<Waiting> findByName(String name);
 	
 	// 고유번호로 주문 삭제 
 	public void deleteByNo(Long no);	

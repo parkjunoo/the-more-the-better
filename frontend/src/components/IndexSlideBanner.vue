@@ -6,10 +6,10 @@
                 <button>Search</button>
             </div>
             <table>
-                  <tr v-for="item in result" :key="item.index" @click="openModal">
-                    <td>{{item}}</td>
-                    <td></td>
-                    <td></td>
+                  <tr id="tr_hover" v-for="item in result" :key="item.index" @click="openModal(item)" @mouseover="mouseOver">
+                    <td>{{item.store.name}}</td>
+                    <td>{{item.closetime}}</td>
+                    <td>{{item.standby}} / {{item.minperson}}</td>
                   </tr>
             </table>
         </section>
@@ -68,8 +68,6 @@
             <ServiceModal @close="closeModal" v-if="modal">
             <!-- default 슬롯 콘텐츠 -->
             <div><input v-model="message"></div>
-            <!-- /default -->
-            <!-- footer 슬롯 콘텐츠 -->
             <template slot="footer">
               <button @click="doSend">제출</button>
             </template>
@@ -79,31 +77,46 @@
 </template>
 
 <script>
+const storage = window.sessionStorage;
 import ServiceModal from './servicecoms/ServiceModal'
 import axios from 'axios'
 export default {
   
   data(){
     return {
+      mem_no: '',
       modal: false,
+      modalData:[],
       message: '',
-      search : "",
-      result : [
-
-      ]
+      search : '',
+      result : [],
+      style: {backgroundColor: 'red'}
     }
   },
   components:{
     ServiceModal
   },
   methods:{
-    openModal() {
-      this.modal = true
+    mouseOver(){
+        this.style = { backgroundColor: 'red' }
+    },
+    openModal(orders) {
+      this.modalData = orders;
+      console.log(this.modalData);
+      this.modal = true;
     },
     closeModal() {
-      this.modal = false
+      this.modalData = [];
+      this.modal = false;
     },
     doSend() {
+      axios.post('/order/setmem',{
+        waitingNum : this.modalData.store.no
+      },{
+      headers: {
+        "mem_no" : storage.getItem("member")
+      }
+      })
       if (this.message.length > 0) {
         alert(this.message)
         this.message = ''
@@ -123,6 +136,7 @@ export default {
       axios.get('/order/search/' + this.search, {
           search: this.search
         }).then(res =>{
+          console.log(res.data);
           this.result=res.data;
         })
      }
@@ -158,7 +172,11 @@ td{
   z-index: 1;
   margin : auto;
 }
-tr{
+
+#tr_hover:hover{
+  background-color: rgb(110, 110, 110);
+}
+#tr_hover{
   bottom: 7px;
   right: 40px;
   background-color: rgb(255, 255, 255);
