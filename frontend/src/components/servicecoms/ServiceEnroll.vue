@@ -138,7 +138,8 @@ export default {
               headers: {
                   "mem_no" : storage.getItem("member")
               }
-            }).then(res =>{
+            })
+            .then(res =>{
               this.$router.push({ name: 'Home' })
               console.log("성공");
             })

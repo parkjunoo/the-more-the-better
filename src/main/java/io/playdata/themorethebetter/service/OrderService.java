@@ -124,7 +124,14 @@ public class OrderService {
 		order.addWaitMem(member);
 		memberRepository.save(member);
 		
-		//주문인원이 모두 찼다면 문자 보내고 주문 삭제 
+	}
+	
+	/* 주문인원이 다 찼는지 확인 */
+	@Transactional
+	public void checkWaitingMem(Long order_no) {
+		Waiting order = waitingRepository.findByNo(order_no)
+				.orElseThrow(() -> new NotFoundException("주문 번호가 올바르지 않습니다."));
+		
 		if(order.getMinperson() == order.getStandby()) {
 			List<Member> members = order.getWaitingmems();
 			log.info("주문 성사 완료 - 해당 주문을 삭제합니다");

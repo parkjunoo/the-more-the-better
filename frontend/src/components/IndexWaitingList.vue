@@ -77,12 +77,10 @@ export default {
       console.log(this.modalData.store.no);
       axios.post('/order/setmem/' + this.modalData.store.no + "/" + storage.getItem("member"))
       .then(res => {
-        if(res,data.status) {
-          console.log("등록성공");
-          alert("주문대기열에 추가되었습니다.");
-          this.closeModal();
-          this.init();
-        }
+        console.log("등록성공");
+        alert("주문대기열에 추가되었습니다.");
+        this.closeModal();
+        this.init();
       }).catch(e => {
         console.log("주문 대기열 등록 실패");
         alert(JSON.stringify(e.response.data.message));

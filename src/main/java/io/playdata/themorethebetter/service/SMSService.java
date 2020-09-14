@@ -37,7 +37,9 @@ public class SMSService {
 	    	log.info("message : " + message);
 	        JSONObject obj = (JSONObject) coolsms.send(params);
 	        System.out.println(obj.toString());
+	        
 	      } catch (CoolsmsException e) {
+	    	  
 	    	log.error("메세지 전송 실패");
 	        System.out.println(e.getMessage());
 	        System.out.println(e.getCode());

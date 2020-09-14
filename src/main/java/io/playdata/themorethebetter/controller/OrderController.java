@@ -143,7 +143,7 @@ public class OrderController {
 	
 	// 주문 대기자 등록
 	@PostMapping("/order/setmem/{order_no}/{mem_no}")
-	public ResponseEntity<Map<String, Object>> waitingSetMem(@PathVariable Long order_no, @PathVariable Long mem_no) { 
+	public ResponseEntity<Map<String, Object>> waitingSetMem(@PathVariable Long order_no, @PathVariable Long mem_no, HttpServletResponse res) { 
 	      log.info("주문 생성 시작");
 	      Map<String, Object> resultMap = new HashMap<>();
 	      HttpStatus status = null;
@@ -159,6 +159,8 @@ public class OrderController {
 	         resultMap.put("message", e.getMessage());
 	         log.error("주문 대기 등록 실패 - 405", e.getMessage());
 	      }
+	      
+	      orderService.checkWaitingMem(order_no);
 	      
 	      return new ResponseEntity<Map<String,Object>>(resultMap, status);
 	}
