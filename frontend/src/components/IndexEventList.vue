@@ -77,8 +77,8 @@ background-color:#f2f2f2;
 h2{
   font-family: 'Do Hyeon', sans-serif;
 }
-.carousel-inner>.carousel-item>img {  width: 320px; height: 360px; 
-   
+.carousel-inner>.carousel-item>img {  width: 320px; height: 360px;
+
 }
 
 
@@ -234,8 +234,8 @@ h1.hero:after {
   background: rgba(255, 255, 255, 0.1);
   cursor: pointer;
 }
-/* 
-  Columns 
+/*
+  Columns
 */
 
 .col {
@@ -350,8 +350,8 @@ h1.hero:after {
 }
 
 .col.imgholder.img{
-  height: 100%; 
-  width : 100%; 
+  height: 100%;
+  width : 100%;
   object-fit: contain;
 }
 
@@ -410,7 +410,7 @@ h2 {
 .reset:after {
   display: none !important;
 }
-/* 
+/*
   Slider with Content
 */
 
@@ -523,7 +523,7 @@ h2 {
 .webdesigntuts-workshop:before,
 .webdesigntuts-workshop:after {
    content: '';
-   display: block;   
+   display: block;
    height: 1px;
    left: 50%;
    margin: 0 0 0 -400px;
@@ -539,7 +539,7 @@ h2 {
 
 .webdesigntuts-workshop:after {
    background: #000;
-   background: linear-gradient(left, #151515, #000, #151515);   
+   background: linear-gradient(left, #151515, #000, #151515);
    top: 191px;
 }
 
@@ -558,8 +558,8 @@ h2 {
 }
 
 .webdesigntuts-workshop input {
-   background: rgb(89, 90, 26);   
-   background: linear-gradient(white,white);   
+   background: rgb(89, 90, 26);
+   background: linear-gradient(white,white);
    border: 1px solid #444;
    border-radius: 5px 0 0 5px;
    box-shadow: 0 2px 0 rgb(229, 232, 241);
@@ -598,7 +598,7 @@ h2 {
    outline: none;
 }
 
-.webdesigntuts-workshop input:focus::-webkit-input-placeholder { 
+.webdesigntuts-workshop input:focus::-webkit-input-placeholder {
    color: #efe;
 }
 
@@ -627,7 +627,7 @@ h2 {
    position: relative;
    text-shadow: 0 -1px 0 rgb(229, 232, 241);
    width: 80px;
-}   
+}
 
 .webdesigntuts-workshop button:hover,
 .webdesigntuts-workshop button:focus {
@@ -648,7 +648,7 @@ h2 {
     0% {
       border-color: #393;
       box-shadow: 0 0 5px rgba(0,255,0,.2), inset 0 0 5px rgba(0,255,0,.1), 0 2px 0 #000;
-    }   
+    }
     100% {
       border-color: #6f6;
       box-shadow: 0 0 20px rgba(0,255,0,.6), inset 0 0 10px rgba(0,255,0,.4), 0 2px 0 #000;

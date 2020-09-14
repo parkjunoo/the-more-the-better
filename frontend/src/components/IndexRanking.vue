@@ -1,7 +1,7 @@
 <template>
 <div class="section">
     <div class="container">
-      <h1>🖤Top4 for this week🖤</h1>
+      <h1>👑 Top4 for this week 👑</h1>
       <div v-for="(item) in ranking" :key="item.index">
       <div class="col four">
           <h1 class="icon">{{item.store}}</h1>
@@ -70,16 +70,18 @@ h2{
 }
 
 
+
 html,
 body {
   margin: 0;
   padding: 0;
   font-family: 'Do Hyeon', sans-serif;
-  background-color:#f2f2f2;
+  background-color: #ffd319;
 }
 
 .section {
-  width: 100%;
+  width: auto;
+    margin: 150px;
 }
 
 .container {
@@ -95,11 +97,12 @@ body {
 }
 
 .section .container {
-  padding: 30px 0 50px 0;
+  padding: 30px 50px 0;
+
 }
 
 .section.bg {
-  background: #f7f7f7;
+  background: #ffd319;
 }
 /*
   Header
@@ -236,6 +239,7 @@ h1.hero:after {
 .col.four {
   width: 23%;
   margin: 0 1%;
+    background-color: rgba(242, 97, 70, 0.86);
 }
 
 .col.three {

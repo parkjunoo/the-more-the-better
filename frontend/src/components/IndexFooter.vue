@@ -83,7 +83,7 @@ body {
   position: relative;
   width: 1170px;
   margin: 0 auto;
-  color: #444;
+  color: beige;
   font-size: 14px;
   font-weight: 300;
   font-family: 'Do Hyeon', sans-serif;
@@ -168,7 +168,7 @@ ul.nav li a {
 
 .section .slider,
 .section .footer {
-  background: #333;
+  background: #b38e74;
 }
 
 .slidercontent {

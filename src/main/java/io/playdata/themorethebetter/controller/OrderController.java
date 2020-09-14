@@ -115,7 +115,7 @@ public class OrderController {
 			@ApiImplicitParam(name = "dto", value = "신규 주문 게시글 작성을 위해 장소/최소주문금액/인원수/매장주소/매장이미지/매장이름/게시글내용/시간 데이터를 전달하는 DTO 객체", required = true, dataType = "object", defaultValue = "deliPlace, minCost, people, storeAddress, storeImg, storeName, text, time") })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "정상적으로 요청이 완료되었습니다!"),
 			@ApiResponse(code = 405, message = "주문생성을 실패했습니다.") })
-	public ResponseEntity<Map<String, Object>> makeOrder(@RequestBody OrderCreateRequestDto dto, HttpServletRequest req) { 
+	public ResponseEntity<Map<String, Object>> makeOrder(@RequestBody OrderCreateRequestDto dto, HttpServletRequest req) throws IOException { 
 		log.info("주문 생성 시작");
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = null;
@@ -143,7 +143,7 @@ public class OrderController {
 	
 	// 주문 대기자 등록
 	@PostMapping("/order/setmem/{order_no}/{mem_no}")
-	public ResponseEntity<Map<String, Object>> waitingSetMem(@PathVariable Long order_no, @PathVariable Long mem_no, HttpServletResponse res) { 
+	public ResponseEntity<Map<String, Object>> waitingSetMem(@PathVariable Long order_no, @PathVariable Long mem_no, HttpServletResponse res) throws IOException { 
 	      log.info("주문 생성 시작");
 	      Map<String, Object> resultMap = new HashMap<>();
 	      HttpStatus status = null;

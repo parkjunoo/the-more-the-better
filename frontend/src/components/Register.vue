@@ -8,74 +8,74 @@
                 <div class="card-body">
                     <h2 class="title" align="center">다다익선 간편 회원가입</h2>
 
-                        <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="아이디" name="mem_id" id="eid"
-                                   v-model="mem_id">
-                            <p style="color:red">{{id_check}}</p>
-                        </div>
-                        
-                        <div class="input-group">
-                            <input class="input--style-2" type="text" placeholder="이름" name="mem_name" id="name"
-                                   v-model="mem_name">
-                        </div>
-                        
-                        <div class="input-group">
-                            <input class="input--style-2" type="password" placeholder="비밀번호" name="mem_pw" id="pass"
-                                   v-model="mem_pw">
-                        </div>
-                        
-                        <div class="input-group">
-                            <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check"
-                                    v-model="mem_pw_check">
-                            <p style="color:red">{{pw_check}}</p>
-                        </div>
-
-                <div class="input-group">
-                    <input class="input--style-2" type="text" placeholder="휴대폰 번호 입력" name="phone_number"
-                           id="phone" v-model="mem_phone">
-                    <p style="color:red">{{phone_check}}</p>
-                </div>
-
-                <!-- validate phone number -->
-                <button @click="sendNum()" class="btn2 warning">인증번호 보내기</button>
-                <div display id="myDIV" style="display:none">
-                    <p>인증번호가 전송되었습니다.</p>
-                    <input class=" input-group" style="margin:3px" type="text" name="fname" placeholder="ex)8282" v-model="mem_vali_num">
-                    <button class="btn2 warning" @click="checkValiNum()">확인</button>
-                </div>
-                <div display id="myDIV2" style="display:none">
-                    <p>{{vali_message}}</p>
-                </div>
-                
-                <div class="input-group">
-                    <div class="rs-select2 js-select-simple select--no-search">
-                        <select name="mem_class" v-model="class_code">
-                            <!-- <select mem_name="mem_class" id="class" v-model="">-->
-                            <option disabled="disabled" selected="selected ">수강중인 수업 선택</option>
-                            <option value="IP">인공지능 P반</option>
-                            <option value="IA">인공지능 A반</option>
-                            <option value="DSY">데이터과학 영등포</option>
-                            <option value="DSS">데이터과학 서초</option>
-                        </select>
-                        <div class="select-dropdown "></div>
+                    <div class="input-group">
+                        <input class="input--style-2" type="text" placeholder="아이디" name="mem_id" id="eid"
+                               v-model="mem_id">
+                        <p style="color:red">{{id_check}}</p>
                     </div>
-                </div>
 
-                <div class="p-t-30 ">
-                    <button class="btn btn--radius btn--green" id="btn_memberJoin"
-                            @click="submitForm">회원가입
-                    </button>
+                    <div class="input-group">
+                        <input class="input--style-2" type="text" placeholder="이름" name="mem_name" id="name"
+                               v-model="mem_name">
+                    </div>
+
+                    <div class="input-group">
+                        <input class="input--style-2" type="password" placeholder="비밀번호" name="mem_pw" id="pass"
+                               v-model="mem_pw">
+                    </div>
+
+                    <div class="input-group">
+                        <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check"
+                               v-model="mem_pw_check">
+                        <p style="color:red">{{pw_check}}</p>
+                    </div>
+
+                    <div class="input-group">
+                        <input class="input--style-2" type="text" placeholder="휴대폰 번호 입력" name="phone_number"
+                               id="phone" v-model="mem_phone">
+                        <p style="color:red">{{phone_check}}</p>
+                    </div>
+
+                    <!-- validate phone number -->
+                    <button @click="sendNum()" class="btn2 warning">인증번호 보내기</button>
+                    <div display id="myDIV" style="display:none">
+                        <p>인증번호가 전송되었습니다.</p>
+                        <input class=" input-group" style="margin:3px" type="text" name="fname" placeholder="ex)8282" v-model="mem_vali_num">
+                        <button class="btn2 warning" @click="checkValiNum()">확인</button>
+                    </div>
+                    <div display id="myDIV2" style="display:none">
+                        <p>{{vali_message}}</p>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="rs-select2 js-select-simple select--no-search">
+                            <select name="mem_class" v-model="class_code">
+                                <!-- <select mem_name="mem_class" id="class" v-model="">-->
+                                <option disabled="disabled" selected="selected ">수강중인 수업 선택</option>
+                                <option value="IP">인공지능 P반</option>
+                                <option value="IA">인공지능 A반</option>
+                                <option value="DSY">데이터과학 영등포</option>
+                                <option value="DSS">데이터과학 서초</option>
+                            </select>
+                            <div class="select-dropdown "></div>
+                        </div>
+                    </div>
+
+                    <div class="p-t-30 ">
+                        <button class="btn btn--radius btn--green" id="btn_memberJoin"
+                                @click="submitForm">회원가입
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 
 </template>
 
 <script>
-    
+
     import axios from 'axios';
     const storage = window.sessionStorage;
     export default {
@@ -106,15 +106,13 @@
                 var x = document.getElementById("myDIV");
                 if (x.style.display === "none") {
                     x.style.display = "block";
-
                     axios.post("members/phone/" + this.mem_phone)
-                    .then(res => {
-                        console.log("send message status : true")
-                        this.validate_num = JSON.stringify(res.data.validate_num);
-
-                    }).catch(e => {
+                        .then(res => {
+                            console.log("send message status : true")
+                            this.validate_num = JSON.stringify(res.data.validate_num);
+                        }).catch(e => {
                         console.log("fail send message");
-                        //controller에서 넘어온 에러 문구 출력 
+                        //controller에서 넘어온 에러 문구 출력
                         alert(JSON.stringify(e.response.data.message));
                     });
                 }
@@ -122,15 +120,12 @@
             checkValiNum() {
                 var x = document.getElementById("myDIV");
                 var x2 = document.getElementById("myDIV2");
-
                 if(this.validate_num === this.mem_vali_num) {
                     this.mem_certify = true;
                     this.vali_message = "인증이 완료되었습니다.";
-
                     if(x.style.display === "block") {
                         x.style.display = "none";
                     }
-
                 } else {
                     this.vali_message = "인증번호가 일치하지 않습니다.";
                     x2.style.display = "block";
@@ -138,9 +133,9 @@
                 x2.style.display = "block";
             },
             submitForm() {
-                
+
                 console.log("vue : start submitForm");
-                
+
                 axios.post("/members/new", {
                     //pw check -> server
                     mem_id: this.mem_id,
@@ -150,9 +145,8 @@
                     mem_phone: this.mem_phone,
                     class_code: this.class_code,
                     mem_certify: this.mem_certify,
-
                 }).then(res => {
-                    
+
                     if(res.data.status) {
                         console.log("status : true");
                         alert(this.mem_name + "님이 가입되었습니다.");
@@ -160,7 +154,7 @@
                     }
                 }).catch(e => {
                     console.log("sign in fail");
-                    //controller에서 넘어온 에러 문구 출력 
+                    //controller에서 넘어온 에러 문구 출력
                     alert(JSON.stringify(e.response.data.message));
                 });
             },
@@ -179,77 +173,73 @@
                 this.phone_check = "";
                 this.pw_check = "";
             }
-    },
-    watch: {
-        mem_id: function(val) {
-            axios.post("members/check/id/" + val)
-            .then(res => {
-                console.log("duplication check status : true");
-                this.id_check = "";
-
-            }).catch(e => {
-                this.id_check = e.response.data.message;
-                if(this.id_check === "No message available") {
-                    this.id_check = "";
-                }
-            });
         },
-        mem_phone: function(val) {
-            axios.post("members/check/phone/" + val)
-            .then(res => {
-                console.log("duplication check status : true");
-                this.phone_check = "";
-
-            }).catch(e => {
-                this.phone_check = e.response.data.message;
-                if(this.phone_check === "No message available") {
-                    this.phone_check = "";
-                }
-            });
-        },
-        mem_pw: function(val) {
-            axios.post("/members/check/pw", {
+        watch: {
+            mem_id: function(val) {
+                axios.post("members/check/id/" + val)
+                    .then(res => {
+                        console.log("duplication check status : true");
+                        this.id_check = "";
+                    }).catch(e => {
+                    this.id_check = e.response.data.message;
+                    if(this.id_check === "No message available") {
+                        this.id_check = "";
+                    }
+                });
+            },
+            mem_phone: function(val) {
+                axios.post("members/check/phone/" + val)
+                    .then(res => {
+                        console.log("duplication check status : true");
+                        this.phone_check = "";
+                    }).catch(e => {
+                    this.phone_check = e.response.data.message;
+                    if(this.phone_check === "No message available") {
+                        this.phone_check = "";
+                    }
+                });
+            },
+            mem_pw: function(val) {
+                axios.post("/members/check/pw", {
                     mem_pw: val,
                     mem_pw_check: this.mem_pw_check,
-                
+
                 }).then(res => {
                     console.log("password same check status : true");
                     this.pw_check = "";
-
                 }).catch(e => {
                     this.pw_check = e.response.data.message;
-                if(this.pw_check === "No message available") {
-                    this.pw_check = "";
-                }
+                    if(this.pw_check === "No message available") {
+                        this.pw_check = "";
+                    }
                 });
-        },
-        mem_pw_check: function(val) {
-            axios.post("/members/check/pw", {
+            },
+            mem_pw_check: function(val) {
+                axios.post("/members/check/pw", {
                     mem_pw: this.mem_pw,
                     mem_pw_check: val,
-                
+
                 }).then(res => {
                     console.log("password same check status : true");
                     this.pw_check = "";
-
                 }).catch(e => {
                     this.pw_check = e.response.data.message;
-                if(this.pw_check === "No message available") {
-                    this.pw_check = "";
-                }
+                    if(this.pw_check === "No message available") {
+                        this.pw_check = "";
+                    }
                 });
+            }
+        }, mounted() {
+            this.init();
         }
-    }, mounted() {
-        this.init();
     }
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
     @import url("https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap");
-    
+
     .btn2 {
         border: 2px solid black;
         background-color: white;
@@ -258,17 +248,14 @@
         font-size: 14px;
         cursor: pointer;
     }
-
     .warning {
         border-color: #ff9800;
         color: orange;
     }
-
     .warning:hover {
         background: #ff9800;
         color: white;
     }
-
     .font-robo {
         font-family: 'Do Hyeon', sans-serif;
     }
@@ -372,7 +359,7 @@
         /* [1] */
         border: 0;
     }
-    
+
     /* ==========================================================================
        #PAGE WRAPPER
        ========================================================================== */
