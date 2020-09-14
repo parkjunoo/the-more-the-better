@@ -73,28 +73,20 @@ export default {
       this.modalData = [];
       this.modal = false;
     },
-    /////////////////////////////////////////////
     doSend(index) {
       console.log(this.modalData.store.no);
-      axios.post('/order/setmem',{
-        waitingNum : this.modalData.store.no
-      },{
-        headers: {
-          "mem_no" : storage.getItem("member")
-        }
-      })
-      .then(res =>{
+      axios.post('/order/setmem/' + this.modalData.store.no + "/" + storage.getItem("member"))
+      .then(res => {
+        if(res,data.status) {
           console.log("등록성공");
-          this.closeModal()
-      })
-
-      if (this.message.length > 0) {
-        alert(this.message)
-        this.message = ''
-        this.closeModal()
-      } else {
-        alert('메시지를 입력해주세요.')
-      }
+          alert("주문대기열에 추가되었습니다.");
+          this.closeModal();
+          this.init();
+        }
+      }).catch(e => {
+        console.log("주문 대기열 등록 실패");
+        alert(JSON.stringify(e.response.data.message));
+      });
     },
     init(){
       console.log("시작")

@@ -38,7 +38,8 @@ public class OrderService {
 	private WaitingRepository waitingRepository;
 	private MemberRepository memberRepository;
 	private StoreRepository storeRepository;
-	
+	private SMSService smsService;
+
 	/* 주문 생성 */
 	@Transactional
 	public void makeOrder(OrderCreateRequestDto dto, Long mem_no) throws NotFoundException, ForbiddenException, ParseException {
@@ -107,9 +108,40 @@ public class OrderService {
 	
 	/* 존재하던 주문에 대기멤버 저장 */
 	@Transactional
-	public void updateWaiting(Member mem) {
-		log.info("대기 주문 저장");
-	    memberRepository.save(mem); 
+	public void updateWaiting(Long mem_no, Long order_no) throws NotFoundException, ForbiddenException {
+		log.info("대기 주문 저장중...");
+		
+		Member member = memberRepository.findByNo(mem_no)
+				.orElseThrow(() -> new NotFoundException("멤버 번호가 올바르지 않습니다."));
+		Waiting order = waitingRepository.findByNo(order_no)
+				.orElseThrow(() -> new NotFoundException("주문 번호가 올바르지 않습니다."));
+	    
+		//이미 진행중인 주문이 존재
+		if(member.getMywait() != null) {
+			throw new ForbiddenException("이미 진행중인 주문이 존재합니다.");
+		}
+		
+		order.addWaitMem(member);
+		memberRepository.save(member);
+		
+		//주문인원이 모두 찼다면 문자 보내고 주문 삭제 
+		if(order.getMinperson() == order.getStandby()) {
+			List<Member> members = order.getWaitingmems();
+			log.info("주문 성사 완료 - 해당 주문을 삭제합니다");
+			
+			for(Member mem : members) {
+				String phone = mem.getPhone();
+				String message = mem.getName() + "님, " + order.getStore().getName() + "의 주문이 성사되었습니다! - 다다익선";
+				smsService.sendMessage(phone, message);
+				mem.cancelWaiting();
+				
+				if(mem.isIshost()) {
+					mem.deleteHost();
+				}
+			}
+			storeRepository.delete(order.getStore());
+			waitingRepository.delete(order);
+		}
 	}
 	
 	/* store 이름으로 주문목록 검색 */
