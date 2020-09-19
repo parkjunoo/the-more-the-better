@@ -6,6 +6,7 @@
             <transition name="fade">
                 <p v-if="show"><IndexWaitingList></IndexWaitingList></p>
             </transition>
+        </div>
 
 
 
@@ -23,7 +24,6 @@
                 </table>
             </section>
 
-        </div>
 
         <br><br><br>
 
@@ -52,10 +52,7 @@
 
                     </div>
 
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>다다익선</h5>
-                        <p>多多益善</p>
-                    </div>
+
                 </div>
 
                 <div class="carousel-item">
@@ -97,15 +94,56 @@
             </div>
         </div>
         <ServiceModal @close="closeModal" v-if="modal">
-            <!-- default 슬롯 콘텐츠 -->
-            <div><input v-model="message"></div>
-            <!-- /default -->
-            <!-- footer 슬롯 콘텐츠 -->
-            <template slot="footer">
-                <button @click="doSend">제출</button>
-            </template>
-            <!-- /footer -->
-        </ServiceModal>
+      <!-- default 슬롯 콘텐츠 -->
+      <div class="modalBox" >
+
+        <div class="modalBox1">
+  
+          <h3 style="text-align: center;">
+            📝{{modalData.store.name}}
+            </h3>
+          
+          <img class="fit-picture" style=" width: 100%;height: 300px;" :src="modalData.store.picture">
+          
+          <hr style="border: inset 1px orange; width: 100%;">
+          
+          <p> 부가 설명<span class="price"></span></p>
+          
+          <hr>  
+        </div>
+          <div class="modalBox2" style="color:black">
+          <h4> 📌게시자 : <span class="price"><i class="fa fa-shopping-cart"></i> <b>{{modalData.host.name}}</b></span></h4>
+          <hr style="border: inset 1px orange; width: 100%;"> 
+          <p> 시작 시간 : <span class="price">{{modalData.createdDate}}</span></p>
+          <p> 마감 시간 : <span class="price">{{modalData.closetime}}</span></p>
+          <hr style="border: inset 1px orange; width: 100%;">
+          <p> 주문 인원<span class="price">{{modalData.standby}}/{{modalData.minperson}}
+              <div class="dropdown">
+                <button @click="detailMember" class="dropbtn">자세히보기</button>
+                <div v-if="listValue" id="myDropdown" class="dropdown-content">
+                  <hr>  
+                  <p> 대기멤버</p>
+                  <p v-for="member in modalData.waitingmems" v-bind:key="member.id"> {{member.name}}</p>
+                  <hr>  
+                </div>
+              </div>
+            </span>
+          </p>
+          <p> 배달 수령 장소 : <span class="price">{{modalData.meetplace}}</span></p>
+          <p> 최소 주문 가격 : <span class="price">{{modalData.mincost}}</span></p>
+          
+          <hr>        
+          </div>
+
+
+
+        </div> 
+
+        <template slot="footer">
+          <button class="dropbtn" style="width: 100px;" @click="doSend">제출</button>
+        </template>
+        <!-- /footer -->
+      </ServiceModal>
     </div>
 
 </template>
@@ -124,7 +162,7 @@
                 message: '',
                 search : '',
                 result : [],
-
+                listValue : false,
                 show:"",
 
             }
@@ -134,33 +172,35 @@
             IndexWaitingList
         },
         methods:{
+            detailMember() {
+              this.listValue = !this.listValue 
+            },
             mouseOver(){
                 this.style = { backgroundColor: 'red' }
             },
             openModal(orders) {
                 this.modalData = orders;
                 console.log(this.modalData);
-                this.modal = true;
+                this.modal = true
             },
             closeModal() {
                 this.modalData = [];
                 this.modal = false;
             },
-            doSend() {
-                axios.post('/order/setmem',{
-                    waitingNum : this.modalData.store.no
-                },{
-                    headers: {
-                        "mem_no" : storage.getItem("member")
-                    }
-                })
-                if (this.message.length > 0) {
-                    alert(this.message)
-                    this.message = ''
-                    this.closeModal()
-                } else {
-                    alert('메시지를 입력해주세요.')
-                }
+            doSend(index) {
+                console.log(this.modalData.store.no);
+                axios.post('/order/setmem/' + this.modalData.store.no + "/" + storage.getItem("member"))
+                    .then(res => {
+                        if(res.data.status) {
+                            console.log("등록성공");
+                            alert("주문대기열에 추가되었습니다.");
+                            this.closeModal();
+                            this.init();
+                        }
+                    }).catch(e => {
+                    console.log("주문 대기열 등록 실패");
+                    alert(JSON.stringify(e.response.data.message));
+                });
             },
             typing(e) {
                 this.search = e.target.value
@@ -176,6 +216,24 @@
                     console.log(res.data);
                     this.result=res.data;
                 })
+            },
+            init(){
+                console.log("시작");
+                this.modal = false;
+                this.message = '';
+                this.orders =  [];
+                this.listValue = false;
+                
+                axios.get('/order/all')
+                    .then(res =>{
+                        for(var i=0; i<JSON.parse(res.data.orders.length); i++) {
+
+                            this.orders.push({
+                                order: res.data.orders[i],
+                                store: res.data.orders[i].store,
+                            })
+                        }
+                    })
             }
 
         }
@@ -188,6 +246,71 @@
 
     @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+p{
+    color:black;
+}
+    table{
+  margin : auto;
+  border-radius: 5px;
+  z-index: 1;
+  
+}
+td{
+  bottom: 5px;
+  right: 40px;
+  background-color: rgb(255, 255, 255);
+  width: 233px; height: 40px;
+  border-bottom: 1px solid #444444;
+  position: relative;
+  margin : auto;
+  z-index: 1;
+}
+    .dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 3px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #46a049;
+}
+
+p{
+  color: black;
+  font-size: 20px;
+  left: 10px;
+  font-family: 'Do Hyeon', sans-serif;
+}
+h2{
+  font-family: 'Do Hyeon', sans-serif;
+}
+.modalBox{
+  font-family: 'Do Hyeon', sans-serif;
+  overflow: hidden;
+  display:inline-block;
+  background-color: #ffefc3;
+  
+}
+.modalBox1{
+    font-family: 'Do Hyeon', sans-serif;
+  margin: 10px;
+  float: left;
+  background-color: white;
+  width: 400px;
+  height: 500px;
+
+}
+.modalBox2{
+    font-family: 'Do Hyeon', sans-serif;
+  margin: 10px;
+  float: left;
+  width: 300px;
+  height: 500px;
+  background-color: white; 
+}
 
     body{
         background-color: #b38e74;
@@ -666,12 +789,8 @@
         top: 191px;
     }
 
-    .webdesigntuts-workshop form {
-        background: rgb(229, 232, 241);
-        background: linear-gradient(rgb(229, 232, 241), rgb(229, 232, 241));
-        border: 1px solid #fff49a;
+    .webdesigntuts-workshop div {
         border-radius: 30px;
-        box-shadow: inset 0 0 0 1px #fff49a;
         display: inline-block;
         font-size: 0px;
         margin:auto 0;
@@ -682,23 +801,21 @@
     }
 
     .webdesigntuts-workshop input {
-        background: rgb(89, 90, 26);
-        background: linear-gradient(white,white);
+        background: rgb(89, 90, 26);   
+        background: linear-gradient(white,white);   
         border: 1px solid #444;
         border-radius: 5px 0 0 5px;
-        box-shadow: 0 2px 0 rgb(229, 232, 241);
-        -webkit-box-align: center;
-        color: #888;
+        color: black;
         display: block;
         float: left;
-        font-family: Do Hyeon, sans-serif;
+        font-family: 'Cabin', helvetica, arial, sans-serif;
         font-size: 13px;
         font-weight: 400;
-        height: 30px;
-
+        height: 40px;
+        margin: 0;
         padding: 0 10px;
         text-shadow: 0 -1px 0 #000;
-        width: 1500px;
+        width: 700px;
     }
 
     .ie .webdesigntuts-workshop input {
@@ -706,11 +823,11 @@
     }
 
     .webdesigntuts-workshop input::-webkit-input-placeholder {
-        color: #888;
+        color: black;
     }
 
     .webdesigntuts-workshop input:-moz-placeholder {
-        color: #888;
+        color: black;
     }
 
     .webdesigntuts-workshop input:focus {
@@ -733,7 +850,7 @@
 
     .webdesigntuts-workshop button {
         background: rgb(229, 232, 241);
-        background: linear-gradient(#333, #222);
+        background: linear-gradient(#333, #e5ef3b);
         box-sizing: border-box;
         border: 1px solid rgb(229, 232, 241);
         border-left-color: rgb(229, 232, 241);
@@ -758,14 +875,14 @@
     .webdesigntuts-workshop button:focus {
         background: rgb(229, 232, 241);
         background: linear-gradient(rgb(229, 232, 241), rgb(229, 232, 241));
-        color: #5f5;
+        color: #8e8231;
         outline: none;
     }
 
     .webdesigntuts-workshop button:active {
         background: rgb(229, 232, 241);
         background: linear-gradient(#393939, #292929);
-        box-shadow: 0 1px 0 #fff49a, inset 1px 0 1px #222;
+        box-shadow: 0 1px 0 #fff49a, inset 1px 0 1px #8e8e22;
         top: 1px;
     }
 
@@ -1318,22 +1435,22 @@
     }
 
     .webdesigntuts-workshop input {
-        background: rgb(89, 90, 26);
-        background: linear-gradient(white, white);
-        border: 1px solid #444;
-        border-radius: 5px 0 0 5px;
-        box-shadow: 0 2px 0 rgb(229, 232, 241);
-        color: #888;
-        display: block;
-        float: left;
-        font-family: 'Cabin', helvetica, arial, sans-serif;
-        font-size: 13px;
-        font-weight: 400;
-        height: 40px;
-        margin: 0;
-        padding: 0 10px;
-        text-shadow: 0 -1px 0 #000;
-        width: 1000px;
+      background: rgb(89, 90, 26);   
+      background: linear-gradient(white,white);   
+      border: 1px solid #444;
+      border-radius: 5px 0 0 5px;
+      color: black;
+      display: block;
+      float: left;
+      font-family: 'Cabin', helvetica, arial, sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      height: 40px;
+      margin: 0;
+      padding: 0 10px;
+      text-shadow: 0 -1px 0 #000;
+      width: 700px;
+      margin-left: 330px;
     }
 
     .ie .webdesigntuts-workshop input {
@@ -1341,11 +1458,11 @@
     }
 
     .webdesigntuts-workshop input::-webkit-input-placeholder {
-        color: #888;
+        color: black;
     }
 
     .webdesigntuts-workshop input:-moz-placeholder {
-        color: #888;
+        color: black;
     }
 
     .webdesigntuts-workshop input:focus {
@@ -1368,7 +1485,7 @@
 
     .webdesigntuts-workshop button {
         background: rgb(229, 232, 241);
-        background: linear-gradient(#333, #222);
+        background: #87d489;
         box-sizing: border-box;
         border: 1px solid rgb(229, 232, 241);
         border-left-color: rgb(229, 232, 241);
@@ -1435,7 +1552,7 @@
     }
 
     p{
-        color: white;
+        color: black;
         font-family: arial;
         display: table-cell;
         text-align: center;
@@ -1534,7 +1651,6 @@
     }
 
     .container {
-        z-index: 1;
         position: relative;
         overflow: hidden;
         display: flex;
@@ -1889,6 +2005,5 @@
     }
 
 </style>
-
 
 

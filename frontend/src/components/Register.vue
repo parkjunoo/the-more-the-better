@@ -15,19 +15,19 @@
                     </div>
 
                     <div class="input-group">
-                        <input class="input--style-2" type="text" placeholder="이름" name="mem_name" id="name"
-                               v-model="mem_name">
-                    </div>
-
-                    <div class="input-group">
                         <input class="input--style-2" type="password" placeholder="비밀번호" name="mem_pw" id="pass"
                                v-model="mem_pw">
                     </div>
-
+                    
                     <div class="input-group">
                         <input class="input--style-2" type="password" placeholder="비밀번호 확인" name="password_check"
                                v-model="mem_pw_check">
                         <p style="color:red">{{pw_check}}</p>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input class="input--style-2" type="text" placeholder="이름" name="mem_name" id="name"
+                               v-model="mem_name">
                     </div>
 
                     <div class="input-group">

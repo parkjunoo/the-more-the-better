@@ -18,28 +18,48 @@
             <div class="group"></div>
         </div>
         <ServiceModal @close="closeModal" v-if="modal">
-            <!-- default 슬롯 콘텐츠 -->
-            <div class="modalBox" >
-                <div class="modalBox1">
-                    <h3 style="text-align: center;">{{modalData.store.name}}</h3>
-                    <img class="fit-picture" style=" width: 100%;height: 300px;" :src="modalData.store.picture">
-                </div>
-                <div class="modalBox2">
-                    <h5>게시자: {{modalData.order.host.name}}</h5>
-                    <h5>모집인원: {{modalData.order.standby}}/{{modalData.order.minperson}}</h5>
-                    <h5>마감시간: {{modalData.order.closetime}}</h5>
-                    <h5>최소금액: {{modalData.order.mincost}}</h5>
-                    <h3>대기인원</h3>
-                    <h5 v-for="mem in modalData.order.waitingmems" :key="mem.index">{{mem.name}}</h5>
-                    <h5>상세설명: {{modalData.order.text}}</h5>
-                </div>
+      <!-- default 슬롯 콘텐츠 -->
+      <div class="modalBox" >
+        <div class="modalBox1">
+          <h1> </h1>
+          <h3 style="text-align: center;">📝{{modalData.store.name}}</h3>
+          <img class="fit-picture" style=" width: 100%;height: 300px;" :src="modalData.store.picture">
+          <hr style="border: inset 1px orange; width: 100%;">
+          <p> 부가 설명<span class="price"></span></p>
+          <hr>  
+          {{modalData.order.text}}
+        </div>
+        <div class="modalBox2">
+        <h4> 📌게시자 : <span class="price" style="color:black"><i class="fa fa-shopping-cart"></i> <b>{{modalData.order.host.name}}</b></span></h4>
+        <hr style="border: inset 1px orange; width: 100%;"> 
+        <p> 시작 시간 : <span class="price">{{modalData.order.createdDate}}</span></p>
+        <p> 마감 시간 : <span class="price">{{modalData.order.closetime}}</span></p>
+        <hr style="border: inset 1px orange; width: 100%;">
+        <p> 주문 인원<span class="price">{{modalData.order.standby}}/{{modalData.order.minperson}}
+            <div class="dropdown">
+              <button @click="detailMember" class="dropbtn">자세히보기</button>
+              <div v-if="listValue" id="myDropdown" class="dropdown-content">
+                <hr>  
+                <p> 대기멤버</p>
+                <p v-for="member in modalData.order.waitingmems" v-bind:key="member.id"> {{member.name}}</p>
+                <hr>  
+              </div>
             </div>
+          </span>
+        </p>
+        <p> 배달 수령 장소 : <span class="price">{{modalData.order.meetplace}}</span></p>
+        <p> 최소 주문 가격 : <span class="price">{{modalData.order.mincost}}</span></p>
+        
+        <hr>        
+        </div>
+      </div>
 
-            <template slot="footer">
-                <button @click="doSend">제출</button>
-            </template>
 
-        </ServiceModal>
+      <template slot="footer">
+        <button class="dropbtn" style="width: 100px;" @click="doSend">제출</button>
+      </template>
+      <!-- /footer -->
+    </ServiceModal>
     </div>
 
 </template>
@@ -57,7 +77,8 @@
                 modal: false,
                 modalData:[],
                 message: '',
-                orders: []
+                orders: [],
+                listValue: false
             }
         },
         created() {
@@ -65,6 +86,9 @@
             this.init()
         },
         methods:{
+            detailMember() {
+                this.listValue = !this.listValue 
+            },
             openModal(orders) {
                 this.modalData = orders;
                 console.log(this.modalData);
@@ -96,6 +120,7 @@
                 this.modalData = [];
                 this.message = '';
                 this.orders =  [];
+                this.listValue = false;
                 
                 axios.get('/order/all')
                     .then(res =>{
@@ -124,6 +149,47 @@
     }/**/
     @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
     @import url('https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap');
+
+    .dropbtn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 3px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #46a049;
+}
+
+
+p{
+  font-size: 20px;
+  left: 10px;
+}
+.modalBox{
+  font-family: 'Do Hyeon', sans-serif;
+  overflow: hidden;
+  display:inline-block;
+  background-color: #ffefc3;
+  
+}
+.modalBox1{
+  
+  margin: 10px;
+  float: left;
+  background-color: #ffffff;
+  width: 400px;
+  height: 500px;
+
+}
+.modalBox2{
+  margin: 10px;
+  float: left;
+  width: 300px;
+  height: 500px;
+  background-color: #ffffff; 
+}
 
     body{
         background-color:#f2f2f2;
