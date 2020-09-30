@@ -1,5 +1,17 @@
+
+
 # the-more-the-better
 플레이데이터 Pose-Estimation 개발자 교육 과정 중간 프로젝트 - '다다익선(多多益善)'
+## 프로젝트 이름 : 다다익선 
+
+## 팀원소개
+###  유재혁(팀장) : QA, 발표, 프로젝트 관리 
+###  박주현(Backend) : oracle, Spring boot, 로그인
+###  박준수(Frontend) : 카카오 맵
+###  박채연(Frontend) : Front 디자인, 가게 정보
+
+
+
 ## Data Model Diagram - 변경사항 2020-09-08
 - 멤버 테이블 마감시간, 수령장소, 최소가격, 최소인원, 상세설명 추가 
 - WAIT_MINPERSON 이랑 WAIT_MINLIMIT 이랑 동일 -> WAIT_MINLIMIT 삭제예정 (작업중)
