@@ -20,7 +20,7 @@
 음료를 일정 인원을 모아 다른 구매자들과 동시간에 함께 구매하여 배달 료를 공동 부담하는 서비스를 제시합니다.
 ### <strong> 3. Accessibility<br>  </strong>
 공동구매자를 실시간 모집할 수 있고 모집이 완료된 후 문자서비스를 통해 함께 상품을 주문할 수 있도록 유도합니다.
-<br>
+<br><br>
 
 ## 📝 사용언어, 기술스택
 ![Generic badge](https://img.shields.io/badge/platform-Web-brightgreen.svg) ![Generic badge](https://img.shields.io/badge/library-vue-blue.svg) ![Generic badge](https://img.shields.io/badge/framework-spring-green.svg)
