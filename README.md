@@ -19,9 +19,8 @@
 #### • 음식이나 음료등을 구매하러 직접 매장을 방문할 필요없이 일정 인원을 모아 공동으로 주문하여 배달료와 시간을 절감
 #### • 공동구매자를 실시간 모집할 수 있고 모집이 완료된 후 문자서비스를 통해 함께 상품을 주문할 수 있도록 유도 
 <br>
-<br>
-## 💻 사용언어, 기술스택
 
+## 💻 사용언어, 기술스택
 ![Generic badge](https://img.shields.io/badge/platform-Web-brightgreen.svg) ![Generic badge](https://img.shields.io/badge/library-vue-blue.svg) ![Generic badge](https://img.shields.io/badge/framework-spring-green.svg)
 ![Generic badge](https://img.shields.io/badge/database-ORACLE-yellow.svg) ![Generic badge](https://img.shields.io/badge/api-kakaomap-red,.svg) ![Generic badge](https://img.shields.io/badge/language-Java,JavaScript-important.svg)
 <br>
