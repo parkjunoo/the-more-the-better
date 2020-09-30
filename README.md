@@ -80,6 +80,7 @@ Waiting : 현재 진행중인 주문 <br>
 
 </div>
 </details>
+<br>
 
 ## Data Model Diagram - 변경사항 2020-09-08
 - 멤버 테이블 마감시간, 수령장소, 최소가격, 최소인원, 상세설명 추가 
