@@ -36,6 +36,10 @@ Waiting : 현재 진행중인 주문 <br>
 <br><br>
 
 ## 프로젝트 구조
+|BackEnd|FrontEnd|
+|------|---|
+|![캡처](https://user-images.githubusercontent.com/68583697/94669084-c22b9a00-034b-11eb-93e2-a676e2f07368.PNG)|![캡처2](https://user-images.githubusercontent.com/68583697/94669086-c22b9a00-034b-11eb-822b-8852db63051c.PNG)|
+<br>
 
 
 
