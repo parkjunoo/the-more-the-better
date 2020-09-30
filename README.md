@@ -26,6 +26,18 @@
 ![Generic badge](https://img.shields.io/badge/platform-Web-brightgreen.svg) ![Generic badge](https://img.shields.io/badge/library-vue-blue.svg) ![Generic badge](https://img.shields.io/badge/framework-spring-green.svg)
 ![Generic badge](https://img.shields.io/badge/database-ORACLE-yellow.svg) ![Generic badge](https://img.shields.io/badge/api-kakaomap-red,.svg) ![Generic badge](https://img.shields.io/badge/language-Java,JavaScript-important.svg)
 <br>
+
+### Maven
+| 패키지명 | 버전 | 설명 |
+| -------- | ---- | ---- |
+| Swagger | ![Generic badge](https://img.shields.io/badge/release-2.8.0-blue.svg)| 팀용 API 문서 및 디자인 도구 |
+| JUnit4 | ![Generic badge](https://img.shields.io/badge/release-4.7.1-blue.svg)| 단위 테스트 프레임 워크 |
+| Rombok | ![Generic badge](https://img.shields.io/badge/release-1.18.12-blue.svg)| 모델 데이터 객체 최소화 |
+| Nurigo | ![Generic badge](https://img.shields.io/badge/release-2.2.1-blue.svg)| 문자메세지 자동 전송 |
+| Ojdbc6 | ![Generic badge](https://img.shields.io/badge/release-11.2.0.1.0-blue.svg)| 오라클 데이터베이스 |
+| Tomcat | ![Generic badge](https://img.shields.io/badge/release-9.0.36-blue.svg)| 웹 어플리케이션 서버 |
+<br>
+
 ## 📜 Data Model Diagram
 ![KakaoTalk_20200930_153857747](https://user-images.githubusercontent.com/68583697/94651283-2f7f0100-0333-11eb-9093-fcb7d5aafb65.png)
 <br>
