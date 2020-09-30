@@ -33,14 +33,4 @@ Member : 사용자 <br>
 Class : 개설된 반 <br>
 Store : 등록되어 있는 가게 <br>
 Waiting : 현재 진행중인 주문 <br>
-Host : 주문을 연 호스트 <br>
-Waiting_Mems : 진행중인 주문의 대기자 모임 <br>
-Event : 가게에서 진행중인 이벤트 <br>
 <br><br>
-## Data Model Diagram - 변경사항 2020-09-08
-- 멤버 테이블 마감시간, 수령장소, 최소가격, 최소인원, 상세설명 추가 
-- WAIT_MINPERSON 이랑 WAIT_MINLIMIT 이랑 동일 -> WAIT_MINLIMIT 삭제예정 (작업중)
-## Data Model Diagram - 변경사항 2020-09-07
-- 멤버 핸드폰 번호 추가
-- 호스트도 waiting_mems 에 들어감
-- waiting 테이블에 현재 대기자 인원 추가
