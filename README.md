@@ -22,7 +22,7 @@
 ## Data Model Diagram
 바뀔수 있어요!
 
-![Screen Shot 2020-09-08 at 2 30 56 PM](https://user-images.githubusercontent.com/64248514/92436637-1aa1c880-f1e0-11ea-8252-0c6f5a436b33.png)
+![KakaoTalk_20200930_153857747](https://user-images.githubusercontent.com/68583697/94651283-2f7f0100-0333-11eb-9093-fcb7d5aafb65.png)
 
 Member : 사용자 <br>
 Class : 개설된 반 <br>
