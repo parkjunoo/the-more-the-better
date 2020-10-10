@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.management.RuntimeErrorException;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
@@ -16,15 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.playdata.themorethebetter.domain.Member;
-import io.playdata.themorethebetter.domain.Store;
-import io.playdata.themorethebetter.domain.Waiting;
 import io.playdata.themorethebetter.dto.member.MemberCreateRequestDto;
 import io.playdata.themorethebetter.dto.member.MemberLogInRequestDto;
 import io.playdata.themorethebetter.dto.member.PasswordCheckRequestDto;
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
 import io.playdata.themorethebetter.service.MemberService;
-import io.playdata.themorethebetter.service.OrderService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;

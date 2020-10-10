@@ -1,15 +1,4 @@
-/*
- * data() {
-    return{
-      storeName : "", //가게 이름 
-      people: 0, //인원
-      time: "", //모집마감시간
-      deliPlace: "", //배달수령장소
-      minCost: "", //최소주문가격
-      text:""//부가설명
-    }
-  },
- */
+
 package io.playdata.themorethebetter.dto.order;
 
 import lombok.Builder;

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.domain.Store;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {

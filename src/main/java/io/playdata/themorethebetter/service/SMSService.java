@@ -7,7 +7,6 @@ import javax.transaction.Transactional;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
 
-import io.playdata.themorethebetter.domain.Member;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.java_sdk.api.Message;
@@ -38,12 +37,12 @@ public class SMSService {
 	        JSONObject obj = (JSONObject) coolsms.send(params);
 	        System.out.println(obj.toString());
 	        
-	      } catch (CoolsmsException e) {
+	    } catch (CoolsmsException e) {
 	    	  
 	    	log.error("메세지 전송 실패");
 	        System.out.println(e.getMessage());
 	        System.out.println(e.getCode());
-	      }
+	    }
 	}
 }
 

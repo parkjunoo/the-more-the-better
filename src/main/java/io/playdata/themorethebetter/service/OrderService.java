@@ -12,7 +12,6 @@ import java.text.ParseException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +20,6 @@ import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.domain.Store;
 import io.playdata.themorethebetter.domain.Waiting;
 import io.playdata.themorethebetter.dto.order.OrderCreateRequestDto;
-import io.playdata.themorethebetter.dto.order.OrderSearchResponseDto;
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
 import io.playdata.themorethebetter.repository.MemberRepository;
