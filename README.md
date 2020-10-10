@@ -1,18 +1,20 @@
 
 
 # 📁 the-more-the-better
+## 다다익선
 플레이데이터 Pose-Estimation 개발자 교육 과정 중간 프로젝트 - '다다익선(多多益善)'
-## 프로젝트 이름 : 다다익선 
+<br><br>
+배달료를 공동으로 부담하기 위해 음료를 함께 구매할 수 있도록 일정 인원을 모집해주는 서비스
 <br>
 
-## 👩‍💻 팀원소개
-#### • 유재혁(팀장) : QA, 발표 및 자료구성, 프로젝트 관리 
-#### • 박주현(Backend) : 회원 가입 및 로그인 구현, 주문처리 기능 구현, DB 모델링
-#### • 박준수(Frontend) : 카카오 맵, 비동기 처리, 주문처리 기능 구현
-#### • 박채연(Frontend) : Front 디자인, 가게 정보, 비동기 처리, 페이지 구성 관리
+## 👩‍💻 팀원 소개
+#### • 🧑🏻‍🦰 유재혁(팀장) : QA, 발표 및 자료구성, 깃 프로젝트 관리 
+#### • 👩🏻 박주현(Backend) : 회원관리 기능 구현, 주문처리 기능 구현, DB 모델링
+#### • 👦🏻 박준수(Frontend) : API를 통해 주문 화면 구현, 비동기 처리, 주문처리 기능 구현
+#### • 👩🏻‍🦰 박채연(Frontend) : Front 디자인, 가게 정보, 비동기 처리, 페이지 구성 관리 -> 가게 정보가 뭘 뜻하는 건지 잘 모르겠음.. 채연이가 수정해줘 ~
 <br>
 
-## 📚 프로젝트 설명 :
+## 📚 프로젝트 설명
 ### <strong> 1. Technology of Untact<br> </strong>
 코로나 바이러스로 인한 사회적 거리 두기가 지속적으로 실시되고 있는 가운데 비 대면 서비스의 중요도가 높아지고 있습니다.  사람이 여럿 모이는 카페를 직접 방문하지 않고 배달주문을 통해 매장을 이용할 수 있는 방법을 찾고자 하였습니다. 
 
@@ -27,9 +29,18 @@
 ![Generic badge](https://img.shields.io/badge/database-ORACLE-yellow.svg) ![Generic badge](https://img.shields.io/badge/api-kakaomap-red,.svg) ![Generic badge](https://img.shields.io/badge/language-Java,JavaScript-important.svg)
 <br>
 
-### Maven
-| 패키지명 | 버전 | 설명 |
-| -------- | ---- | ---- |
+### 세부 기술
+| 기술 | 설명 |
+| -------- | ---- |
+| SpringBoot | 스프링 기반 애플리케이션 |
+| JPA | 관계형 데이터베이스 사용방식 정의 인터페이스 |
+| Log4j | 프로그램 작성시 로그를 남기기 위해 사용되는 자바 기반 로깅 유틸리티 |
+| REST API | REST 아키텍처의 제약 조건을 준수하는 애플리케이션 프로그래밍 인터페이스 |
+| Oracle RDBMS | Oracle의 관계형 데이터베이스 관리 시스템 |
+| Builder Pattern | 복합 객체의 생성 과정과 표현 방법을 분리하여 동일한 생성 절차에서 서로 다른 표현 결과를 만들 수 있게 하는 패턴 |
+| MVC Pattern | 복합 객체의 생성 과정과 표현 방법을 분리하여 동일한 생성 절차에서 서로 다른 표현 결과를 만들 수 있게 하는 패턴 |
+
+
 | Swagger | ![Generic badge](https://img.shields.io/badge/release-2.8.0-blue.svg)| 팀용 API 문서 및 디자인 도구 |
 | JUnit4 | ![Generic badge](https://img.shields.io/badge/release-4.7.1-blue.svg)| 단위 테스트 프레임 워크 |
 | Rombok | ![Generic badge](https://img.shields.io/badge/release-1.18.12-blue.svg)| 모델 데이터 객체 최소화 |
