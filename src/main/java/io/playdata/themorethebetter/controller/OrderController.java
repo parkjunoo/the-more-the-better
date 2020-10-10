@@ -12,21 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.playdata.themorethebetter.domain.Member;
 import io.playdata.themorethebetter.domain.Waiting;
 import io.playdata.themorethebetter.dto.order.OrderCreateRequestDto;
-import io.playdata.themorethebetter.dto.order.OrderSearchResponseDto;
-import io.playdata.themorethebetter.dto.order.OrderWaitingSetNewMemDto;
-import io.playdata.themorethebetter.service.MemberService;
 import io.playdata.themorethebetter.service.OrderService;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -42,8 +36,6 @@ import lombok.extern.slf4j.Slf4j;
 public class OrderController {
 	
 	private OrderService orderService;
-	private MemberService memberService;
-
 	
 	/* 대기인원 많은 순으로 모든 주문 내역 찾기 */ 
 	@GetMapping("/order/all")

@@ -7,13 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.playdata.themorethebetter.exception.ForbiddenException;
 import io.playdata.themorethebetter.exception.NotFoundException;
-import io.swagger.annotations.ApiModel;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

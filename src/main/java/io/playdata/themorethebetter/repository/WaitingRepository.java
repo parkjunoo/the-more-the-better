@@ -3,13 +3,11 @@ package io.playdata.themorethebetter.repository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import io.playdata.themorethebetter.domain.Waiting;
-import io.playdata.themorethebetter.dto.order.OrderSearchResponseDto;
 
 public interface WaitingRepository extends JpaRepository<Waiting, Long> {
 	// 고유번호로 주문 검색

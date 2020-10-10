@@ -6,7 +6,7 @@ import Board from "@/components/IndexWaitingList.vue";
 import Enroll from "@/views/Enroll.vue";
 import Register from "@/components/Register";
 import BoardRegister from "@/components/BoardRegister"
-import Mypage from "../components/Mypage";
+import Mypage from "../components/MyPage";
 import List from "../components/List";
 
 
