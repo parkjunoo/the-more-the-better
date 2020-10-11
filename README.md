@@ -66,8 +66,8 @@
 
 | FrontEnd | BackEnd (main)| BackEnd (test) |
 | -------- | ------------- | -------------- |
-| ![Screen Shot 2020-10-11 at 9 26 54 PM](https://user-images.githubusercontent.com/64248514/95678604-adcb8500-0c08-11eb-911c-1df82b7e64e7.png) | ![Screen Shot 2020-10-11 at 9 44 55 PM](https://user-images.githubusercontent.com/64248514/95679002-1287df00-0c0b-11eb-8141-1c0bd3e5e787.png)
- | ![Screen Shot 2020-10-11 at 9 25 22 PM](https://user-images.githubusercontent.com/64248514/95678607-b1f7a280-0c08-11eb-8d2c-2856b91e2210.png) |
+| ![Screen Shot 2020-10-11 at 9 26 54 PM](https://user-images.githubusercontent.com/64248514/95678604-adcb8500-0c08-11eb-911c-1df82b7e64e7.png) | ![Screen Shot 2020-10-11 at 9 44 55 PM](https://user-images.githubusercontent.com/64248514/95679002-1287df00-0c0b-11eb-8141-1c0bd3e5e787.png) | ![Screen Shot 2020-10-11 at 9 25 22 PM](https://user-images.githubusercontent.com/64248514/95678607-b1f7a280-0c08-11eb-8d2c-2856b91e2210.png) |
+
 <br>
 
 
