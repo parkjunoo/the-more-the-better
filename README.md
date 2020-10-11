@@ -31,7 +31,7 @@
 
 ### 세부 기술
 | 기술 | 버전 | 설명 |
-| -------- | ---- | ---- |
+| :--------: | :----: | ---- |
 | SpringBoot | ![Generic badge](https://img.shields.io/badge/release-2.3.3-blue.svg) | 스프링 기반 애플리케이션 |
 | JPA | ![Generic badge](https://img.shields.io/badge/release-5.4.20-blue.svg) | 관계형 데이터베이스 사용방식 정의 인터페이스 |
 | Log4j | ![Generic badge](https://img.shields.io/badge/release-2.13.3-blue.svg) | 프로그램 작성시 로그를 남기기 위해 사용되는 자바 기반 로깅 유틸리티 |
@@ -49,13 +49,17 @@
 
 <br>
 
-## 📜 Data Model Diagram
+## 📜 ERD (Entity Relationship Diagram)
 ![KakaoTalk_20200930_153857747](https://user-images.githubusercontent.com/68583697/94651283-2f7f0100-0333-11eb-9093-fcb7d5aafb65.png)
 <br>
-Member : 사용자 <br>
-Class : 개설된 반 <br>
-Store : 등록되어 있는 가게 <br>
-Waiting : 현재 진행중인 주문 <br>
+
+| Entity | Attributes | Domains |
+| :------: | ---------- | ------- |
+| MEMBER <br> 회원 | MEM_NO <br> CREATED_DATE <br> MODIFIED_DATE <br> MEM_ID <br> MEM_ISCERTIFY <br> MEM_ISHOST <br> MEM_NAME <br> MEM_PHONE <br> MEM_PW <br> CLASS_NO <br> WAIT_NO |고유 번호 <br> 가입 일 <br> 정보 수정일 <br> 아이디 <br> 인증 여부 <br> 현재 주문 생성 여부 <br> 이름 <br> 전화 번호 <br> 비밀 번호 <br> 소속 반 고유번호 <br> 현재 속한 주문 고유번호 |
+| WAITING <br> 현재 진행중인 주문 | WAIT_NO <br> CREATED_DATE <br> MODIFIED_DATE <br> WAIT_CLOSETIME <br> WAIT_PLACE <br> WAIT_MINCOST <br> WAIT_MINPERSON <br> WAIT_STANDBY <br> WAIT_TEXT <br> MEM_NO <br> ST_NO | 고유 번호 <br> 생성 일 <br> 정보 수정일 <br> 마감 시간 <br> 수령 장소 <br> 주문 최소 금액 <br> 주문 최소 인원 <br> 현재 대기인 수 <br> 주문 상세 정보 <br> 주문 대기인 고유 번호 <br> 가게 고유 번호 |
+| CLASS <br> 개설된 반 | CLASS_NO <br> CREATED_DATE <br> MODIFIED_DATE <br> CLASS_CODE <br> CLASS_NAME | 고유 번호 <br> 개강 일 <br> 정보 수정일 <br> 고유 코드 <br> 이름 |
+| STORE <br> 가게 | ST_NO <br> CREATED_DATE <br> MODIFIED_DATE <br> ST_ADDR <br> ST_NAME <br> ST_PICTURE | 고유 번호 <br> 가입일 <br> 정보 수정일 <br> 상세 주소 <br> 이름 <br> 가게 사진 |
+
 <br><br>
 
 ## 프로젝트 구조
