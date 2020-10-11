@@ -1,7 +1,7 @@
 
 
 # 📁 the-more-the-better
-## 다다익선
+## 🐸 다다익선 🐸
 플레이데이터 Pose-Estimation 개발자 교육 과정 중간 프로젝트 - '다다익선(多多益善)'
 <br><br>
 배달료를 공동으로 부담하기 위해 음료를 함께 구매할 수 있도록 일정 인원을 모집해주는 서비스
@@ -9,7 +9,7 @@
 
 ## 👩‍💻 팀원 소개
 #### • 🧑🏻‍🦰 유재혁(팀장) : QA, 발표 및 자료구성, 깃 프로젝트 관리 
-#### • 👩🏻 박주현(Backend) : 회원관리 기능 구현, 주문처리 기능 구현, DB 모델링
+#### • 👩🏻 박주현(Backend) : 회원관리 기능 구현, 주문처리 기능 구현, DB 모델링, 스케줄러 관리
 #### • 👦🏻 박준수(Frontend) : API를 통해 주문 화면 구현, 비동기 처리, 주문처리 기능 구현
 #### • 👩🏻‍🦰 박채연(Frontend) : Front 디자인, 가게 정보, 비동기 처리, 페이지 구성 관리 -> 가게 정보가 뭘 뜻하는 건지 잘 모르겠음.. 채연이가 수정해줘 ~
 <br>
@@ -30,23 +30,23 @@
 <br>
 
 ### 세부 기술
-| 기술 | 설명 |
-| -------- | ---- |
-| SpringBoot | 스프링 기반 애플리케이션 |
-| JPA | 관계형 데이터베이스 사용방식 정의 인터페이스 |
-| Log4j | 프로그램 작성시 로그를 남기기 위해 사용되는 자바 기반 로깅 유틸리티 |
-| REST API | REST 아키텍처의 제약 조건을 준수하는 애플리케이션 프로그래밍 인터페이스 |
-| Oracle RDBMS | Oracle의 관계형 데이터베이스 관리 시스템 |
-| Builder Pattern | 복합 객체의 생성 과정과 표현 방법을 분리하여 동일한 생성 절차에서 서로 다른 표현 결과를 만들 수 있게 하는 패턴 |
-| MVC Pattern | 복합 객체의 생성 과정과 표현 방법을 분리하여 동일한 생성 절차에서 서로 다른 표현 결과를 만들 수 있게 하는 패턴 |
+| 기술 | 버전 | 설명 |
+| -------- | ---- | ---- |
+| SpringBoot | ![Generic badge](https://img.shields.io/badge/release-2.3.3-blue.svg) | 스프링 기반 애플리케이션 |
+| JPA | ![Generic badge](https://img.shields.io/badge/release-5.4.20-blue.svg) | 관계형 데이터베이스 사용방식 정의 인터페이스 |
+| Log4j | ![Generic badge](https://img.shields.io/badge/release-2.13.3-blue.svg) | 프로그램 작성시 로그를 남기기 위해 사용되는 자바 기반 로깅 유틸리티 |
+| REST API | ![Generic badge](https://img.shields.io/badge/release--blue.svg) | REST 아키텍처의 제약 조건을 준수하는 애플리케이션 프로그래밍 인터페이스 |
+| Oracle RDBMS | ![Generic badge](https://img.shields.io/badge/release-19.3.0.0-blue.svg) | Oracle의 관계형 데이터베이스 관리 시스템 |
+| Spring Scheduler | ![Generic badge](https://img.shields.io/badge/release-2.3.2-blue.svg) | 원하는 시간에 원하는 기능을 실행해 주는 Scheduler 라이브러리 |
+| MVC Pattern | ![Generic badge](https://img.shields.io/badge/release--blue.svg) | 애플리케이션을 Model, View, Controller 세가지의 역할로 구분한 디자인 패턴 |
+| Builder Pattern | ![Generic badge](https://img.shields.io/badge/release--blue.svg) | 복합 객체의 생성 과정과 표현 방법을 분리하여 동일한 생성 절차에서 서로 다른 표현 결과를 만들 수 있게 하는 패턴 |
+| Swagger | ![Generic badge](https://img.shields.io/badge/release-2.8.0-blue.svg) | 팀용 API 문서 및 디자인 도구 |
+| JUnit4 | ![Generic badge](https://img.shields.io/badge/release-4.7.1-blue.svg) | 단위 테스트 프레임 워크 |
+| Rombok | ![Generic badge](https://img.shields.io/badge/release-1.18.12-blue.svg) | 모델 데이터 객체 최소화 |
+| Nurigo | ![Generic badge](https://img.shields.io/badge/release-2.2.1-blue.svg) | 문자메세지 자동 전송 API |
+| Vue.js | ![Generic badge](https://img.shields.io/badge/release-4.5.4-blue.svg) | 오픈 소스 프로그레시브 자바스크립트 프론트엔드 프레임워크 |
+| ESLint | ![Generic badge](https://img.shields.io/badge/release-6.14.8-blue.svg) | ECMAScript 코드에서 문제점 검사 또는 더 나은 코드로 정정하는 린트 도구 |
 
-
-| Swagger | ![Generic badge](https://img.shields.io/badge/release-2.8.0-blue.svg)| 팀용 API 문서 및 디자인 도구 |
-| JUnit4 | ![Generic badge](https://img.shields.io/badge/release-4.7.1-blue.svg)| 단위 테스트 프레임 워크 |
-| Rombok | ![Generic badge](https://img.shields.io/badge/release-1.18.12-blue.svg)| 모델 데이터 객체 최소화 |
-| Nurigo | ![Generic badge](https://img.shields.io/badge/release-2.2.1-blue.svg)| 문자메세지 자동 전송 |
-| Ojdbc6 | ![Generic badge](https://img.shields.io/badge/release-11.2.0.1.0-blue.svg)| 오라클 데이터베이스 |
-| Tomcat | ![Generic badge](https://img.shields.io/badge/release-9.0.36-blue.svg)| 웹 어플리케이션 서버 |
 <br>
 
 ## 📜 Data Model Diagram
