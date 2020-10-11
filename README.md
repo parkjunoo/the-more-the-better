@@ -63,9 +63,10 @@
 <br><br>
 
 ## 프로젝트 구조
-|BackEnd|FrontEnd|
-|------|---|
-|![캡처](https://user-images.githubusercontent.com/68583697/94669084-c22b9a00-034b-11eb-93e2-a676e2f07368.PNG)|![캡처2](https://user-images.githubusercontent.com/68583697/94669086-c22b9a00-034b-11eb-822b-8852db63051c.PNG)|
+
+| FrontEnd | BackEnd (main)| BackEnd (test) |
+| -------- | ------------- | -------------- |
+| ![Screen Shot 2020-10-11 at 9 26 54 PM](https://user-images.githubusercontent.com/64248514/95678604-adcb8500-0c08-11eb-911c-1df82b7e64e7.png) | ![Screen Shot 2020-10-11 at 9 24 08 PM](https://user-images.githubusercontent.com/64248514/95678601-a60be080-0c08-11eb-90ca-be3cc835fd57.png) | ![Screen Shot 2020-10-11 at 9 25 22 PM](https://user-images.githubusercontent.com/64248514/95678607-b1f7a280-0c08-11eb-8d2c-2856b91e2210.png) |
 <br>
 
 
