@@ -11,7 +11,7 @@
 #### • 🧑🏻‍🦰 유재혁(팀장) : QA, 발표 및 자료구성, 깃 프로젝트 관리 
 #### • 👩🏻 박주현(Backend) : 회원관리 기능 구현, 주문처리 기능 구현, DB 모델링, 스케줄러 관리
 #### • 👦🏻 박준수(Frontend) : API를 통해 주문 화면 구현, 비동기 처리, 주문처리 기능 구현
-#### • 👩🏻‍🦰 박채연(Frontend) : Front 디자인, 가게 정보, 비동기 처리, 페이지 구성 관리 -> 가게 정보가 뭘 뜻하는 건지 잘 모르겠음.. 
+#### • 👩🏻‍🦰 박채연(Frontend) : SPA 페이지 구성 관리, 크로스 브라우징, 비동기 처리, UI/UX 구현 
 <br>
 
 ## 📚 프로젝트 설명
@@ -72,51 +72,10 @@
 
 
 
-## 💻 최종 실행 화면 --> 다음사람 부탁해... 힘드러.. 
-<details>
-<summary>메인화면</summary>
-<div markdown="1">
-  
- ![FireShot Capture 012 - chaeyeon - localhost](https://user-images.githubusercontent.com/68583697/94666502-83481500-0348-11eb-80e4-ed9dd1109d22.png)
- 
-</div>
-</details>
+## 💻 최종 실행 화면
+<img width="1142" alt="finalpage" src="https://user-images.githubusercontent.com/61309080/95737615-edef3e00-0cc2-11eb-8aa7-ae1bb493f209.png">
 
-<details>
-<summary>회원가입 화면</summary>
-<div markdown="1">
-  
-![1](https://user-images.githubusercontent.com/68583697/94666879-ff425d00-0348-11eb-8ad7-4c5402790bd5.png)
- 
-</div>
-</details>
 
-<details>
-<summary>모집하기</summary>
-<div markdown="1">
-  
-![2](https://user-images.githubusercontent.com/68583697/94667026-387acd00-0349-11eb-9a6f-2182816f4adc.png)
- 
-</div>
-</details>
-
-<details>
-<summary>등록하기</summary>
-<div markdown="1">
-  
-![KakaoTalk_20200930_175651163](https://user-images.githubusercontent.com/68583697/94667114-547e6e80-0349-11eb-8b2e-a91f8b4ac7ef.png)
- 
-</div>
-</details>
-
-<details>
-<summary>마이페이지</summary>
-<div markdown="1">
-  
-![KakaoTalk_20200930_175808855](https://user-images.githubusercontent.com/68583697/94667165-65c77b00-0349-11eb-9f0e-81fbea8a85a5.png)
-
-</div>
-</details>
 <br>
 
 ## 🔎 ERD - 변경사항 2020-09-08
