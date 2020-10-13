@@ -73,7 +73,8 @@
 
 
 ## 💻 최종 실행 화면
-<img width="1142" alt="finalpage" src="https://user-images.githubusercontent.com/61309080/95737615-edef3e00-0cc2-11eb-8aa7-ae1bb493f209.png">
+<img width="1126" alt="finalpage" src="https://user-images.githubusercontent.com/61309080/95804315-511db680-0d3d-11eb-95b1-bc6f2350e68b.png">
+
 
 
 <br>
